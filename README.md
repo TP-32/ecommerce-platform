@@ -10,6 +10,7 @@
 3. Run project by
     - Clicking `Run` above the `main` method in `EcommercePlatformApplication.java`
     - Clicking `Spring Boot Dashboard` on the left dropdown, right click `ecommerce-platform` and click `Run`
+4. Access the live web project at `http://localhost:3000`
     
 All changes made will be reflected, live, on the web by reloading the page.  
 Make sure to save the code before reloading, else the changes will not be reflected.  
