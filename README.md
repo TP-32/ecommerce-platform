@@ -7,7 +7,15 @@
     - SSH: `git clone git@github.com:TP-32/ecommerce-platform.git`
 2. Download Spring Boot Extensions
     - Ctrl+Shift+X -> Spring Boot Extension Pack -> Install
-3. Run project by
+3. Create a database using MySQL Workbench  
+    1. Connect to a valid Connection from the home page.  
+    2. Create a database within `Query` with `CREATE DATABASE ecommerce;`  
+4. Create local `.env` file to store database information
+    1. Within the ecommerce-platform folder, create a `.env` file.
+    2. Add these variables with your local values:  
+       `DB_USERNAME="USERNAME"`  
+       `DB_PASSWORD="PASSWORD"`
+5. Run project by
     - Clicking `Run` above the `main` method in `EcommercePlatformApplication.java`
     - Clicking `Spring Boot Dashboard` on the left dropdown, right click `ecommerce-platform` and click `Run`
 
