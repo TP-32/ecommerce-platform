@@ -2,6 +2,8 @@ package com.tp32.ecommerceplatform.model;
 
 import jakarta.persistence.*;
 
+import java.util.Date;
+
 @Entity
 @Table(name="orders")
 public class Orders {
@@ -12,6 +14,8 @@ public class Orders {
     @Column
     private User user;
 
-    /* created_at TIMESTAMP required */
+    @Column
+    private Long orderTime;
+    /* created_at TIMESTAMP to show what time the order was ordered at */
 
 }

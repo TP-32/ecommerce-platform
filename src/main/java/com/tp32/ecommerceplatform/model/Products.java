@@ -19,7 +19,11 @@ public class Products {
     @Column(name = "product_name", nullable = false, length = 25)
     private String productName;
 
-    /* image required */
+    @Column(name = "image", nullable = false, length = 255)
+    private String image;
+
+    @Column(name = "description", nullable = false, length = 255)
+    private String description;
 
     @Column(name = "price", nullable = false)
     private Integer price;
