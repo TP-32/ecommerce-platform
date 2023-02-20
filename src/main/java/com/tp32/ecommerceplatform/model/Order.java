@@ -5,14 +5,16 @@ import jakarta.persistence.*;
 import java.util.Date;
 
 @Entity
-@Table(name="orders")
-public class Orders {
+@Table(name="order")
+public class Order {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column
-    private User user;
+    // @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    // @JoinColumn(name = "user_id")
+    // private User user;
 
     @Column
     private Long orderTime;
