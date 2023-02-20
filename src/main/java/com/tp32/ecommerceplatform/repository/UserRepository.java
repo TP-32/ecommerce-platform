@@ -1,18 +1,16 @@
 package com.tp32.ecommerceplatform.repository;
 
+import java.util.Optional;
+
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.stereotype.Repository;
 
 import com.tp32.ecommerceplatform.model.User;
 
 /**
  * Used to manage the data within the Spring Boot application.
  */
-@Repository
 public interface UserRepository extends JpaRepository<User, Long> {
+    Optional<User> findByEmail(String emaiL);
 
-    User findByFirstName(String firstName);
-    User findByLastName(String lastName);
-    User findByEmail(String emaiL);
-    
+    Boolean existsByEmail(String email);
 }
