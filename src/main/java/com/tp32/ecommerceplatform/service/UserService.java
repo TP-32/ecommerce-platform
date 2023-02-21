@@ -1,17 +1,12 @@
 package com.tp32.ecommerceplatform.service;
 
-import com.tp32.ecommerceplatform.model.User;
+import com.tp32.ecommerceplatform.dto.LoginDto;
+import com.tp32.ecommerceplatform.dto.RegisterDto;
 
 /**
  * Abstract implementation of services required for the User.
  */
 public interface UserService {
-
-    User findById(Long id);
-    User findByFirstName(String firstName);
-    User findByLastName(String lastName);
-    User findByEmail(String email);
-    User save(User user);
-    
-    User createUser(User user);
+    String login(LoginDto loginDto);
+    String register(RegisterDto registerDto);
 }

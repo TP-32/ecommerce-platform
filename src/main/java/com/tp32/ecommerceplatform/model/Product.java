@@ -10,11 +10,11 @@ public class Products {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column
-    private Category category;
+    // @Column
+    // private Category category;
 
-    @Column
-    private Inventory inventory;
+    // @Column
+    // private Inventory inventory;
 
     @Column(name = "product_name", nullable = false, length = 25)
     private String productName;

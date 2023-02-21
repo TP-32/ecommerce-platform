@@ -3,8 +3,8 @@ package com.tp32.ecommerceplatform.model;
 import jakarta.persistence.*;
 
 @Entity
-@Table(name="orderItems")
-public class OrderItems {
+@Table(name="orderitem")
+public class OrderItem {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -13,10 +13,10 @@ public class OrderItems {
     @Column
     private Integer quantity;
 
-    @Column
-    private Orders orders;
+    // @Column
+    // private Order orders;
 
-    @Column
-    private Products products;
+    // @Column
+    // private Products products;
 
 }
