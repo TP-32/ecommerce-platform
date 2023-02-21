@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service;
 
 import com.tp32.ecommerceplatform.dto.LoginDto;
 import com.tp32.ecommerceplatform.dto.RegisterDto;
-import com.tp32.ecommerceplatform.exception.TestException;
+import com.tp32.ecommerceplatform.exception.InputException;
 import com.tp32.ecommerceplatform.model.Role;
 import com.tp32.ecommerceplatform.model.User;
 import com.tp32.ecommerceplatform.repository.RoleRepository;
@@ -59,14 +59,13 @@ public class UserServiceImpl implements UserService {
     @Override
     public String register(RegisterDto registerDto) {
         if (userRepository.existsByEmail(registerDto.getEmail())) {
-            throw new TestException(HttpStatus.BAD_REQUEST, "This email is already being used.");
+            throw new InputException(HttpStatus.BAD_REQUEST, "This email is already being used.");
         }
 
         User user = new User();
         user.setFirstName(registerDto.getFirstName());
         user.setLastName(registerDto.getLastName());
         user.setEmail(registerDto.getEmail());
-        System.out.println("Email: " + registerDto.getEmail() + " Password: " + registerDto.getPassword());
         user.setPassword(passwordEncoder.encode(registerDto.getPassword()));
 
         Role userRole = roleRepository.findByName("ROLE_USER").get();
