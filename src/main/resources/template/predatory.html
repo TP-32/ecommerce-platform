@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Predatory Fish</title>
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,900&display=swap" rel="stylesheet">
+    <link href='https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css' rel='stylesheet'>
+    <link rel="stylesheet" href="categories.css">
+  </head>
+  <body>
+    <header>
+      <nav>
+        <ul>
+          <li><a href="#">Home</a></li>
+          <li><a href="categories.html">Categories</a></li>
+          <li><a href="#">Sign in</a></li>
+          <li><a href="#">Sign up</a></li>
+          <li><a href="#">Net</a></li>
+          <li><a href="#">About</a></li>
+          <li><a href="#">Contact</a></li>
+        </ul>
+      </nav>
+    </header>
+    <div class="breadcumb-wrapper">
+      <h2 class="page-title">Categories</h2>
+    </div>
+    <div class="bg-main">
+        <div class="container">
+        <div class="box">
+          <div class="breadcumb">
+            <a href="#">Home</a>
+            <span><i class='bx bxs-chevrons-right'></i></span>
+            <a href="categories.html">Categories</a>
+          </div>
+          <ul class="pagination">
+              <select>
+                <option value="option1">Most Popular</option>
+                <option value="option2">Name (A-Z)</option>
+                <option value="option3">Name (Z-A)</option>
+                <option value="option2">Price (low to high)</option>
+                <option value="option3">Price (high to low)</option>
+              </select>
+          </ul>
+        </div>          
+        <div class="box">
+          <div class="row">
+            <div class="col-3 filter-col" id="filter-col">
+              <div class="box">
+                <span class="filter-header">Categories</span>
+                <ul class="filter-list">
+                  <li><a href="tropical.html">Tropical Fish</a></li>
+                  <li><a href="brackish.html">Brackish Fish</a></li>
+                  <li><a href="hybrid.html">Hybrid Fish</a></li>
+                  <li><a href="predatory.html">Predatory Fish</a></li>
+                  <li><a href="coldwater.html">Coldwater Fish</a></li>
+                  <li><a href="marine.html">Marine Fish</a></li>
+                </ul>
+              </div>
+            </div>
+            <div class="col-9 col-md-12">
+              <div class="box">
+                <h2 class="description">Predatory fish are those kind of fish species
+                   that hunts or ambushes other animals for food. These can be fish that
+                    bite chunks out of their prey; such as members of the piranha family 
+                    or consume them whole; such as the red-tailed catfish. Predatory fish 
+                    are distinct from scavenging species which, while they will consume other 
+                    fish species, they will do so more opportunistically, feeding upon already 
+                    dead fish or the remains of someone else’s meal. </h2>
+                <div class="row" id="products"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>          
+    </div>
+    <script>
+      let products = [
+      {
+        name: 'PLATINUM BARRAMUNDI GROUPER LATES CALCIFER 30CM   ',
+        image1: './images/p1.png',
+        image2: './images/p1.png',
+        curr_price: '£ 3,000.00'
+    },
+    {
+        name: 'PLATINUM FLORIDA SPOTTED GAR LEPISOSTEUS 15CM   ',
+        image1: './images/p2.png',
+        image2: './images/p2.png',
+        curr_price: '£ 2,000.00'
+    },
+    {
+        name: 'PLATINUM BICHIR POLYPTERUS ENDLICHERI 15CM   ',
+        image1: './images/p3.png',
+        image2: './images/p3.png',
+        curr_price: '£ 2,000.00'
+    },
+    {
+        name: 'XANTHIC GOLDEN BARRAMUNDI GROUPER LATES CALCIFER ',
+        image1: './images/p4.png',
+        image2: './images/p4.png',
+        curr_price: '£ 2,000.00'
+    },
+    {
+        name: 'VIOLET LINE PIRANHA SERRASALMUS GERYI 12CM   ',
+        image1: './images/p5.png',
+        image2: './images/p5.png',
+        curr_price: '£ 1,500.00'
+    },
+    {
+        name: 'ARAPAIMA GIGAS OSTEOGLOSSIFORMES 90CM    ',
+        image1: './images/p6.png',
+        image2: './images/p6.png',
+        curr_price: '£ 1,000.00'
+    },
+    {
+        name: 'GIANT FRESHWATER PUFFER FISH TETRADON MBU 70CM   ',
+        image1: './images/p7.png',
+        image2: './images/p7.png',
+        curr_price: '£ 1,000.00'
+    },
+    {
+        name: 'TIGRINUS ZEBRA SHOVELNOSE CATFISH 15CM   ',
+        image1: './images/p8.png',
+        image2: './images/p8.png',
+        curr_price: '£ 1,000.00'
+    },
+    {
+        name: 'MEGHALAYA LEOPARD SNAKEHEAD CHANNA 20CM   ',
+        image1: './images/p9.png',
+        image2: './images/p9.png',
+        curr_price: '£ 500.00'
+    },
+]
+let product_list = document.querySelector('#products')
+renderProducts = (products) => {
+    products.forEach(e => {
+        let prod = `
+            <div class="col-4 col-md-6 col-sm-12">
+                <div class="product-card">
+                    <div class="product-card-img">
+                        <img src="${e.image1}" alt="">
+                        <img src="${e.image2}" alt="">
+                    </div>
+                    <div class="product-card-info">
+                        <div class="product-btn">
+                            <a href="fish-detail.html" class="btn-flat btn-hover btn-shop-now">shop now</a>
+                        </div>
+                        <div class="product-card-name">
+                            ${e.name}
+                        </div>
+                        <div class="product-card-price">
+                            <span class="curr-price">${e.curr_price}</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        `
+        product_list.insertAdjacentHTML("beforeend", prod)
+    })
+}
+renderProducts(products)
+    </script>
+  </body>
+</html>
