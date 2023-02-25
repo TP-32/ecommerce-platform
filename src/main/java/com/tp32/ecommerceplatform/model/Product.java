@@ -2,6 +2,10 @@ package com.tp32.ecommerceplatform.model;
 
 import jakarta.persistence.*;
 
+/**
+ * A model which holds the application data of a particular Product, used to be
+ * displayed within a view.
+ */
 @Entity
 @Table(name="products")
 public class Product {

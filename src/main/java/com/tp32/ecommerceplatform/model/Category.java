@@ -4,6 +4,10 @@ import java.util.List;
 
 import jakarta.persistence.*;
 
+/**
+ * A model which holds the application data of a particular Category, used to be
+ * displayed within a view.
+ */
 @Entity
 @Table(name= "category")
 public class Category {

@@ -5,6 +5,10 @@ import jakarta.persistence.*;
 import java.util.Date;
 import java.util.List;
 
+/**
+ * A model which holds the application data of a particular Order, used to be
+ * displayed within a view.
+ */
 @Entity
 @Table(name="`order`") // Uses ` syntax to distinguish order from a keyword
 public class Order {

@@ -14,6 +14,10 @@ import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 
+/**
+ * A model which holds the application data of a particular Basket/Cart/Net, used to be
+ * displayed within a view.
+ */
 @Entity
 @Table(name="net")
 public class Net {
