@@ -11,5 +11,21 @@ public class Inventory {
     private Long id;
 
     @Column
-    private Integer quantity;
+    private Integer stock;
+
+    public Inventory() {}
+
+    // Getters
+    public Long getID() {
+        return this.id;
+    }
+
+    public Integer getStock() {
+        return this.stock;
+    }
+
+    // Setters
+    public void setStock(Integer stock) {
+        this.stock = stock;
+    }
 }
