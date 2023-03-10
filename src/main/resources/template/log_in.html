@@ -7,12 +7,43 @@
     <title>SignIn - IFM</title>
     <style media="screen">
     
+        
+        body {
+            background-color: black;
+            }
+
+            .nav {
+        float: right;
+        list-style: none;
+        margin-top: 30px;
+            }
+
+        .nav li {
+        display: inline-block;
+            }
+
+        .nav li a {
+        color: rgb(242, 239, 244);
+        padding: 5px 20px;
+        font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+        font-size: 15px;
+        text-decoration: none;
+            }
+
+        .nav li a:hover {
+        background: #780250;
+        color: aliceblue;
+            }
+
+        .nav ul li a {
+        color: aliceblue;
+            }
 
         form {
             
             height: auto;
             width: auto;
-            background-color:  rgba( 39, 50, 57,1);
+            background-color:  rgba( 113, 3, 113);
             position: absolute;
             transform: translate(-50%, -50%);
             top: 50%;
@@ -25,7 +56,7 @@
         }
 
         form * {
-            font-family: 'Gabriola';
+            font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
             width: 450px;
             color: white;
             letter-spacing: 2px;
@@ -50,7 +81,7 @@
             font-size: 25px;
             display: block;
             color: #080710;
-            height: 40px;
+            height: 20px;
             width: 100%;
             background-color: white;
             border-radius: 3px;
@@ -70,13 +101,24 @@
             cursor: pointer;
         }
         button:hover{
-            background-color: lightcoral;
-            color: black;
-
+            background-color: black;
+            color: white;
         }        
+
     </style>
 </head>
+<body>
+<ul class="nav">
+    <li><a href="#">Home</a></li>
+    <li><a href="#">Categories</a></li>
+    <li><a href="#">Sign in</a></li>
+    <li><a href="#">Sign up</a></li>
+    <li><a href="#">Net</a></li>
+    <li><a href="#">About</a></li>
+    <li><a href="#">Contact</a></li>
+  </ul>
 
+</body>
 
 <form method="get" action="">
             <h3>Login Here</h3>
