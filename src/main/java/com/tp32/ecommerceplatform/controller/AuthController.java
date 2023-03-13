@@ -41,7 +41,6 @@ public class AuthController {
         JwtResponse res = userService.register(registerDto);
         ResponseCookie cookie = ResponseCookie.from("Authorization", res.getToken())
             .httpOnly(true)
-            .secure(true)
             .path("/")
             .maxAge(jwtExpiration/1000)
             .build();
@@ -60,7 +59,6 @@ public class AuthController {
         JwtResponse res = userService.login(loginDto);
         ResponseCookie cookie = ResponseCookie.from("Authorization", res.getToken())
             .httpOnly(true)
-            .secure(true)
             .path("/")
             .maxAge(jwtExpiration/1000)
             .build();
