@@ -2,12 +2,12 @@ package com.tp32.ecommerceplatform.exception;
 
 import org.springframework.http.HttpStatus;
 
-public class TestException extends RuntimeException {
+public class InputException extends RuntimeException {
 
     private HttpStatus status;
     private String message;
 
-    public TestException(HttpStatus status, String message) {
+    public InputException(HttpStatus status, String message) {
         super(message);
         this.status = status;
         this.message = message;

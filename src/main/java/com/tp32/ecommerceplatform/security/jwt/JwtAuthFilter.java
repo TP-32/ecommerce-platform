@@ -8,11 +8,14 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
 import org.springframework.stereotype.Component;
-import org.springframework.util.StringUtils;
 import org.springframework.web.filter.OncePerRequestFilter;
+import org.springframework.web.util.WebUtils;
+
+import com.tp32.ecommerceplatform.repository.TokenRepository;
 
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
+import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
@@ -26,36 +29,40 @@ public class JwtAuthFilter extends OncePerRequestFilter {
 
     private UserDetailsService userDetailsService;
 
-    public JwtAuthFilter(JwtToken jwtToken, UserDetailsService userDetailsService) {
+    private TokenRepository tokenRepository;
+
+    public JwtAuthFilter(JwtToken jwtToken, UserDetailsService userDetailsService, TokenRepository tokenRepository) {
         this.jwtToken = jwtToken;
         this.userDetailsService = userDetailsService;
+        this.tokenRepository = tokenRepository;
     }
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
         // Returns the token from the HTTP request
-        String token = getTokenFromRequest(request);
+        String token = "";
+        Cookie cookie = WebUtils.getCookie(request, "Authorization");
+        if (cookie != null)
+            token = cookie.getValue();
 
-        if (StringUtils.hasText(token) && jwtToken.validateToken(token)) {
-            String email = jwtToken.getEmailFromToken(token);
-            UserDetails userDetails = userDetailsService.loadUserByUsername(email);
-
-            UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
-            authToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
-
-            SecurityContextHolder.getContext().setAuthentication(authToken);
+        if (token.equals("")) {
+            filterChain.doFilter(request, response);
+            return;
         }
-
+        
+        String email = jwtToken.getEmailFromToken(token);
+        if (email != null && SecurityContextHolder.getContext().getAuthentication() == null) {
+            UserDetails userDetails = this.userDetailsService.loadUserByUsername(email);
+            boolean isValid = tokenRepository.findByToken(token)
+                .map(t -> !t.isExpired() && !t.isRevoked())
+                .orElse(false);
+            if (jwtToken.validateToken(token, userDetails) && isValid) {
+                UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
+                authToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
+                SecurityContextHolder.getContext().setAuthentication(authToken);
+            }
+        }
         filterChain.doFilter(request, response);
+
     }
-
-    private String getTokenFromRequest(HttpServletRequest request) {
-        String bearerToken = request.getHeader("Authorization");
-
-        if (StringUtils.hasText(bearerToken) && bearerToken.startsWith("Bearer "))
-            return bearerToken.substring(7, bearerToken.length());
-
-        return null;
-    }
-    
 }

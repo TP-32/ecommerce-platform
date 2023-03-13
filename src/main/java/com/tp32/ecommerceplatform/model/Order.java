@@ -24,8 +24,7 @@ public class Order {
     @Column(name = "price", nullable = false)
     private Float price;
 
-    @OneToMany(cascade = CascadeType.ALL)
-    @JoinColumn(name = "orderitem_id", referencedColumnName = "id")
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private List<OrderItem> orderItems;
 
     @ManyToOne

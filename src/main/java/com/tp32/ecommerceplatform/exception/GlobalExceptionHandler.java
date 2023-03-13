@@ -21,7 +21,7 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
      * Thrown if an invalid input is given, for example a duplicate email.
      */
     @ExceptionHandler(InputException.class)
-    public ResponseEntity<String> handleTestException(InputException exception) {
+    public ResponseEntity<String> handleInputException(InputException exception) {
         String response =
                   "<header>"
                 + "<h1><span>An exception has occurred: "

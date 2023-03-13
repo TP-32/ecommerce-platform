@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="eng">
+
+<head>
+  <meta charset="UTF-8">
+  <title>THE UNCOMMON CATCH</title>
+  <link rel="stylesheet" th:href="@{/css/home.css}"/>
+  <link rel="stylesheet" th:href="@{/css/navbar.css}"/>
+</head>
+
+<body>
+  <header>
+    <div class="holder">
+      <div class="logo">
+        <img th:src="@{/images/logo3.png}" alt="Logo">
+      </div>
+      <div th:replace="~{fragments/navbar :: navbar}"></div>
+    </div>
+    <div class="text">
+      <h1 style="color: aliceblue;">THE UNCOMMON CATCH</h1>
+      
+      <button type="button" onclick="window.location.href='categories'">Discover Sea Treasures</button>
+    </div> 
+  </header>
+</body>
+
+</html>

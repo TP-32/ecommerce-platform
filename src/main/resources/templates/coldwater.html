@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Coldwater Fish</title>
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link
+    href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,900&display=swap"
+    rel="stylesheet">
+  <link href='https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css' rel='stylesheet'>
+  <link rel="stylesheet" th:href="@{/css/categories.css}" />
+  <link rel="stylesheet" th:href="@{/css/navbar.css}" />
+</head>
+
+<body>
+  <div class="breadcumb-wrapper">
+    <h2 class="page-title">Categories</h2>
+  </div>
+  <div class="bg-main">
+    <div class="container">
+      <div th:replace="~{fragments/navbar :: navbar}"></div>
+      <div class="box">
+        <div class="breadcumb">
+          <a th:href="@{/}">Home</a>
+          <span><i class='bx bxs-chevrons-right'></i></span>
+          <a th:href="@{/categories}">Categories</a>
+        </div>
+        <ul class="pagination">
+          <select>
+            <option value="option1">Most Popular</option>
+            <option value="option2">Name (A-Z)</option>
+            <option value="option3">Name (Z-A)</option>
+            <option value="option2">Price (low to high)</option>
+            <option value="option3">Price (high to low)</option>
+          </select>
+        </ul>
+      </div>
+      <div class="box">
+        <div class="row">
+          <div class="col-3 filter-col" id="filter-col">
+            <div class="box">
+              <span class="filter-header">Categories</span>
+              <ul class="filter-list">
+                <li><a th:href="@{/tropical}">Tropical Fish</a></li>
+                <li><a th:href="@{/brackish}">Brackish Fish</a></li>
+                <li><a th:href="@{/hybrid}">Hybrid Fish</a></li>
+                <li><a th:href="@{/predatory}">Predatory Fish</a></li>
+                <li><a th:href="@{/coldwater}">Coldwater Fish</a></li>
+                <li><a th:href="@{/marine}">Marine Fish</a></li>
+              </ul>
+            </div>
+          </div>
+          <div class="col-9 col-md-12">
+            <div class="box">
+              <h2 class="description">Coldwater fish are fish species that
+                prefer to live in cooler water temperatures than most tropical fish.
+                As far as aquarium fishes are concerned, cold-water species prefer
+                water that is typically around or below 68° Fahrenheit. The most
+                commonly kept cold-water pet fish are members of the Cyprinid family
+                that includes Koi Carp. These kinds of fishes can be kept successfully
+                in outdoor ponds, surviving the cold of winter by hiding away in
+                vegetation and the warmer depths of their habitat when the surface
+                of the water freezes. </h2>
+              <div class="row" id="products"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script th:inline="javascript">
+    var products = /*[[${products}]]*/[];
+    /*     let products = [
+          {
+            name: 'DOITSU KARASHIGOI KOI CARP    ',
+            image1: './images/c1.png',
+            image2: './images/c1.png',
+            curr_price: '£ 4,995.00'
+          },
+          {
+            name: ' GIN RIN TANCHO KOI CARP   ',
+            image1: './images/c6.png',
+            image2: './images/c6.png',
+            curr_price: '£ 4,995.00'
+          },
+          {
+            name: 'MUKASHI OGON KOI CARP   ',
+            image1: './images/c3.png',
+            image2: './images/c3.png',
+            curr_price: '£ 3,995.00'
+          },
+          {
+            name: 'SANKE KOI CARP   ',
+            image1: './images/c4.png',
+            image2: './images/c4.png',
+            curr_price: '£ 2,495.00'
+          },
+          {
+            name: 'GINGA KOI CARP   ',
+            image1: './images/c5.png',
+            image2: './images/c5.png',
+            curr_price: '£ 2,395.00'
+          },
+          {
+            name: ' SHIRO UTSURI KOI CARP ',
+            image1: './images/c2.png',
+            image2: './images/c2.png',
+            curr_price: '£ 2,295.00'
+          },
+          {
+            name: 'KI UTSURI KOI CARP   ',
+            image1: './images/c7.png',
+            image2: './images/c7.png',
+            curr_price: '£ 1,995.00'
+          },
+          {
+            name: 'HI UTSURI KOI CARP   ',
+            image1: './images/c8.png',
+            image2: './images/c8.png',
+            curr_price: '£ 1,995.00'
+          },
+          {
+            name: 'GOLDEN CORN KOI CARP   ',
+            image1: './images/c9.png',
+            image2: './images/c9.png',
+            curr_price: '£ 1,695.00'
+          },
+        ] */
+    function formatPrice(x) {
+      return x.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",");
+    }
+    let product_list = document.querySelector('#products')
+    renderProducts = (products) => {
+      products.forEach(e => {
+        let prod = `
+            <div class="col-4 col-md-6 col-sm-12">
+                <div class="product-card">
+                    <div class="product-card-img">
+                        <img src="${e.image}" alt="">
+                        <img src="${e.image}" alt="">
+                    </div>
+                    <div class="product-card-info">
+                        <div class="product-btn">
+                          <a href="fish/details/${e.id}" class="btn-flat btn-hover btn-shop-now">shop now</a>
+                        </div>
+                        <div class="product-card-name">
+                            ${e.name}
+                        </div>
+                        <div class="product-card-price">
+                            <span class="curr-price">£ ` + formatPrice(`${e.price}`); `</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        `
+        product_list.insertAdjacentHTML("beforeend", prod)
+      })
+    }
+    renderProducts(products)
+  </script>
+</body>
+
+</html>

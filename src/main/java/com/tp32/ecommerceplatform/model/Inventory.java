@@ -17,6 +17,9 @@ public class Inventory {
     @Column
     private Integer stock;
 
+    @OneToOne(mappedBy="inventory")
+    private Product product;
+
     public Inventory() {}
 
     // Getters
