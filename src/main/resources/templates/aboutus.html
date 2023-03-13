@@ -3,13 +3,15 @@
 
 <head>
     <title>About us</title>
-    <link rel="stylesheet" href="About-Style.css">
+    <link rel="stylesheet" th:href="@{/css/aboutus.css}"/>
+    <link rel="stylesheet" th:href="@{/css/navbar.css}"/>
 </head>
 
 <body>
+    <div th:replace="~{fragments/navbar :: navbar}"></div>
     <section class="about-us">
         <div class="main">
-            <img src="img.jpg">
+            <img th:src="@{/images/img.jpg}"/>
             <div class="info">
                 <h1>Who We Are </h1>
                 <p
@@ -18,8 +20,8 @@
                     and rare species of fish found in the world. Our passion for marine life and our commitment to
                     providing the best quality products has earned us a reputation as one of the leading online
                     retailers for rare fish.</p>
-                <a href="Categories.html"><button type="button">Discover More</button></a>
-                <a href="Homepage.html"><button type="button1">Home</button></a>
+                <a th:href="categories"><button type="button">Discover More</button></a>
+                <a href="/"><button type="button1">Home</button></a>
             </div>
         </div>
     </section>

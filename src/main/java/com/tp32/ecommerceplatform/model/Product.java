@@ -1,5 +1,7 @@
 package com.tp32.ecommerceplatform.model;
 
+import java.util.List;
+
 import jakarta.persistence.*;
 
 /**
@@ -14,7 +16,7 @@ public class Product {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "product_name", nullable = false, length = 25)
+    @Column(name = "product_name", nullable = false, length = 255)
     private String name;
 
     @Column(name = "image", nullable = false, length = 255)
@@ -26,13 +28,16 @@ public class Product {
     @Column(name = "price", nullable = false)
     private Float price;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "category_id", referencedColumnName = "id", nullable = false)
     private Category category;
 
     @OneToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "inventory_id", referencedColumnName = "id")
     private Inventory inventory;
+
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "product")
+    private List<Net> nets;
 
     public Product(String name, String image, String description, Float price) {
         this.name = name;

@@ -30,9 +30,25 @@ public class IndexController {
     /*
      * When register is requested, a new Register Data Transfer Object is constructed (to be updated with data from the user input)
      */
-    @GetMapping("/register")
+    @GetMapping("/signup")
     public String register(Model model) {
         model.addAttribute("user", new RegisterDto());
         return "signup.html";
+    }
+
+    /*
+     * Simply displays the about us page to the user.
+     */
+    @GetMapping("/aboutus")
+    public String aboutus() {
+        return "aboutus.html";
+    }
+
+    /*
+     * Simply displays the contact us page to the user.
+     */
+    @GetMapping("/contact")
+    public String contact() {
+        return "contact.html";
     }
 }

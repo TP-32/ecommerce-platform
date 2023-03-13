@@ -1,8 +1,5 @@
 package com.tp32.ecommerceplatform.model;
 
-import java.util.List;
-
-import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -10,7 +7,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
-import jakarta.persistence.OneToMany;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 
@@ -29,9 +26,9 @@ public class Net {
     @Column
     private Integer quantity;
 
-    @OneToMany(cascade = CascadeType.ALL)
+    @ManyToOne
     @JoinColumn(name = "product_id", referencedColumnName = "id")
-    private List<Product> products;
+    private Product product;
 
     @OneToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "user_id", referencedColumnName = "id")
@@ -48,8 +45,8 @@ public class Net {
         return this.quantity;
     }
 
-    public List<Product> getProducts() {
-        return this.products;
+    public Product getProduct() {
+        return this.product;
     }
 
     public User getUser() {
@@ -61,8 +58,8 @@ public class Net {
         this.quantity = quantity;
     }
 
-    public void setProducts(List<Product> products) {
-        this.products = products;
+    public void setProduct(Product product) {
+        this.product = product;
     }
 
     public void setUser(User user) {

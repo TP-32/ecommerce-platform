@@ -1,55 +1,54 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SignIn - IFM</title>
+    <title>Signup</title>
     <style media="screen">
-    
-        
         body {
             background-color: black;
-            }
+        }
 
-            .nav {
-        float: right;
-        list-style: none;
-        margin-top: 30px;
-            }
+        .nav {
+            float: right;
+            list-style: none;
+            margin-top: 30px;
+        }
 
         .nav li {
-        display: inline-block;
-            }
+            display: inline-block;
+        }
 
         .nav li a {
-        color: rgb(242, 239, 244);
-        padding: 5px 20px;
-        font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
-        font-size: 15px;
-        text-decoration: none;
-            }
+            color: rgb(242, 239, 244);
+            padding: 5px 20px;
+            font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+            font-size: 15px;
+            text-decoration: none;
+        }
 
         .nav li a:hover {
-        background: #780250;
-        color: aliceblue;
-            }
+            background: #780250;
+            color: aliceblue;
+        }
 
         .nav ul li a {
-        color: aliceblue;
-            }
+            color: aliceblue;
+        }
+
 
         form {
-            
+
             height: auto;
             width: auto;
-            background-color:  rgba( 113, 3, 113);
+            background-color: rgba(113, 3, 113);
             position: absolute;
             transform: translate(-50%, -50%);
-            top: 50%;
+            top: 55%;
             left: 50%;
             border-radius: 20px;
-            backdrop-filter: blur(10px);
             border: 2px solid rgba(0, 0, 0, 0.1);
             box-shadow: 0 0 40px rgba(8, 7, 16, 0.6);
             padding: 55px 200px;
@@ -57,7 +56,7 @@
 
         form * {
             font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
-            width: 450px;
+            width: 400px;
             color: white;
             letter-spacing: 2px;
             outline: none;
@@ -73,8 +72,8 @@
 
         label {
             display: inline-block;
-            margin-top:  15px;
-            font-size: 25px; 
+            margin-top: 15px;
+            font-size: 25px;
         }
 
         input {
@@ -100,41 +99,37 @@
             border-radius: 5px;
             cursor: pointer;
         }
-        button:hover{
+
+        button:hover {
             background-color: black;
             color: white;
-        }        
-
+        }
     </style>
 </head>
-<body>
-<ul class="nav">
-    <li><a href="#">Home</a></li>
-    <li><a href="#">Categories</a></li>
-    <li><a href="#">Sign in</a></li>
-    <li><a href="#">Sign up</a></li>
-    <li><a href="#">Net</a></li>
-    <li><a href="#">About</a></li>
-    <li><a href="#">Contact</a></li>
-  </ul>
+
+
+<form th:action="@{/register}" th:object="${user}" method="POST">
+    <h3>Sign-Up Here</h3>
+
+    <label for="firstname">First Name: </label>
+    <input type="text" id="firstname" name="firstname" th:field="*{firstName}" />
+
+    <label for="lastname">Last Name: </label>
+    <input type="text" id="lastname" name="lastname" th:field="*{lastName}" />
+
+    <label for="email">Email: </label>
+    <input type="text" id="email" name="email" th:field="*{email}" />
+
+    <label for="password">Password: </label>
+    <input type="password" id="password" name="password" th:field="*{password}" />
+
+    <button>Sign Up</button>
+
+</form>
+</div>
+
+
 
 </body>
 
-<form method="get" action="">
-            <h3>Login Here</h3>
-
-            <label for="username">Email: </label>
-            <input type="text" id="username" name="email">
-
-            <label for="password">Password: </label>
-            <input type="password" id="password" name="password">
-
-            <button>Log In</button>
-            
-        </form>
-    </div>
-
-
-    
-</body>
 </html>

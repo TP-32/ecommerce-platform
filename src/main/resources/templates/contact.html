@@ -4,25 +4,17 @@
 <head>
     <meta charset="UTF-8">
     <title>Contact</title>
-    <link rel="stylesheet" href="style2.css">
+    <link rel="stylesheet" th:href="@{/css/contact.css}" />
+    <link rel="stylesheet" th:href="@{/css/navbar.css}" />
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;800&display=swap" rel="stylesheet">
 </head>
 
 <body>
-    <ul class="nav">
-        <li><a href="#">Home</a></li>
-        <li><a href="#">Categories</a></li>
-        <li><a href="#">Sign in</a></li>
-        <li><a href="#">Sign up</a></li>
-        <li><a href="#">Net</a></li>
-        <li><a href="#">About</a></li>
-        <li><a href="Contact.html">Contact</a></li>
-      </ul>
-
     <div class="container">
-        <div class = "top-container">
+        <div class="top-container">
+            <div th:replace="~{fragments/navbar :: navbar}"></div>
             <h1>Contact Us - Deep Waters</h1>
             <p>We would love to respond to any enquires.
                 Feel free to get in touch.
@@ -31,41 +23,41 @@
         <div class="contact-box">
             <div class="contact-leftside">
                 <h3>Send your enquiry</h3>
-                <form id = "form" action = "#">
-                    <div class = "input_row">
+                <form id="form" action="#">
+                    <div class="input_row">
                         <div class="input-group">
                             <td>Name</td>
-                            <input type = "text" id = "name" placeholder="e.g. Demarcus Cousins">
+                            <input type="text" id="name" placeholder="Demarcus Cousins">
                         </div>
                         <div class="input-group">
                             <td>Phone Number</td>
-                            <input type = "text" placeholder="+44">
+                            <input type="text" placeholder="+44">
                         </div>
                         <div class="input-group">
                             <td>Email</td>
-                            <input type = "email" id = "email" placeholder="example@domain.com">
+                            <input type="email" id="email" placeholder="example@domain.com">
                         </div>
                         <div class="input-group">
                             <td>Confirm Email</td>
-                            <input type = "email" id = "email_confirm" placeholder="example@domain.com">
+                            <input type="email" id="email_confirm" placeholder="example@domain.com">
                         </div>
                         <div class="input-group">
                             <td>Subject</td>
-                            <input type = "text">
+                            <input type="text">
                         </div>
 
                     </div>
                     <td>Message</td>
                     <textarea rows="5" placeholder="Your enquiry"></textarea>
                     <h3>How would you like to be Contacted?</h3>
-                    <select name = "dropBox" id="option">
+                    <select name="dropBox" id="option">
                         <option>via Phone</option>
                         <option>via Email</option>
                     </select>
                     <br>
-                    <button type = "submit" onclick="pop()">SUBMIT</button>
+                    <button type="submit" onclick="pop()">SUBMIT</button>
                 </form>
-                <script type = "text/JavaScript">
+                <script type="text/JavaScript">
                     function email_Validation(){
                         var form = document.getElementById("form");
                         var form = document.getElementById("text");
@@ -94,28 +86,28 @@
                     <tr>
                         <div class="header">
                             <br>
-                            <img src="phone.png" alt="phone" />
-                            <h5>   016046785453</h5>
-                        </div> 
+                            <img src="./images/phone.png" alt="phone" />
+                            <h5> 016046785453</h5>
+                        </div>
                         <div class="header">
                             <br><br>
-                            <img src="mail.png" alt="logo" />
-                            <h5>   help@companyname.com</h5>
+                            <img src="./images/mail.png" alt="logo" />
+                            <h5> help@companyname.com</h5>
                             <br> <br>
                         </div>
-                        
-                        
+
+
                     </tr>
-                    <tr> 
+                    <tr>
                         <br>
-                        <img src="map.png" width = "400" height = "200">
+                        <img src="./images/map.png" width="400" height="200">
                         <pre>
 
 Aston Express Way 
 West Midlands, Birmigham  
 B4 7ET 
                         </pre>
-                        
+
                     </tr>
 
                 </table>

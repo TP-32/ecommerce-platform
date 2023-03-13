@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tropical Fish</title>
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link
+    href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,900&display=swap"
+    rel="stylesheet">
+  <link href='https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css' rel='stylesheet'>
+  <link rel="stylesheet" th:href="@{/css/categories.css}" />
+  <link rel="stylesheet" th:href="@{/css/navbar.css}" />
+</head>
+
+<body>
+  <div class="breadcumb-wrapper">
+    <h2 class="page-title">Categories</h2>
+  </div>
+  <div class="bg-main">
+    <div class="container">
+      <div th:replace="~{fragments/navbar :: navbar}"></div>
+      <div class="box">
+        <div class="breadcumb">
+          <a th:href="@{/}">Home</a>
+          <span><i class='bx bxs-chevrons-right'></i></span>
+          <a th:href="@{/categories}">Categories</a>
+        </div>
+        <ul class="pagination">
+          <select>
+            <option value="option1">Most Popular</option>
+            <option value="option2">Name (A-Z)</option>
+            <option value="option3">Name (Z-A)</option>
+            <option value="option2">Price (low to high)</option>
+            <option value="option3">Price (high to low)</option>
+          </select>
+        </ul>
+      </div>
+      <div class="box">
+        <div class="row">
+          <div class="col-3 filter-col" id="filter-col">
+            <div class="box">
+              <span class="filter-header">Categories</span>
+              <ul class="filter-list">
+                <li><a th:href="@{/tropical}">Tropical Fish</a></li>
+                <li><a th:href="@{/brackish}">Brackish Fish</a></li>
+                <li><a th:href="@{/hybrid}">Hybrid Fish</a></li>
+                <li><a th:href="@{/predatory}">Predatory Fish</a></li>
+                <li><a th:href="@{/coldwater}">Coldwater Fish</a></li>
+                <li><a th:href="@{/marine}">Marine Fish</a></li>
+              </ul>
+            </div>
+          </div>
+          <div class="col-9 col-md-12">
+            <div class="box">
+              <h2 class="description">A tropical fish is one that lives between
+                23-27°C, but it can come from both saltwater and freshwater.
+                They are often the brightest coloured, thanks to pigmented
+                and iridescent cells on their skin. Though they all started as
+                a wild species, lots are now bred from captive specimens and this
+                means even more colours are available. Tropical fishes can be called
+                any of various small fishes of tropical origin often are kept in aquariums.
+                They are interesting for their behaviour or showiness or both. </h2>
+              <div class="row" id="products"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script th:inline="javascript">
+    var products = /*[[${products}]]*/[];
+    /*     let products = [
+          {
+            name: 'PLATINUM ARAPAIMA GIGAS 12CM   ',
+            image1: './images/t1.png',
+            image2: './images/t1.png',
+            curr_price: '£ 50,000.00'
+          },
+          {
+            name: 'PLATINIUM DATNOID 40CM   ',
+            image1: './images/t2.png',
+            image2: './images/t2.png',
+            curr_price: '£ 50,000.00'
+          },
+          {
+            name: 'PLATINIUM DILVER AROWANA 40CM    ',
+            image1: './images/t3.png',
+            image2: './images/t3.png',
+            curr_price: '£ 50,000.00'
+          },
+          {
+            name: 'XANTHIC GOLDEN AROWANA 20CM   ',
+            image1: './images/t4.png',
+            image2: './images/t4.png',
+            curr_price: '£ 20,000.00'
+          },
+          {
+            name: 'KING CHILLI RED SHORT BODIED AROWANA 30CM ',
+            image1: './images/t5.png',
+            image2: './images/t5.png',
+            curr_price: '£ 10,000.00'
+          },
+          {
+            name: 'XANTHIC GOLDEN DATNOID 10CM     ',
+            image1: './images/t6.png',
+            image2: './images/t6.png',
+            curr_price: '£ 5,000.00'
+          },
+          {
+            name: 'PEACOCK SNAKEHEAD CHANNA BARCA 60CM    ',
+            image1: './images/t7.png',
+            image2: './images/t7.png',
+            curr_price: '£ 4,000.00'
+          },
+          {
+            name: 'ALBINO BLACK DIAMOND POLKA DOT STINGRAY ',
+            image1: './images/t8.png',
+            image2: './images/t8.png',
+            curr_price: '£ 3,500.00'
+          },
+          {
+            name: 'ZEBRA PLECO HYPANCISTRUS 4CM   ',
+            image1: './images/t9.png',
+            image2: './images/t9.png',
+            curr_price: '£ 3,000.00'
+          },
+        ] */
+    function formatPrice(x) {
+      return x.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",");
+    }
+    let product_list = document.querySelector('#products')
+    renderProducts = (products) => {
+      products.forEach(e => {
+        let prod = `
+            <div class="col-4 col-md-6 col-sm-12">
+                <div class="product-card">
+                    <div class="product-card-img">
+                        <img src="${e.image}" alt="">
+                        <img src="${e.image}" alt="">
+                    </div>
+                    <div class="product-card-info">
+                        <div class="product-btn">
+                          <a href="fish/details/${e.id}" class="btn-flat btn-hover btn-shop-now">shop now</a>
+                        </div>
+                        <div class="product-card-name">
+                            ${e.name}
+                        </div>
+                        <div class="product-card-price">
+                            <span class="curr-price">£ ` + formatPrice(`${e.price}`); `</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        `
+        product_list.insertAdjacentHTML("beforeend", prod)
+      })
+    }
+    renderProducts(products)
+  </script>
+</body>
+
+</html>

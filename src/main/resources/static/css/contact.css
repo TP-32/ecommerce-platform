@@ -3,7 +3,7 @@
     padding: 0;
 }
 body{
-    background: linear-gradient(rgba(0, 0, 0, 0), rgba(194, 7, 144, 0)), url(Bg.jpeg);
+    background: linear-gradient(rgba(0, 0, 0, 0), rgba(194, 7, 144, 0)), url('../images/Background2.jpg');
     background-position: left;
     background-repeat: no-repeat;background-color: black;
     font-size: 12px;

@@ -2,12 +2,13 @@ package com.tp32.ecommerceplatform.security.jwt;
 
 import java.security.Key;
 import java.util.Date;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.security.core.Authentication;
-import org.springframework.stereotype.Component;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.function.Function;
 
-import com.tp32.ecommerceplatform.model.User;
-import com.tp32.ecommerceplatform.repository.UserRepository;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.stereotype.Service;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
@@ -17,7 +18,7 @@ import io.jsonwebtoken.security.Keys;
 /**
  * Handles the generation and validation of Jwt (Tokens)
  */
-@Component
+@Service
 public class JwtToken {
     
     @Value("${app.jwt-secret}")
@@ -26,17 +27,16 @@ public class JwtToken {
     @Value("${app.jwt-expiration-ms}")
     private long jwtExpiration;
 
-    public String generateToken(Authentication auth, UserRepository userRepository) {
-        String email = auth.getName();
-        Date currentDate = new Date();
-        Date expireDate = new Date(currentDate.getTime() + jwtExpiration);
-        User user = userRepository.findByEmail(email).get();
+    public String generateToken(UserDetails userDetails) {
+        return generateToken(userDetails, new HashMap<>());
+    }
 
+    public String generateToken(UserDetails userDetails, Map<String, Object> extraClaims) {
         String token = Jwts.builder()
-                .setSubject(email)
-                .setIssuedAt(new Date())
-                .claim("role", user.getRole())
-                .setExpiration(expireDate)
+                .setClaims(extraClaims)
+                .setSubject(userDetails.getUsername())
+                .setIssuedAt(new Date(System.currentTimeMillis()))
+                .setExpiration(new Date(System.currentTimeMillis() + jwtExpiration))
                 .signWith(key())
                 .compact();
         return token;
@@ -46,27 +46,34 @@ public class JwtToken {
         return Keys.hmacShaKeyFor(Decoders.BASE64.decode(jwtSecret));
     }
 
-    public String getEmailFromToken(String token) {
+    private Claims extractClaims(String token) {
         Claims claims = Jwts.parserBuilder()
-                .setSigningKey(key())
-                .build()
-                .parseClaimsJws(token)
-                .getBody();
-        String email = claims.getSubject();
-        return email;
+            .setSigningKey(key())
+            .build()
+            .parseClaimsJws(token)
+            .getBody();
+        return claims;
     }
 
+    public <T> T getClaim(String token, Function<Claims, T> claimsResolver) {
+        Claims claims = extractClaims(token);
+        return claimsResolver.apply(claims);
+    }
 
-    public boolean validateToken(String token) {
-        try {
-            Jwts.parserBuilder()
-                    .setSigningKey(key())
-                    .build()
-                    .parse(token);
-            return true;
-        } catch (Exception e) {
-            return false;
-            // Throw Exception
-        }
+    public String getEmailFromToken(String token) {
+        return getClaim(token, Claims::getSubject);
+    }
+
+    public Date getExpireFromToken(String token) {
+        return getClaim(token, Claims::getExpiration);
+    }
+
+    public boolean validateToken(String token, UserDetails userDetails) {
+        String email = getEmailFromToken(token);
+        return (email.equals(userDetails.getUsername())) && !expiredToken(token);
+    }
+
+    public boolean expiredToken(String token) {
+        return getExpireFromToken(token).before(new Date());
     }
 }

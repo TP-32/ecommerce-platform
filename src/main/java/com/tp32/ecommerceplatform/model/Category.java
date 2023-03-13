@@ -22,8 +22,7 @@ public class Category {
     @Column(name="description", length = 255)
     private String description;
 
-    @OneToMany(cascade = CascadeType.ALL)
-    @JoinColumn(name = "product_id", referencedColumnName = "id")
+    @OneToMany(mappedBy = "category")
     private List<Product> products;
 
     public Category() {}
@@ -41,9 +40,9 @@ public class Category {
         return this.description;
     }
 
-    public List<Product> getProducts() {
-        return this.products;
-    }
+    // public List<Product> getProducts() {
+    //     return this.products;
+    // }
 
     // Setters
     public void setName(String categoryName) {
@@ -54,7 +53,7 @@ public class Category {
         this.description = description;
     }
 
-    public void setProducts(List<Product> products) {
-        this.products = products;
-    }
+    // public void setProducts(List<Product> products) {
+    //     this.products = products;
+    // }
 }
