@@ -1,6 +1,8 @@
 package com.tp32.ecommerceplatform.controller;
 
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -28,19 +30,10 @@ public class NetController {
      * Simply displays the categories page to the user.
      */
     @PostMapping("/cart/add/{productId}")
-    public ResponseEntity<Product> addToCart(@PathVariable("productId") Long productId, Model model) throws Exception {
+    @PreAuthorize("hasRole('USER')")
+    public ResponseEntity<Product> addToCart(@PathVariable("productId") Long productId, Model model, Authentication auth) throws Exception {
         Product product = productService.getProduct(productId);
-        //System.out.println("Product: " + product.getName());
-        //Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        //System.out.println("Auth: " + auth);
-        //if (userRepository.findByEmail(auth.getName()).get() == null) {
-        //    System.out.println("This is null.");
-        //} 
-        //User user = userRepository.findByEmail(auth.getName()).get();
-        User user = userRepository.findById(1L).get();
-        System.out.println("User " + user);
-
-        System.out.println("Email " + user.getEmail());
+        User user = userRepository.findByEmail(auth.getName()).get();
         netService.addProduct(user, product);
 
         return ResponseEntity.ok(product);

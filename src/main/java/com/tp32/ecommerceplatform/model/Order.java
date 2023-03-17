@@ -31,6 +31,10 @@ public class Order {
     @JoinColumn(name = "user_id", referencedColumnName = "id", nullable = false)
     private User user;
 
+    @OneToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "status_id", referencedColumnName = "id")
+    private Status status;
+
     public Order() {}
 
     // Getters
@@ -46,6 +50,10 @@ public class Order {
         return this.price;
     }
 
+    public Status getStatus() {
+        return this.status;
+    }
+
     public List<OrderItem> getOrderItems() {
         return this.orderItems;
     }
@@ -57,6 +65,10 @@ public class Order {
 
     public void setPrice(Float price) {
         this.price = price;
+    }
+
+    public void setStatus(Status status) {
+        this.status = status;
     }
 
     public void setOrderItems(List<OrderItem> orderItems) {
