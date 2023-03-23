@@ -7,6 +7,6 @@ import com.tp32.ecommerceplatform.model.Product;
 import com.tp32.ecommerceplatform.model.User;
 
 public interface NetService {
-    List<Product> getProducts(User user);
     Net addProduct(User user, Product product);
+    List<Product> getProducts(User user);
 }

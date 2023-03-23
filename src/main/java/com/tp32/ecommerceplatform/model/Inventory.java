@@ -8,7 +8,7 @@ import jakarta.persistence.*;
  */
 @Entity
 @Table(name="inventory")
-public class Inventory {
+public class Inventory implements Comparable<Inventory> {
     
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -34,5 +34,10 @@ public class Inventory {
     // Setters
     public void setStock(Integer stock) {
         this.stock = stock;
+    }
+
+    @Override
+    public int compareTo(Inventory anotherInventory) {
+        return Math.toIntExact(this.getID() - anotherInventory.getID());
     }
 }

@@ -39,6 +39,7 @@ public class SecurityConfig {
     public SecurityFilterChain configure(HttpSecurity http) throws Exception {
         http.csrf().disable()
                 .authorizeHttpRequests()
+                .requestMatchers("/admin/**").hasRole("ADMIN")
                 .requestMatchers("/**").permitAll()
                 .anyRequest().authenticated()
                 .and()
@@ -46,7 +47,8 @@ public class SecurityConfig {
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
                 .authenticationProvider(authProvider)
-                .addFilterBefore(authFilter, UsernamePasswordAuthenticationFilter.class);
+                .logout().deleteCookies("JSESSIONID").deleteCookies("Authorization").invalidateHttpSession(true).logoutSuccessUrl("/")
+                .and().addFilterBefore(authFilter, UsernamePasswordAuthenticationFilter.class);
         return http.build();
     }
 }
