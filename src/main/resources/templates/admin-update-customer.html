@@ -27,8 +27,12 @@
             <div class="formPage">
                 <div class="cardHeader">
                     <h2>Update Customer</h2>
-                    <a th:href="@{/admin/customers}" class="btn" id="return">Return</a>
-                    <a style="background-color: red;" th:href="@{'/admin/customers/delete?testId=' + ${customer.ID}}" class="btn" id="return">Delete</a>
+                    <div>
+                        <a th:href="@{/admin/customers}" class="btn" id="return">Return</a>
+                        <a style="background-color: red;"
+                            th:href="@{'/admin/customers/delete?testId=' + ${customer.ID}}" class="btn"
+                            id="return">Delete</a>
+                    </div>
                 </div>
                 <table class="product-table">
                     <form th:action="@{'/admin/customers/update?userId=' + ${customer.ID}}" th:object="${userDto}"
@@ -57,8 +61,8 @@
                         <tr>
                             <div class="field">
                                 <td><label for="password">Password</label></td>
-                                <td><input type="password" name="password" id="password" required th:name="password" /><br>
-                                    <input type="checkbox" onclick="passwordView()" > Show Password
+                                <td><input type="password" name="password" id="password" th:name="password" /><br>
+                                    <input type="checkbox" onclick="passwordView()"> Show Password
                                 </td>
 
                             </div>
