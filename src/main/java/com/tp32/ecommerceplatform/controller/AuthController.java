@@ -4,8 +4,6 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseCookie;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -64,9 +62,4 @@ public class AuthController {
             .build();
         return ResponseEntity.ok().header(HttpHeaders.SET_COOKIE, cookie.toString()).body(res);
      }
-    @GetMapping("admin")
-    @PreAuthorize("hasRole('ADMIN')")
-    public String admin() {
-        return "Admin Auth";
-    }
 }
