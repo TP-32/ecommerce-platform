@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin</title>
+    <link rel="stylesheet" th:href="@{/css/admin.css}" />
+    <link rel="stylesheet" th:href="@{/css/navbar.css}" />
+</head>
+
+<body>
+    <div th:replace="~{fragments/sidebar :: sidebar}"></div>
+    <div class="first">
+        <div class="topbar">
+            <div class="toggle">
+                <ion-icon name="menu-outline"></ion-icon>
+            </div>
+            <div class="user">
+                <img th:src="@{/images/user_icon.png}" alt="">
+            </div>
+        </div>
+        <div>
+
+        </div>
+
+        <div class="detail">
+            <button onclick="byStock()" id="button" class="button" th:if="${filter} != 'true'">View Low Stock</button>
+            <button onclick="byStock()" id="button" class="button" th:if="${filter} == 'true'">View All
+                Products</button>
+            <form th:action="@{/admin/products}">
+                <input type="text" id="search" name="search" />
+                <input type="submit" value="Search" />
+            </form>
+
+
+            <div th:if="${!products.empty}">
+                <div class="listProducts">
+                    <div class="cardHeader">
+                        <h2>Products</h2>
+                        <a th:href="@{/admin/products}" class="btn" id="return">View All</a>
+                    </div>
+
+                    <table>
+                        <thead>
+                            <tr>
+                                <!-- Allows columns to be sorted if a filter is not active. -->
+                                <div th:if="${filter} != 'true' and ${search} == null">
+                                    <td><a class="sort"
+                                            th:href="@{'/admin/products/ID?sortDir=' + ${reverseSortDir}}">ID</a></td>
+                                    <td><a class="sort"
+                                            th:href="@{'/admin/products/name?sortDir=' + ${reverseSortDir}}">Name</a>
+                                    </td>
+                                    <td><a class="sort"
+                                            th:href="@{'/admin/products/description?sortDir=' + ${reverseSortDir}}">Description</a>
+                                    </td>
+                                    <td><a class="sort"
+                                            th:href="@{'/admin/products/image?sortDir=' + ${reverseSortDir}}">Image</a>
+                                    </td>
+                                    <td><a class="sort"
+                                            th:href="@{'/admin/products/price?sortDir=' + ${reverseSortDir}}">Price</a>
+                                    </td>
+                                    <td><a class="sort"
+                                            th:href="@{'/admin/products/category?sortDir=' + ${reverseSortDir}}">Category</a>
+                                    </td>
+                                    <td><a class="sort"
+                                            th:href="@{'/admin/products/stock?sortDir=' + ${reverseSortDir}}">Stock</a>
+                                    </td>
+                                </div>
+                                <div th:if="${reverseSortDir} != null and ${search} != null">
+                                    <td><a class="sort"
+                                            th:href="@{'/admin/products/ID?sortDir=' + ${reverseSortDir} + '&search=' + ${search}}">ID</a>
+                                    </td>
+                                    <td><a class="sort"
+                                            th:href="@{'/admin/products/name?sortDir=' + ${reverseSortDir} + '&search=' + ${search}}">Name</a>
+                                    </td>
+                                    <td><a class="sort"
+                                            th:href="@{'/admin/products/description?sortDir=' + ${reverseSortDir} + '&search=' + ${search}}">Description</a>
+                                    </td>
+                                    <td><a class="sort"
+                                            th:href="@{'/admin/products/image?sortDir=' + ${reverseSortDir} + '&search=' + ${search}}">Image</a>
+                                    </td>
+                                    <td><a class="sort"
+                                            th:href="@{'/admin/products/price?sortDir=' + ${reverseSortDir} + '&search=' + ${search}'}">Price</a>
+                                    </td>
+                                    <td><a class="sort"
+                                            th:href="@{'/admin/products/category?sortDir=' + ${reverseSortDir} + '&search=' + ${search}'}">Category</a>
+                                    </td>
+                                    <td><a class="sort"
+                                            th:href="@{'/admin/products/stock?sortDir=' + ${reverseSortDir} + '&search=' + ${search}'}">Stock</a>
+                                    </td>
+                                </div>
+                                <div th:if="${reverseSortDir} == null and ${search} != null">
+                                    <td><a class="sort"
+                                            th:href="@{'/admin/products/ID?search=' + ${search}}">ID</a>
+                                    </td>
+                                    <td><a class="sort"
+                                            th:href="@{'/admin/products/name?search=' + ${search}}">Name</a>
+                                    </td>
+                                    <td><a class="sort"
+                                            th:href="@{'/admin/products/description?search=' + ${search}}">Description</a>
+                                    </td>
+                                    <td><a class="sort"
+                                            th:href="@{'/admin/products/image?search=' + ${search}}">Image</a>
+                                    </td>
+                                    <td><a class="sort"
+                                            th:href="@{'/admin/products/price?search=' + ${search}'}">Price</a>
+                                    </td>
+                                    <td><a class="sort"
+                                            th:href="@{'/admin/products/category?search=' + ${search}'}">Category</a>
+                                    </td>
+                                    <td><a class="sort"
+                                            th:href="@{'/admin/products/stock?search=' + ${search}'}">Stock</a>
+                                    </td>
+                                </div>
+                                <!-- Does not allow columns to be sorted if a filter is active. -->
+                                <div th:if="${filter} == 'true'">
+                                    <td>ID</td>
+                                    <td>Name</td>
+                                    <td>Description</td>
+                                    <td>Image</td>
+                                    <td>Price</td>
+                                    <td>Category</td>
+                                    <td>Stock</td>
+                                </div>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <th:block th:each="product : ${products}" id="productList">
+                                <tr th:onclick="'rowClicked(\'' + ${product.ID} + '\');'">
+                                    <td class="id" th:text=${product.ID}></td>
+                                    <td class="name" th:text=${product.name}></td>
+                                    <td th:text="${product.description}"></td>
+                                    <td><img th:src="@{/{image}(image=${product.image})}" width="80" height="80" /></td>
+                                    <td th:text="'£' + ${product.price}"></td>
+                                    <td th:text="${product.category.name}"></td>
+                                    <td th:text="${product.inventory.stock}"></td>
+                                    </a>
+                                </tr>
+                            </th:block>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div th:if="${products.empty}">
+                <h2 style="text-align: center;">Oops, this filter has returned no valid records.</h2>
+                <h3 style="text-align: center;">Click <a th:href="@{/admin/products/new}"
+                        style="text-decoration: none; color: rgb(156, 1, 156)">here</a> to add a new product.</h3>
+            </div>
+
+            <script th:inline="javascript" type="text/javascript">
+                function byStock() {
+                    console.log(window.location.pathname);
+                    if (!window.location.pathname.startsWith('/admin/products/low')) {
+                        window.location = '/admin/products/low';
+                    } else {
+                        window.location = '/admin/products';
+                    }
+                };
+
+                function rowClicked(value) {
+                    location.href = "/admin/products?productId=" + value;
+                }
+            </script>
+        </div>
+
+        <script th:src="@{/js/admin.js}"></script>
+        <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+        <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+</body>
