@@ -1,12 +1,15 @@
 package com.tp32.ecommerceplatform.service.impl;
 
-import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import com.tp32.ecommerceplatform.dto.ProductDto;
+import com.tp32.ecommerceplatform.model.Inventory;
 import com.tp32.ecommerceplatform.model.Product;
+import com.tp32.ecommerceplatform.repository.CategoryRepository;
+import com.tp32.ecommerceplatform.repository.InventoryRepository;
 import com.tp32.ecommerceplatform.repository.ProductRepository;
 import com.tp32.ecommerceplatform.service.ProductService;
 
@@ -14,9 +17,13 @@ import com.tp32.ecommerceplatform.service.ProductService;
 public class ProductServiceImpl implements ProductService {
 
     private ProductRepository productRepository;
+    private CategoryRepository categoryRepository;
+    private InventoryRepository inventoryRepository;
 
-    public ProductServiceImpl(ProductRepository productRepository) {
+    public ProductServiceImpl(ProductRepository productRepository, CategoryRepository categoryRepository, InventoryRepository inventoryRepository) {
         this.productRepository = productRepository;
+        this.categoryRepository = categoryRepository;
+        this.inventoryRepository = inventoryRepository;
     }
 
     @Override
@@ -29,26 +36,37 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public Product createProduct(ProductDto productDto) {
-        if (productRepository.existsByName(productDto.getName())) {
-            // A product with this name already exists
-        }
+        Product product = new Product();
+        product.setName(productDto.getName());
+        product.setDescription(productDto.getDescription());
+        product.setImage(productDto.getImage());
+        product.setPrice(productDto.getPrice());
+        product.setCategory(categoryRepository.findByName(productDto.getCategory()).get());
 
-        // Validate the Data Transfer Object before the product is made, and then save it afterwards.
-        // Errors can be thrown if there is an issue, instead of returning.
+        Inventory inventory = new Inventory();
+        inventory.setStock(productDto.getStock());
+        
+        product.setInventory(inventory);
+        inventoryRepository.save(inventory);
+        productRepository.save(product);
 
-        Product product = new Product(productDto.getName(), productDto.getDescription(), productDto.getImage(), productDto.getPrice());
-
-        // Product needs to be validated first
-        productRepository.save(product); // Saves the product to the database.
         return product;
     }
 
     @Override
-    public Product updateProduct(Long id, Product product) {
-        // Update the id of a product with the new Product
+    public Product updateProduct(Long id, ProductDto productDto) {
         Product updateProduct = productRepository.findById(id).get();
-        updateProduct.setName(product.getName());
+        updateProduct.setName(productDto.getName());
+        updateProduct.setDescription(productDto.getDescription());
+        updateProduct.setImage(productDto.getImage());
+        updateProduct.setPrice(productDto.getPrice());
+        updateProduct.setCategory(categoryRepository.findByName(productDto.getCategory()).get());
 
+        Inventory inventory = updateProduct.getInventory();
+        inventory.setStock(productDto.getStock());
+
+        inventoryRepository.save(inventory);
+        productRepository.save(updateProduct);
         return updateProduct;
     }
 
@@ -61,13 +79,16 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public List<Product> getProducts() {
-        List<Product> products = new ArrayList<>();
-
         // Populate the products list with data from the database
-        products = productRepository.findAll();
-        System.out.println(products);
-        
-        return products;
+        return productRepository.findAll();
     }
-    
+
+    @Override
+    public List<Product> getProductsWithSort(String field, String direction) {
+        Sort sort = direction.equalsIgnoreCase(Sort.Direction.ASC.name()) ?
+        Sort.by(field).ascending() :
+        Sort.by(field).descending();
+
+        return productRepository.findAll(sort);
+    }
 }
