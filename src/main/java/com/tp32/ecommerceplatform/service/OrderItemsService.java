@@ -1,14 +1,9 @@
 package com.tp32.ecommerceplatform.service;
 
+import com.tp32.ecommerceplatform.model.Order;
 import com.tp32.ecommerceplatform.model.OrderItem;
-import com.tp32.ecommerceplatform.repository.OrderItemsRepository;
+import com.tp32.ecommerceplatform.model.Product;
 
-public class OrderItemsService {
-    
-    private OrderItemsRepository orderItemsRepository;
-
-    public void addOrderedProducts(OrderItem orderItem) {
-        orderItemsRepository.save(orderItem);
-        
-    }
+public interface OrderItemsService {
+   OrderItem addOrderItem(Order order, Product product);
 }
