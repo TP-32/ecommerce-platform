@@ -52,7 +52,7 @@
                                     <td><a class="sort"
                                             th:href="@{'/admin/products/name?sortDir=' + ${reverseSortDir}}">Name</a>
                                     </td>
-                                    <td><a class="sort"
+                                    <td class="description"><a class="sort"
                                             th:href="@{'/admin/products/description?sortDir=' + ${reverseSortDir}}">Description</a>
                                     </td>
                                     <td><a class="sort"
@@ -75,30 +75,28 @@
                                     <td><a class="sort"
                                             th:href="@{'/admin/products/name?sortDir=' + ${reverseSortDir} + '&search=' + ${search}}">Name</a>
                                     </td>
-                                    <td><a class="sort"
+                                    <td class="description"><a class="sort"
                                             th:href="@{'/admin/products/description?sortDir=' + ${reverseSortDir} + '&search=' + ${search}}">Description</a>
                                     </td>
                                     <td><a class="sort"
                                             th:href="@{'/admin/products/image?sortDir=' + ${reverseSortDir} + '&search=' + ${search}}">Image</a>
                                     </td>
                                     <td><a class="sort"
-                                            th:href="@{'/admin/products/price?sortDir=' + ${reverseSortDir} + '&search=' + ${search}'}">Price</a>
+                                            th:href="@{'/admin/products/price?sortDir=' + ${reverseSortDir} + '&search=' + ${search}}">Price</a>
                                     </td>
                                     <td><a class="sort"
-                                            th:href="@{'/admin/products/category?sortDir=' + ${reverseSortDir} + '&search=' + ${search}'}">Category</a>
+                                            th:href="@{'/admin/products/category?sortDir=' + ${reverseSortDir} + '&search=' + ${search}}">Category</a>
                                     </td>
                                     <td><a class="sort"
-                                            th:href="@{'/admin/products/stock?sortDir=' + ${reverseSortDir} + '&search=' + ${search}'}">Stock</a>
+                                            th:href="@{'/admin/products/stock?sortDir=' + ${reverseSortDir} + '&search=' + ${search}}">Stock</a>
                                     </td>
                                 </div>
                                 <div th:if="${reverseSortDir} == null and ${search} != null">
-                                    <td><a class="sort"
-                                            th:href="@{'/admin/products/ID?search=' + ${search}}">ID</a>
+                                    <td><a class="sort" th:href="@{'/admin/products/ID?search=' + ${search}}">ID</a>
                                     </td>
-                                    <td><a class="sort"
-                                            th:href="@{'/admin/products/name?search=' + ${search}}">Name</a>
+                                    <td><a class="sort" th:href="@{'/admin/products/name?search=' + ${search}}">Name</a>
                                     </td>
-                                    <td><a class="sort"
+                                    <td class="description"><a class="sort"
                                             th:href="@{'/admin/products/description?search=' + ${search}}">Description</a>
                                     </td>
                                     <td><a class="sort"

@@ -727,6 +727,10 @@ table td .sort {
   border-radius: 28px;
 }
 
+table .description {
+  width: 30%;
+}
+
 .cardBox a {
   text-decoration: none;
 }
