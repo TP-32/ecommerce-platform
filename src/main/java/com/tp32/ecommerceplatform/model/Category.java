@@ -10,7 +10,7 @@ import jakarta.persistence.*;
  */
 @Entity
 @Table(name= "category")
-public class Category {
+public class Category implements Comparable<Category> {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -47,5 +47,10 @@ public class Category {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    @Override
+    public int compareTo(Category anotherCategory) {
+        return Math.toIntExact(this.getID() - anotherCategory.getID());
     }
 }
