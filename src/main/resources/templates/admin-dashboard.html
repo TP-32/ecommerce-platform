@@ -95,7 +95,7 @@
                         <th:block th:each="order : ${orders}" id="orderList">
                             <tr th:onclick="'orderRowClicked(\'' + ${order.ID} + '\');'">
                                 <td class="name" th:text="|${order.user.firstName} ${order.user.lastName}"></td>
-                                <td th:text="${order.price}"></td>
+                                <td th:text="|£${order.price}|"></td>
                                 <td>
                                     <span class="status pending" th:text="${order.status.name}" th:if="${order.status.name} == 'Pending'"></span>
                                     <span class="status processing" th:text="${order.status.name}" th:if="${order.status.name} == 'Processing'"></span>
