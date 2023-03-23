@@ -15,59 +15,74 @@ import com.tp32.ecommerceplatform.service.ProductService;
 public class ProductController {
 
     private ProductService productService;
-    
+
     public ProductController(ProductService productService) {
         this.productService = productService;
     }
 
     /*
-     * Simply displays the categories page to the user.
+     * Simply displays the categories page to the user, with a limit of 10 shown at
+     * once.
      */
     @GetMapping("categories")
     public String categories(Model model) {
-        List<Product> products = productService.getProducts().stream().limit(10).collect(Collectors.toList());
+        List<Product> products = productService.getProducts().stream().filter(p -> p.getInventory().getStock() > 0)
+                .collect(Collectors.toList()).subList(0,
+                        Math.min(productService.getProducts().size(), 10));
         model.addAttribute("products", products);
         return "categories.html";
     }
 
     @GetMapping("/tropical")
     public String categoryTropical(Model model) {
-        List<Product> products = productService.getProducts().stream().filter(p -> p.getCategory().getName().equals("Tropical")).collect(Collectors.toList());
+        List<Product> products = productService.getProducts().stream()
+                .filter(p -> p.getCategory().getName().equals("Tropical") && p.getInventory().getStock() > 0)
+                .collect(Collectors.toList());
         model.addAttribute("products", products);
         return "tropical.html";
     }
 
     @GetMapping("/brackish")
     public String categoryBrackish(Model model) {
-        List<Product> products = productService.getProducts().stream().filter(p -> p.getCategory().getName().equals("Brackish")).collect(Collectors.toList());
+        List<Product> products = productService.getProducts().stream()
+                .filter(p -> p.getCategory().getName().equals("Brackish") && p.getInventory().getStock() > 0)
+                .collect(Collectors.toList());
         model.addAttribute("products", products);
         return "brackish.html";
     }
 
     @GetMapping("/coldwater")
     public String categoryColdwater(Model model) {
-        List<Product> products = productService.getProducts().stream().filter(p -> p.getCategory().getName().equals("Coldwater")).collect(Collectors.toList());
+        List<Product> products = productService.getProducts().stream()
+                .filter(p -> p.getCategory().getName().equals("Coldwater") && p.getInventory().getStock() > 0)
+                .collect(Collectors.toList());
         model.addAttribute("products", products);
         return "coldwater.html";
     }
 
     @GetMapping("/hybrid")
     public String categoryHybrid(Model model) {
-        List<Product> products = productService.getProducts().stream().filter(p -> p.getCategory().getName().equals("Hybrid")).collect(Collectors.toList());
+        List<Product> products = productService.getProducts().stream()
+                .filter(p -> p.getCategory().getName().equals("Hybrid") && p.getInventory().getStock() > 0)
+                .collect(Collectors.toList());
         model.addAttribute("products", products);
         return "hybrid.html";
     }
 
     @GetMapping("/marine")
     public String categoryMarine(Model model) {
-        List<Product> products = productService.getProducts().stream().filter(p -> p.getCategory().getName().equals("Marine")).collect(Collectors.toList());
+        List<Product> products = productService.getProducts().stream()
+                .filter(p -> p.getCategory().getName().equals("Marine") && p.getInventory().getStock() > 0)
+                .collect(Collectors.toList());
         model.addAttribute("products", products);
         return "marine.html";
     }
 
     @GetMapping("/predatory")
     public String categoryPredatory(Model model) {
-        List<Product> products = productService.getProducts().stream().filter(p -> p.getCategory().getName().equals("Predatory")).collect(Collectors.toList());
+        List<Product> products = productService.getProducts().stream()
+                .filter(p -> p.getCategory().getName().equals("Predatory") && p.getInventory().getStock() > 0)
+                .collect(Collectors.toList());
         model.addAttribute("products", products);
         return "predatory.html";
     }
@@ -77,17 +92,21 @@ public class ProductController {
         model.addAttribute("products", productService.getProducts());
         return "basket.html";
     }
-    
-    /* A parameter needs to be mapped here.
-    * With the 'Shop Now' button, once clicked, a request should be made to /fish/details with a parameter, this will likely be its ID
-    * Then the GetMapping method below will need to grab that id, find the product, and add it to the model as an attribute, before
-    * redirecting the user to the page, which should then have access to that model.
-    * GetMapping("/fish/details")
-    * public String getDetails(@RequestParam(required = true) String id) {
-    *    return "ID: " + id;
-    *}
-    * This will then be mapped to /fish/details?id={id}
-    */
+
+    /*
+     * A parameter needs to be mapped here.
+     * With the 'Shop Now' button, once clicked, a request should be made to
+     * /fish/details with a parameter, this will likely be its ID
+     * Then the GetMapping method below will need to grab that id, find the product,
+     * and add it to the model as an attribute, before
+     * redirecting the user to the page, which should then have access to that
+     * model.
+     * GetMapping("/fish/details")
+     * public String getDetails(@RequestParam(required = true) String id) {
+     * return "ID: " + id;
+     * }
+     * This will then be mapped to /fish/details?id={id}
+     */
     @GetMapping("/fish/details/{productId}")
     public String getDetails(@PathVariable("productId") Long id, Model model) {
         model.addAttribute("product", productService.getProduct(id));
