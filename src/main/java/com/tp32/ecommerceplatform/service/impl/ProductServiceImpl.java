@@ -1,7 +1,7 @@
 package com.tp32.ecommerceplatform.service.impl;
 
+import java.util.Comparator;
 import java.util.List;
-
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
@@ -90,5 +90,18 @@ public class ProductServiceImpl implements ProductService {
         Sort.by(field).descending();
 
         return productRepository.findAll(sort);
+    }
+
+    @Override
+    public List<Product> getProductsWithSort(List<Product> products, String field, String direction) {
+        if (field.equalsIgnoreCase("id")) products.sort(Comparator.comparing(Product::getID, direction.equalsIgnoreCase("asc") ? Comparator.naturalOrder() : Comparator.reverseOrder()));
+        if (field.equalsIgnoreCase("name")) products.sort(Comparator.comparing(Product::getName, direction.equalsIgnoreCase("asc") ? Comparator.naturalOrder() : Comparator.reverseOrder()));
+        if (field.equalsIgnoreCase("description")) products.sort(Comparator.comparing(Product::getDescription, direction.equalsIgnoreCase("asc") ? Comparator.naturalOrder() : Comparator.reverseOrder()));;
+        if (field.equalsIgnoreCase("image")) products.sort(Comparator.comparing(Product::getImage, direction.equalsIgnoreCase("asc") ? Comparator.naturalOrder() : Comparator.reverseOrder()));
+        if (field.equalsIgnoreCase("price")) products.sort(Comparator.comparing(Product::getPrice, direction.equalsIgnoreCase("asc") ? Comparator.naturalOrder() : Comparator.reverseOrder()));
+        if (field.equalsIgnoreCase("category")) products.sort(Comparator.comparing(Product::getCategory, direction.equalsIgnoreCase("asc") ? Comparator.naturalOrder() : Comparator.reverseOrder()));
+        if (field.equalsIgnoreCase("inventory.stock")) products.sort(Comparator.comparing(Product::getInventory, direction.equalsIgnoreCase("asc") ? Comparator.naturalOrder() : Comparator.reverseOrder()));
+
+        return products;
     }
 }

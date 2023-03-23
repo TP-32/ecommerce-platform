@@ -1,6 +1,7 @@
 package com.tp32.ecommerceplatform.controller;
 
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -181,11 +182,13 @@ public class AdminController {
             @RequestParam(value = "search", required = false) String search) {
         if (sort.equals("stock"))
             sort = "inventory.stock";
-        List<Product> products = productService.getProductsWithSort(sort, sortDir);
+        List<Product> products;
         if (search != null && !search.isEmpty()) {
             products = this.filterBySearch(productService.getProducts(), search);
+            products = productService.getProductsWithSort(products, sort, sortDir);
             model.addAttribute("search", search.toLowerCase());
-        }
+        } else products = productService.getProductsWithSort(sort, sortDir);
+        
         model.addAttribute("sortDir", sortDir);
         model.addAttribute("reverseSortDir", sortDir.equals("asc") ? "desc" : "asc");
         model.addAttribute("products", products);
@@ -257,7 +260,10 @@ public class AdminController {
         List<Product> productFilterDesc = products.stream()
                 .filter(p -> p.getDescription().toLowerCase().contains(search.toLowerCase()))
                 .collect(Collectors.toList());
+
+        productList.removeAll(productFilterDesc); // Removes potential duplicates without Set()
         productList.addAll(productFilterDesc);
+        productList = productList.stream().sorted(Comparator.comparing(Product::getID)).collect(Collectors.toList());
         return productList;
     }
 }
