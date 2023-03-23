@@ -50,6 +50,10 @@ public class Order {
         return this.price;
     }
 
+    public User getUser() {
+        return this.user;
+    }
+
     public Status getStatus() {
         return this.status;
     }
@@ -65,6 +69,10 @@ public class Order {
 
     public void setPrice(Float price) {
         this.price = price;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 
     public void setStatus(Status status) {
