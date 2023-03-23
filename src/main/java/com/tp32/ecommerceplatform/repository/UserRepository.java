@@ -11,6 +11,5 @@ import com.tp32.ecommerceplatform.model.User;
  */
 public interface UserRepository extends JpaRepository<User, Long> {
     Optional<User> findByEmail(String emaiL);
-
     Boolean existsByEmail(String email);
 }
