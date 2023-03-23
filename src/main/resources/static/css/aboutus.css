@@ -55,12 +55,13 @@ button {
     transition: .3s;
 }
 
-button:hover{
+button:hover {
     background: rgb(81, 2, 83);
     cursor: pointer;
     border: 3px solid rgb(200, 37, 200);
 }
-.button1{
+
+.button1 {
     color: antiquewhite;
     background: rgb(200, 37, 200);
     font-weight: bold;
@@ -70,8 +71,13 @@ button:hover{
     border: 2px solid transparent;
     transition: .3s;
 }
-button1:hover{
+
+button1:hover {
     background: rgb(81, 2, 83);
     cursor: pointer;
     border: 3px solid rgb(200, 37, 200);
+}
+
+#aboutus {
+    background-color: black;
 }
