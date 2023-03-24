@@ -1,11 +1,13 @@
-*{
+* {
     margin: 0;
     padding: 0;
 }
-body{
+
+body {
     background: linear-gradient(rgba(0, 0, 0, 0), rgba(194, 7, 144, 0)), url('../images/Background2.jpg');
     background-position: left;
-    background-repeat: no-repeat;background-color: black;
+    background-repeat: no-repeat;
+    background-color: black;
     font-size: 12px;
     font-family: 'Open Sans', sans-serif;
     height: 100vh;
@@ -14,47 +16,57 @@ body{
     background-position: center center;
     position: relative;
 }
-.container{
+
+.container {
     width: 80%;
     margin: 50px auto;
 }
-.contact-box{
+
+.contact-box {
     background-color: purple;
     opacity: 85%;
     display: flex;
 }
+
 .contact-leftside {
     flex-basis: 60%;
     padding: 40px 60px;
 }
-.contact-rightside{
+
+.contact-rightside {
     flex-basis: 40%;
     padding: 40px;
-    background: white;  
+    background: white;
     color: black;
 }
-h1{
+
+h1 {
     margin-bottom: 10px;
 }
+
 .container p {
     margin-bottom: 40px;
 }
-.input-row{
+
+.input-row {
     display: flex;
     justify-content: space-between;
     margin-bottom: 20px;
 }
-.input-row .input-group{
+
+.input-row .input-group {
     flex-basis: 45%;
 }
-input{
+
+input {
     width: 100%;
     border: none;
     border-bottom: 1px solid black;
     outline: none;
     padding-bottom: 5px;
 }
-textarea{
+
+textarea {
     width: 100%;
     outline: none;
     border: 1px solid black;
@@ -62,59 +74,70 @@ textarea{
     box-sizing: border-box;
 
 }
-label{
+
+label {
     margin-bottom: 5px;
     display: block;
     color: #385c6d;
 }
-button{
+
+button {
     background-color: white;
     border: none;
     width: 100px;
     outline: none;
-    color:black;
+    color: black;
     height: 35px;
     border-radius: 30px;
     margin-top: 20px;
-    box-shadow: 0px 5px 15px 0px rgba(28,0,181,0.3);
+    box-shadow: 0px 5px 15px 0px rgba(28, 0, 181, 0.3);
 }
-.contact-leftside h3{
+
+.contact-leftside h3 {
     font-weight: 600;
     margin-bottom: 30px;
 }
-.header img{
+
+.header img {
     float: left;
     width: 20px;
     height: 20px;
-    
-} 
-.top-container{
+
+}
+
+.top-container {
     color: white;
 }
+
 .nav {
     float: right;
     list-style: none;
     margin-top: 30px;
-  
-  }
-  
-  .nav li {
+
+}
+
+.nav li {
     display: inline-block;
-  }
-  
-  .nav li a {
+}
+
+.nav li a {
     color: rgb(242, 239, 244);
     padding: 5px 20px;
     font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
     font-size: 15px;
     text-decoration: none;
-  }
-  
-  .nav li a:hover {
+}
+
+.nav li a:hover {
     background: #780250;
     color: aliceblue;
-  }
-  
-  .nav ul li a {
+}
+
+.nav ul li a {
     color: aliceblue;
-  }
+}
+
+.holder {
+    width: 1165px;
+    margin: auto;
+}

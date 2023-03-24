@@ -104,10 +104,17 @@
             background-color: black;
             color: white;
         }
+
+        .holder {
+            width: 1165px;
+            margin: auto;
+        }
     </style>
 </head>
 
-
+<div class="holder">
+    <div th:replace="~{fragments/navbar :: navbar}"></div>
+</div>
 <form th:action="@{/register}" th:object="${user}" method="POST">
     <h3>Sign-Up Here</h3>
 
