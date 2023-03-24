@@ -28,7 +28,12 @@
                 <div class="cardHeader">
                     <h2>Update Product</h2>
                     <img th:src="@{/{image}(image=${product.image})}" width="80" height="80" />
-                    <a th:href="@{/admin/products}" class="btn" id="return">Return</a>
+                    <div>
+                        <a th:href="@{/admin/products}" class="btn" id="return">Return</a>
+                        <a style="background-color: red;"
+                            th:href="@{'/admin/products/delete?productId=' + ${product.ID}}" class="btn"
+                            id="return">Delete</a>
+                    </div>
                 </div>
                 <table class="product-table">
                     <form th:action="@{'/admin/products/update?productId=' + ${product.ID}}" th:object="${productDto}"

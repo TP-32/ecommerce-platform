@@ -29,6 +29,11 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
+    public long count(Status status) {
+        return orderRepository.count(status);
+    }
+
+    @Override
     public Float sumPrice() {
         return orderRepository.sumPrice();
     }
@@ -72,6 +77,13 @@ public class OrderServiceImpl implements OrderService {
 
         orderRepository.save(updateOrder);
         return updateOrder;
+    }
+
+    @Override
+    public Order deleteOrder(Long id) {
+        Order order = orderRepository.findById(id).get();
+        orderRepository.deleteById(id);
+        return order;
     }
 
     @Override
