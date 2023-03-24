@@ -27,7 +27,11 @@
             <div class="formPage">
                 <div class="cardHeader">
                     <h2>Update Order</h2>
-                    <a th:href="@{/admin/orders}" class="btn" id="return">Return</a>
+                    <div>
+                        <a th:href="@{/admin/orders}" class="btn" id="return">Return</a>
+                        <a style="background-color: red;" th:href="@{'/admin/orders/delete?orderId=' + ${order.ID}}"
+                            class="btn" id="return">Delete</a>
+                    </div>
                 </div>
                 <table class="order-table">
                     <form th:action="@{'/admin/orders/update?orderId=' + ${order.ID}}" th:object="${orderDto}"
@@ -36,7 +40,7 @@
                             <div class="field">
                                 <td><label for="firstName">Name</label></td>
                                 <td><input type="text" name="name" id="name" required th:name="name"
-                                        th:value="|${order.user.firstName} ${order.user.lastName}|" readonly/></td>
+                                        th:value="|${order.user.firstName} ${order.user.lastName}|" readonly /></td>
                             </div>
                         </tr>
                         <tr>
@@ -50,7 +54,7 @@
                             <div class="field">
                                 <td><label for="time">Order Time</label></td>
                                 <td><input type="datetime" name="time" id="time" required th:name="time"
-                                        th:value="${order.orderTime}" readonly /></td>
+                                        th:value="${order.time}" readonly /></td>
                             </div>
                         </tr>
                         <tr>
@@ -67,13 +71,6 @@
                                     </select></td>
                             </div>
                         </tr>
-                        <!-- <tr>
-                            <div class="field">
-                                <td><label for="status">Status</label></td>
-                                <td><input type="text" name="status" id="status" required th:name="status"
-                                        th:value="${order.status.name}" /></td>
-                            </div>
-                        </tr> -->
                 </table>
                 <div class="form_action--button">
                     <input type="submit" value="Submit">

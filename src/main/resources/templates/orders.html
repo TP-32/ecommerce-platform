@@ -5,59 +5,46 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin</title>
-    <link rel="stylesheet" th:href="@{/css/admin.css}" />
+    <title>Orders</title>
+    <link rel="stylesheet" th:href="@{/css/order.css}" />
     <link rel="stylesheet" th:href="@{/css/navbar.css}" />
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
 </head>
 
 <body>
-    <div th:replace="~{fragments/sidebar :: sidebar}"></div>
-    <div class="first">
-        <div class="topbar">
-            <div class="toggle">
-                <ion-icon name="menu-outline"></ion-icon>
-            </div>
-            <div class="user">
-                <img th:src="@{/images/user_icon.png}" alt="">
-            </div>
+    <header>
+        <div class="holder">
+            <div th:replace="~{fragments/navbar :: navbar}"></div>
         </div>
-        <div>
+    </header>
+    <div class="detail">
+        <div class="recentOrders">
+            <div class="cardHeader">
+                <h2>Orders</h2>
+            </div>
 
-        </div>
-        <div class="detail">
-            <div class="recentOrders">
-                <div class="cardHeader">
-                    <h2>Orders</h2>
-                </div>
-
-                <div>
-                    <select id="status">
-                        <option value="0">Select Status</option>
-                        <option th:each="status : ${status}" th:value="${status.ID}" th:text="${status.name}"></option>
-                    </select>
-                </div>
-
-                <table>
+            <table>
+                <div th:if="${orders != null and !orders.isEmpty()}">
                     <thead id="orderHeader">
                         <tr>
-                            <td><a class="sort" th:href="@{'/admin/orders/ID?sortDir=' + ${reverseSortDir}}">ID</a></td>
-                            <td><a class="sort" th:href="@{'/admin/orders/name?sortDir=' + ${reverseSortDir}}">Name</a>
+                            <td><a class="sort" th:href="@{'/orders/ID?sortDir=' + ${reverseSortDir}}">ID</a></td>
+                            <td><a class="sort" th:href="@{'/orders/name?sortDir=' + ${reverseSortDir}}">Name</a>
                             </td>
                             <td><a class="sort"
-                                    th:href="@{'/admin/orders/price?sortDir=' + ${reverseSortDir}}">Price</a></td>
-                            <td><a class="sort" th:href="@{'/admin/orders/time?sortDir=' + ${reverseSortDir}}">Order
+                                    th:href="@{'/orders/price?sortDir=' + ${reverseSortDir}}">Price</a>
+                            </td>
+                            <td><a class="sort" th:href="@{'/orders/time?sortDir=' + ${reverseSortDir}}">Order
                                     Time</a>
                             </td>
                             <td><a class="sort"
-                                    th:href="@{'/admin/orders/status?sortDir=' + ${reverseSortDir}}">Status</a></td>
+                                    th:href="@{'/orders/status?sortDir=' + ${reverseSortDir}}">Status</a>
+                            </td>
                         </tr>
                     </thead>
 
                     <tbody id="orders">
                         <th:block th:each="order : ${orders}" id="orderList">
-                            <!-- Hides 'Completed' orders from Order List (unless specifically filtered) -->
-                            <tr th:onclick="'rowClicked(\'' + ${order.ID} + '\');'" th:if="${order.status.name} != 'Completed'">
+                            <tr>
                                 <td class="id" th:text="${order.ID}"></td>
                                 <td class="name" th:text="|${order.user.firstName} ${order.user.lastName}|"></td>
                                 <td th:text="|£${order.price}|"></td>
@@ -77,18 +64,17 @@
                             </tr>
                         </th:block>
                     </tbody>
-                </table>
-            </div>
+                </div>
+                <div th:if="${orders.isEmpty()}">
+                    <h2 style="text-align: center;">Oops, you do not have any orders yet.
+                    </h2>
+                    <h3 style="text-align: center;">Click <a th:href="@{/categories}"
+                        style="text-decoration: none; color: rgb(156, 1, 156)">here</a> to begin browsing!</h3>
+                </div>
             </table>
         </div>
+    </div>
 
-        <script th:inline="javascript" type="text/javascript">
-            function rowClicked(value) {
-                location.href = "/admin/orders?orderId=" + value;
-            }
-        </script>
-
-        <script th:src="@{/js/admin.js}"></script>
-        <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
-        <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+    <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
 </body>

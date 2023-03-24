@@ -81,3 +81,8 @@ button1:hover {
 #aboutus {
     background-color: black;
 }
+
+.holder {
+    width: 1165px;
+    margin: auto;
+}

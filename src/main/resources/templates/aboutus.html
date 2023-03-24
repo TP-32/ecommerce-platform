@@ -3,15 +3,17 @@
 
 <head>
     <title>About us</title>
-    <link rel="stylesheet" th:href="@{/css/aboutus.css}"/>
-    <link rel="stylesheet" th:href="@{/css/navbar.css}"/>
+    <link rel="stylesheet" th:href="@{/css/aboutus.css}" />
+    <link rel="stylesheet" th:href="@{/css/navbar.css}" />
 </head>
 
 <body id="aboutus">
-    <div th:replace="~{fragments/navbar :: navbar}"></div>
+    <div class="holder">
+        <div th:replace="~{fragments/navbar :: navbar}"></div>
+    </div>
     <section class="about-us">
         <div class="main">
-            <img th:src="@{/images/img.jpg}"/>
+            <img th:src="@{/images/img.jpg}" />
             <div class="info">
                 <h1>Who We Are </h1>
                 <p

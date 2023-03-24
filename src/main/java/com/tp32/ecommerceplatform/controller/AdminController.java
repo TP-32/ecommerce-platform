@@ -51,7 +51,7 @@ public class AdminController {
     @GetMapping("/dashboard")
     public String dashboard(Model model) {
         // Attributes used for statistics on the dashboard
-        model.addAttribute("sales", orderService.count());
+        model.addAttribute("sales", orderService.count(orderService.getStatus(4L)));
         model.addAttribute("users", userService.count());
 
         List<User> customers = userService.getUsers();
@@ -79,7 +79,7 @@ public class AdminController {
     @GetMapping("/analytics")
     public String analytics(Model model) {
         // Attributes used for statistics on the dashboard
-        model.addAttribute("sales", orderService.count());
+        model.addAttribute("sales", orderService.count(orderService.getStatus(4L)));
         model.addAttribute("users", userService.count());
 
         // Formats the total price to 2 decimal places
@@ -114,7 +114,7 @@ public class AdminController {
     }
 
     @GetMapping("/customers/delete")
-    public ModelAndView deleteCustomer(@RequestParam(value = "testId", required = true) Long id,
+    public ModelAndView deleteCustomer(@RequestParam(value = "userId", required = true) Long id,
             RedirectAttributes redirect) {
         userService.deleteUser(id);
         ModelAndView model = new ModelAndView("redirect:/admin/customers");
@@ -177,6 +177,14 @@ public class AdminController {
         return model;
     }
 
+    @GetMapping("/products/delete")
+    public ModelAndView deleteProduct(@RequestParam(value = "productId", required = true) Long id,
+            RedirectAttributes redirect) {
+        productService.deleteProduct(id);
+        ModelAndView model = new ModelAndView("redirect:/admin/products");
+        return model;
+    }
+
     @GetMapping("/products/{sort}")
     public String products(Model model, @PathVariable("sort") String sort, @RequestParam("sortDir") String sortDir,
             @RequestParam(value = "search", required = false) String search) {
@@ -187,8 +195,9 @@ public class AdminController {
             products = this.filterBySearch(productService.getProducts(), search);
             products = productService.getProductsWithSort(products, sort, sortDir);
             model.addAttribute("search", search.toLowerCase());
-        } else products = productService.getProductsWithSort(sort, sortDir);
-        
+        } else
+            products = productService.getProductsWithSort(sort, sortDir);
+
         model.addAttribute("sortDir", sortDir);
         model.addAttribute("reverseSortDir", sortDir.equals("asc") ? "desc" : "asc");
         model.addAttribute("products", products);
@@ -223,6 +232,14 @@ public class AdminController {
     public ModelAndView updateOrder(@ModelAttribute UpdateOrderDto orderDto, @RequestParam(value = "orderId") Long id,
             RedirectAttributes redirect) {
         orderService.updateOrder(id, orderDto);
+        ModelAndView model = new ModelAndView("redirect:/admin/orders");
+        return model;
+    }
+
+    @GetMapping("/orders/delete")
+    public ModelAndView deleteOrder(@RequestParam(value = "orderId", required = true) Long id,
+            RedirectAttributes redirect) {
+        orderService.deleteOrder(id);
         ModelAndView model = new ModelAndView("redirect:/admin/orders");
         return model;
     }

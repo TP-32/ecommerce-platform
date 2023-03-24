@@ -1,9 +1,7 @@
 package com.tp32.ecommerceplatform.controller;
 
+import java.io.IOException;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.ResponseCookie;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -12,6 +10,9 @@ import com.tp32.ecommerceplatform.dto.JwtResponse;
 import com.tp32.ecommerceplatform.dto.LoginDto;
 import com.tp32.ecommerceplatform.dto.RegisterDto;
 import com.tp32.ecommerceplatform.service.UserService;
+
+import jakarta.servlet.http.Cookie;
+import jakarta.servlet.http.HttpServletResponse;
 
 /**
  * Handles the creation of RESTful web services, which maps requests to actions.
@@ -31,35 +32,39 @@ public class AuthController {
     /**
      * @param registerDto stores relevant details of the register process to be sent
      *                    from front-end to back-end
-     * @return A ResponseEntity response which confirms that the process was
-     *         successful
+     * @throws IOException
      */
     @PostMapping("/register")
-    public ResponseEntity<JwtResponse> register(@ModelAttribute RegisterDto registerDto) {
+    public void register(@ModelAttribute RegisterDto registerDto, HttpServletResponse response) throws IOException {
         JwtResponse res = userService.register(registerDto);
-        ResponseCookie cookie = ResponseCookie.from("Authorization", res.getToken())
-            .httpOnly(true)
-            .path("/")
-            .maxAge(jwtExpiration/1000)
-            .build();
-        return ResponseEntity.ok().header(HttpHeaders.SET_COOKIE, cookie.toString()).body(res);
+        setCookie(res.getToken(), response);
     }
 
     /**
      * @param loginDto stores relevant details of the login process to be sent from
      *                 front-end to back-end
-     * @return a ResponseEntity response which returns the token to the user, and
-     *         confirms the process was successful
+     * @throws IOException
      */
 
      @PostMapping("login")
-     public ResponseEntity<JwtResponse> login(@ModelAttribute LoginDto loginDto) {
+     public void login(@ModelAttribute LoginDto loginDto, HttpServletResponse response) throws IOException {
         JwtResponse res = userService.login(loginDto);
-        ResponseCookie cookie = ResponseCookie.from("Authorization", res.getToken())
-            .httpOnly(true)
-            .path("/")
-            .maxAge(jwtExpiration/1000)
-            .build();
-        return ResponseEntity.ok().header(HttpHeaders.SET_COOKIE, cookie.toString()).body(res);
+        setCookie(res.getToken(), response);
+     }
+
+     /**
+      * Helper Method to generate and set the cookie of a user
+      * @param token the generated token for this instance
+      * @param response provides HTTP functionality in sending a response
+      * @throws IOException
+      */
+     private void setCookie(String token, HttpServletResponse response) throws IOException {
+        Cookie cookie = new Cookie("Authorization", token);
+        cookie.setHttpOnly(true);
+        cookie.setPath("/");
+        cookie.setMaxAge((int) (jwtExpiration/1000));
+        
+        response.addCookie(cookie);
+        response.sendRedirect("/");
      }
 }

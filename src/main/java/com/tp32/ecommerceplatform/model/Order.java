@@ -19,7 +19,7 @@ public class Order {
 
     /* created_at TIMESTAMP to show what time the order was ordered at */
     @Column(name = "order_time")
-    private Date orderTime;
+    private Date time;
 
     @Column(name = "price", nullable = false)
     private Float price;
@@ -42,8 +42,8 @@ public class Order {
         return this.id;
     }
 
-    public Date getOrderTime() {
-        return this.orderTime;
+    public Date getTime() {
+        return this.time;
     }
 
     public Float getPrice() {
@@ -63,8 +63,8 @@ public class Order {
     }
 
     // Setters
-    public void setOrderTime(Date date) {
-        this.orderTime = date;
+    public void setTime(Date date) {
+        this.time = date;
     }
 
     public void setPrice(Float price) {
