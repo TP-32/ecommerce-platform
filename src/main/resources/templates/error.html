@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Error</title>
+    <link rel="stylesheet" th:href="@{/css/error.css}" />
+</head>
+
+<body>
+    <header>
+        <div class="text" th:switch="${status}">
+            <div th:case="'403'">
+                <h1 style="font-size: 100px;">403</h1></br>
+                <h1>You do not have access to this page!</h1>
+            </div>
+            <div th:case="'404'">
+                <h1 style="font-size: 100px;">404</h1></br>
+                <h1>Oops, this page does not exist.</h1>
+            </div>
+            <div th:case="*">
+                <h1 style="font-size: 100px;">Error</h1></br>
+                <h1>Sorry, something went wrong!</h1><br>
+            </div>
+            </br></br>
+            <a th:href="@{/}">Return Home</a>
+        </div>
+    </header>
+</body>
+
+</html>
