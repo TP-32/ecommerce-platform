@@ -27,29 +27,28 @@
                 <div th:if="${orders != null and !orders.isEmpty()}">
                     <thead id="orderHeader">
                         <tr>
-                            <td><a class="sort" th:href="@{'/admin/orders/ID?sortDir=' + ${reverseSortDir}}">ID</a></td>
-                            <td><a class="sort" th:href="@{'/admin/orders/name?sortDir=' + ${reverseSortDir}}">Name</a>
+                            <td><a class="sort" th:href="@{'/orders/ID?sortDir=' + ${reverseSortDir}}">ID</a></td>
+                            <td><a class="sort" th:href="@{'/orders/name?sortDir=' + ${reverseSortDir}}">Name</a>
                             </td>
                             <td><a class="sort"
-                                    th:href="@{'/admin/orders/price?sortDir=' + ${reverseSortDir}}">Price</a>
+                                    th:href="@{'/orders/price?sortDir=' + ${reverseSortDir}}">Price</a>
                             </td>
-                            <td><a class="sort" th:href="@{'/admin/orders/time?sortDir=' + ${reverseSortDir}}">Order
+                            <td><a class="sort" th:href="@{'/orders/time?sortDir=' + ${reverseSortDir}}">Order
                                     Time</a>
                             </td>
                             <td><a class="sort"
-                                    th:href="@{'/admin/orders/status?sortDir=' + ${reverseSortDir}}">Status</a>
+                                    th:href="@{'/orders/status?sortDir=' + ${reverseSortDir}}">Status</a>
                             </td>
                         </tr>
                     </thead>
 
                     <tbody id="orders">
-
                         <th:block th:each="order : ${orders}" id="orderList">
                             <tr>
                                 <td class="id" th:text="${order.ID}"></td>
                                 <td class="name" th:text="|${order.user.firstName} ${order.user.lastName}|"></td>
                                 <td th:text="|£${order.price}|"></td>
-                                <td th:text="${order.orderTime}"></td>
+                                <td th:text="${order.time}"></td>
                                 <td>
                                     <span class="status pending" th:text="${order.status.name}"
                                         th:if="${order.status.name} == 'Pending'"></span>
