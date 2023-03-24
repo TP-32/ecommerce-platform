@@ -78,10 +78,27 @@
                 </div>
                 </form>
             </div>
+        </div>
 
-            <script th:src="@{/js/admin.js}"></script>
-            <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
-            <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+        <section class="content">
+            <div class="productListing">
+                <div class="card" th:each="orderItem : ${orderitems}">
+                    <!--<p th:text="|${orderItem.firstName} ${orderItem.user.lastName}|"></p>-->
+                    <div class="header">
+                        <span id="parent" th:text="${orderItem.name}"></span>
+                        <!-- TODO: Remove Product from OrderItems Listing -->
+                        <a href="#"><ion-icon style="font-size: 30px;" name="close-circle-outline"></ion-icon></a>
+                    </div>
+                    <img id="product-image" th:src="@{/{image}(image=${orderItem.image})}" /><br>
+                    <!--<span class="child" th:text="|${orderItem.quantity}|"></span>-->
+                    <span class="child" th:text="|£${orderItem.price}|"></span>
+                </div>
+            </div>
+        </section>
+
+        <script th:src="@{/js/admin.js}"></script>
+        <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+        <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
 </body>
 
 </html>

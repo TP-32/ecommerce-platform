@@ -57,7 +57,8 @@
                     <tbody id="orders">
                         <th:block th:each="order : ${orders}" id="orderList">
                             <!-- Hides 'Completed' orders from Order List (unless specifically filtered) -->
-                            <tr th:onclick="'rowClicked(\'' + ${order.ID} + '\');'" th:if="${order.status.name} != 'Completed'">
+                            <tr th:onclick="'rowClicked(\'' + ${order.ID} + '\');'"
+                                th:if="${order.status.name} != 'Completed'">
                                 <td class="id" th:text="${order.ID}"></td>
                                 <td class="name" th:text="|${order.user.firstName} ${order.user.lastName}|"></td>
                                 <td th:text="|£${order.price}|"></td>
@@ -79,7 +80,6 @@
                     </tbody>
                 </table>
             </div>
-            </table>
         </div>
 
         <script th:inline="javascript" type="text/javascript">

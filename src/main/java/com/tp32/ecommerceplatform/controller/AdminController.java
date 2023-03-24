@@ -219,6 +219,7 @@ public class AdminController {
             model.addAttribute("orderDto", new UpdateOrderDto());
             model.addAttribute("order", orderService.getOrder(id));
             model.addAttribute("status", orderService.getStatus());
+            model.addAttribute("orderitems", productService.getProducts());
             return "admin-update-order.html";
         }
 
