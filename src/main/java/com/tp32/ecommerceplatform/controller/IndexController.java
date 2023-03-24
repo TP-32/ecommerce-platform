@@ -1,12 +1,17 @@
 package com.tp32.ecommerceplatform.controller;
 
+import java.util.List;
+
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.tp32.ecommerceplatform.dto.LoginDto;
 import com.tp32.ecommerceplatform.dto.RegisterDto;
+import com.tp32.ecommerceplatform.model.Order;
 import com.tp32.ecommerceplatform.model.User;
 import com.tp32.ecommerceplatform.service.OrderService;
 
@@ -71,7 +76,20 @@ public class IndexController {
         if (!(principal instanceof User))
             return null;
 
+        model.addAttribute("reverseSortDir", "asc");
         model.addAttribute("orders", orderService.getOrders(((User) principal).getID()));
+        return "orders.html";
+    }
+
+    @GetMapping("/orders/{sort}")
+    public String orders(Model model, @PathVariable("sort") String sort, @RequestParam("sortDir") String sortDir) {
+        User user = ((User) SecurityContextHolder.getContext().getAuthentication().getPrincipal());
+        if (sort.equals("name"))
+            sort = "user.firstName";
+        List<Order> orders = orderService.getOrdersWithSort(user.getID(), sort, sortDir);
+        model.addAttribute("sortDir", sortDir);
+        model.addAttribute("reverseSortDir", sortDir.equals("asc") ? "desc" : "asc");
+        model.addAttribute("orders", orders);
         return "orders.html";
     }
 }

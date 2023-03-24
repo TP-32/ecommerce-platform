@@ -107,6 +107,15 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
+    public List<Order> getOrdersWithSort(Long id, String field, String direction) {
+        List<Order> orders = getOrdersWithSort(field, direction);
+        List<Order> orders2 = getOrders(id);
+
+        orders.retainAll(orders2);
+        return orders;
+    }
+
+    @Override
     public Status getStatus(Long id) {
         if (statusRepository.existsById(id))
             return statusRepository.findById(id).get();

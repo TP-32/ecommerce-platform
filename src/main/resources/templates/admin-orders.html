@@ -61,7 +61,7 @@
                                 <td class="id" th:text="${order.ID}"></td>
                                 <td class="name" th:text="|${order.user.firstName} ${order.user.lastName}|"></td>
                                 <td th:text="|£${order.price}|"></td>
-                                <td th:text="${order.orderTime}"></td>
+                                <td th:text="${order.time}"></td>
                                 <td>
                                     <span class="status pending" th:text="${order.status.name}"
                                         th:if="${order.status.name} == 'Pending'"></span>

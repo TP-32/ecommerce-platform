@@ -62,7 +62,7 @@ $('#status').on('change', function () {
           '<td class="id">' + this.id + '</td>' +
           '<td class="name">' + this.user.firstName + ' ' + this.user.lastName + '</td>' +
           '<td> £' + formatPrice(this.price) + '</td>' +
-          '<td>' + $.formattedDate(this.orderTime) + '</td></tr>');
+          '<td>' + $.formattedDate(this.time) + '</td></tr>');
       })
 
       if (category.length == 0) {

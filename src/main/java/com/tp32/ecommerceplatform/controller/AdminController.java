@@ -195,8 +195,9 @@ public class AdminController {
             products = this.filterBySearch(productService.getProducts(), search);
             products = productService.getProductsWithSort(products, sort, sortDir);
             model.addAttribute("search", search.toLowerCase());
-        } else products = productService.getProductsWithSort(sort, sortDir);
-        
+        } else
+            products = productService.getProductsWithSort(sort, sortDir);
+
         model.addAttribute("sortDir", sortDir);
         model.addAttribute("reverseSortDir", sortDir.equals("asc") ? "desc" : "asc");
         model.addAttribute("products", products);
