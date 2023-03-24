@@ -61,7 +61,7 @@ $('#status').on('change', function () {
         $('#orders').append('<tr onclick="rowClicked(\'' + this.id + '\');">' + 
           '<td class="id">' + this.id + '</td>' +
           '<td class="name">' + this.user.firstName + ' ' + this.user.lastName + '</td>' +
-          '<td>' + this.price + '</td>' +
+          '<td> £' + formatPrice(this.price) + '</td>' +
           '<td>' + $.formattedDate(this.orderTime) + '</td></tr>');
       })
 
@@ -72,3 +72,7 @@ $('#status').on('change', function () {
     }
   })
 })
+
+function formatPrice(x) {
+  return x.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",");
+}
