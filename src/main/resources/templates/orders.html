@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Orders</title>
+    <link rel="stylesheet" th:href="@{/css/order.css}" />
+    <link rel="stylesheet" th:href="@{/css/navbar.css}" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
+</head>
+
+<body>
+    <header>
+        <div class="holder">
+            <div th:replace="~{fragments/navbar :: navbar}"></div>
+        </div>
+    </header>
+    <div class="detail">
+        <div class="recentOrders">
+            <div class="cardHeader">
+                <h2>Orders</h2>
+            </div>
+
+            <table>
+                <div th:if="${orders != null and !orders.isEmpty()}">
+                    <thead id="orderHeader">
+                        <tr>
+                            <td><a class="sort" th:href="@{'/admin/orders/ID?sortDir=' + ${reverseSortDir}}">ID</a></td>
+                            <td><a class="sort" th:href="@{'/admin/orders/name?sortDir=' + ${reverseSortDir}}">Name</a>
+                            </td>
+                            <td><a class="sort"
+                                    th:href="@{'/admin/orders/price?sortDir=' + ${reverseSortDir}}">Price</a>
+                            </td>
+                            <td><a class="sort" th:href="@{'/admin/orders/time?sortDir=' + ${reverseSortDir}}">Order
+                                    Time</a>
+                            </td>
+                            <td><a class="sort"
+                                    th:href="@{'/admin/orders/status?sortDir=' + ${reverseSortDir}}">Status</a>
+                            </td>
+                        </tr>
+                    </thead>
+
+                    <tbody id="orders">
+
+                        <th:block th:each="order : ${orders}" id="orderList">
+                            <tr>
+                                <td class="id" th:text="${order.ID}"></td>
+                                <td class="name" th:text="|${order.user.firstName} ${order.user.lastName}|"></td>
+                                <td th:text="|£${order.price}|"></td>
+                                <td th:text="${order.orderTime}"></td>
+                                <td>
+                                    <span class="status pending" th:text="${order.status.name}"
+                                        th:if="${order.status.name} == 'Pending'"></span>
+                                    <span class="status processing" th:text="${order.status.name}"
+                                        th:if="${order.status.name} == 'Processing'"></span>
+                                    <span class="status shipping" th:text="${order.status.name}"
+                                        th:if="${order.status.name} == 'Shipping'"></span>
+                                    <span class="status completed" th:text="${order.status.name}"
+                                        th:if="${order.status.name} == 'Completed'"></span>
+                                    <span class="status declined" th:text="${order.status.name}"
+                                        th:if="${order.status.name} == 'Declined'"></span>
+                                </td>
+                            </tr>
+                        </th:block>
+                    </tbody>
+                </div>
+                <div th:if="${orders.isEmpty()}">
+                    <h2 style="text-align: center;">Oops, you do not have any orders yet.
+                    </h2>
+                    <h3 style="text-align: center;">Click <a th:href="@{/categories}"
+                        style="text-decoration: none; color: rgb(156, 1, 156)">here</a> to begin browsing!</h3>
+                </div>
+            </table>
+        </div>
+    </div>
+
+    <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+</body>

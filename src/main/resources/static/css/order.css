@@ -1,0 +1,116 @@
+body {
+    background-color: black;
+}
+
+* {
+    font-family: "Ubuntu", sans-serif;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.holder {
+    width: 1165px;
+    margin: auto;
+}
+
+.detail .recentOrders table tr {
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.detail .recentOrders table tr:last-child {
+    border-bottom: none;
+}
+
+.detail .recentOrders table tbody tr:hover {
+    background-color: rgb(227, 227, 227);
+}
+
+.detail .recentOrders table tbody tr:hover .name,
+.detail .recentOrders table tbody tr:hover .id {
+    text-decoration-line: underline;
+}
+
+.detail .recentOrders table tr td {
+    padding: 10px;
+}
+
+.detail {
+    position: relative;
+    width: 100%;
+    padding: 50px;
+    display: grid;
+    grid-template-columns: 2fr fr;
+    grid-gap: 40px;
+}
+
+.detail .recentOrders {
+    position: relative;
+    display: grid;
+    background: var(--white);
+    padding: 20px;
+    border-radius: 20px;
+    box-shadow: 0 7px 25px rgba(255, 255, 255, 0.686);
+    display: table;
+    table-layout: fixed;
+    width: 100%;
+    background-color: white;
+}
+
+.detail .cardHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+}
+
+table {
+    background-color: white;
+}
+
+.detail table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+}
+
+.detail table thead td {
+    font-weight: 600;
+}
+
+
+table td .sort {
+    color: antiquewhite;
+    background: rgb(113, 3, 113);
+    text-decoration: none;
+    padding: 5px 10px;
+    border-radius: 28px;
+}
+
+.status {
+    padding: 2px 4px;
+    color: var(--white);
+    border-radius: 4px;
+    font-size: 14px;
+    font-weight: 500;
+    color: white;
+  }
+  
+  .status.pending {
+    background: #e9b10a;
+  }
+  
+  .status.processing {
+    background: #1795ce;
+  }
+  
+  .status.shipping {
+    background: rgb(255, 0, 251);
+  }
+  
+  .status.completed {
+    background: rgb(0, 212, 60);
+  }
+  
+  .status.declined {
+    background: rgb(255, 0, 0);
+  }

@@ -507,7 +507,6 @@ body {
   display: grid;
   grid-template-columns: 2fr fr;
   grid-gap: 40px;
-
 }
 
 .detail .formPage,

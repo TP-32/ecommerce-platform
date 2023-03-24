@@ -12,6 +12,7 @@ public interface OrderService {
     Order deleteOrder(Long id);
     List<Order> getOrders();
     List<Order> getOrdersWithSort(String field, String direction);
+    List<Order> getOrders(Long id);
     Status getStatus(Long id);
     List<Status> getStatus();
     Float sumPrice();

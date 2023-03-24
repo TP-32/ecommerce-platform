@@ -40,6 +40,7 @@ public class SecurityConfig {
         http.csrf().disable()
                 .authorizeHttpRequests()
                 .requestMatchers("/admin/**").hasRole("ADMIN")
+                .requestMatchers("/orders").hasAnyRole("USER", "ADMIN")
                 .requestMatchers("/**").permitAll()
                 .anyRequest().authenticated()
                 .and()
