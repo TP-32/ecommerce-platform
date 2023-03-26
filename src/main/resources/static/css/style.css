@@ -1,0 +1,90 @@
+body {
+    background-color: black;
+    }
+    
+header{
+	width: 100vw;
+	min-height: 100vh;
+	background: #000000;
+	font-size: 1.2rem;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+.container{
+	background: rgb(0, 0, 0);
+	max-width: 800px;
+	min-height: 500px;
+	display: flex;
+	justify-content:space-between;
+	align-items: flex-start;
+	padding: 0.5rem 1.5rem;
+    box-shadow: 0 8px 30px rgba(255, 255, 255, 0.686);
+}
+.left{
+	flex-basis: 80%;
+}
+
+form{
+	padding: 4rem;
+}
+
+h3{
+	margin-top: 1rem;
+	color:#ffffff;
+	}
+
+form input[type="text"]{
+	width: 100%;
+	padding: 0.5rem 0.7rem;
+	margin: 0.5rem 0;
+	outline: none;
+}
+
+#post{
+	display: flex;
+	margin-top: 0.5rem;
+}
+#post select{
+	padding: 0.5rem 0.7rem;
+}
+#post input[type="text1"]{
+	padding: 0.5rem 0.7rem;
+	margin-left: 5px;	
+}
+
+
+
+
+
+.nav {
+    float: right;
+    list-style: none;
+    margin-top: 30px;
+  
+  }
+  
+  .nav li {
+    display: inline-block;
+  }
+  
+  .nav li a {
+    color: rgb(242, 239, 244);
+    padding: 5px 20px;
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    font-size: 15px;
+    text-decoration: none;
+  }
+  
+  .nav li a:hover {
+    background: #780250;
+    color: aliceblue;
+  }
+  
+  .nav ul li a {
+    color: aliceblue;
+  }
+
+  *{padding:0; margin:0; box-sizing: border-box; font-family:sans-serif;}
+
+
