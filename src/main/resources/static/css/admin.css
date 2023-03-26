@@ -235,7 +235,6 @@ body {
   justify-content: space-between;
   cursor: pointer;
   box-shadow: 0 7px 25px rgba(0, 0, 0, 0.686);
-
 }
 
 .cardBox .card .numbers {
@@ -416,7 +415,7 @@ body {
 }
 
 .popularProduct .imgBx img {
-  display: block; 
+  display: block;
   margin: 0 auto;
   width: 300px;
   height: 300px;
@@ -430,8 +429,8 @@ body {
   font-size: 16px;
   font-weight: 500;
   line-height: 1.2rem;
-  display: block; 
-  text-align: center; 
+  display: block;
+  text-align: center;
   margin: 0 auto;
 }
 
@@ -439,9 +438,9 @@ body {
   font-size: 14px;
   color: var(--black2);
   text-decoration-line: none;
-  display: block; 
+  display: block;
   text-align: center;
-  margin: 0 auto; 
+  margin: 0 auto;
   width: 300px
 }
 
@@ -449,9 +448,9 @@ body {
   font-size: 10px;
   color: rgb(171, 4, 171);
   text-decoration-line: none;
-  display: block; 
+  display: block;
   text-align: center;
-  margin: 0 auto; 
+  margin: 0 auto;
 }
 
 .recentCustomers .imgBx img {
@@ -732,4 +731,56 @@ table .description {
 
 .cardBox a {
   text-decoration: none;
+}
+
+.productListing {
+  overflow-x: auto;
+  overflow-y: hidden;
+  white-space: nowrap;
+  padding-bottom: 10px;
+  margin: 10px;
+  width: 100%;
+  -webkit-overflow-scrolling: touch;
+  transform: rotateX(180deg);
+}
+
+.productListing .card {
+  display: inline-block;
+  text-align: center;
+  width: 300px;
+  margin: 10px 10px 5px;
+  height: 300px;
+  box-shadow: 0 1px 25px rgba(0, 0, 0, 0.686);
+  background-color: white;
+  border-radius: 20px;
+  transform: rotateX(-180deg);
+}
+
+.productListing .card .header {
+  display: block;
+  margin: 10px auto;
+}
+
+.productListing .card ion-icon {
+  color: red;
+  margin-left: 30%;
+}
+
+.productListing .card .child {
+  font-size: 14px;
+  color: var(--black2);
+}
+
+.productListing .card .side {
+  font-size: 14px;
+  color: var(--black1);
+}
+
+#product-image {
+  margin: auto;
+  height: 200px;
+  width: 200px;
+  box-sizing: border-box;
+  border-radius: 100px;
+  background-size: cover;
 }

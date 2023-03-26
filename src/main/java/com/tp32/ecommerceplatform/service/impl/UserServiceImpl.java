@@ -41,7 +41,8 @@ public class UserServiceImpl implements UserService {
     private JwtToken jwtToken;
 
     public UserServiceImpl(AuthenticationManager authManager, UserRepository userRepository,
-            RoleRepository roleRepository, OrderRepository orderRepository, TokenRepository tokenRepository, PasswordEncoder passwordEncoder,
+            RoleRepository roleRepository, OrderRepository orderRepository, TokenRepository tokenRepository,
+            PasswordEncoder passwordEncoder,
             JwtToken jwtToken) {
         this.authManager = authManager;
         this.userRepository = userRepository;
@@ -61,10 +62,10 @@ public class UserServiceImpl implements UserService {
         User user = userRepository.findByEmail(loginDto.getEmail())
                 .orElseThrow();
 
-        HashMap<String, Object> test = new HashMap<>();
-        test.put("role", user.getRole());
+        HashMap<String, Object> role = new HashMap<>();
+        role.put("role", user.getRole());
 
-        String token = jwtToken.generateToken(user, test);
+        String token = jwtToken.generateToken(user, role);
         this.revokeUserToken(user);
         this.saveToken(user, token);
         JwtResponse jwtResponse = new JwtResponse();
@@ -139,9 +140,8 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public List<User> getUsersWithSort(String field, String direction) {
-        Sort sort = direction.equalsIgnoreCase(Sort.Direction.ASC.name()) ?
-        Sort.by(field).ascending() :
-        Sort.by(field).descending();
+        Sort sort = direction.equalsIgnoreCase(Sort.Direction.ASC.name()) ? Sort.by(field).ascending()
+                : Sort.by(field).descending();
 
         return userRepository.findAll(sort);
     }
@@ -181,7 +181,8 @@ public class UserServiceImpl implements UserService {
         // Sets the role of the user to null (for db deletion)
         user.setRole(null);
 
-        // Removes all orders that this user previously had, as this is no longer relevant.
+        // Removes all orders that this user previously had, as this is no longer
+        // relevant.
         for (Order order : orderRepository.findAllByUser(user)) {
             orderRepository.delete(order);
         }

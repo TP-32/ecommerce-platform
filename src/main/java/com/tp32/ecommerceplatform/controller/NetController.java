@@ -1,42 +1,71 @@
 package com.tp32.ecommerceplatform.controller;
 
-import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
-import com.tp32.ecommerceplatform.model.Product;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.ModelAndView;
+
+import com.tp32.ecommerceplatform.dto.NetDto;
+import com.tp32.ecommerceplatform.model.Net;
 import com.tp32.ecommerceplatform.model.User;
-import com.tp32.ecommerceplatform.repository.UserRepository;
+import com.tp32.ecommerceplatform.service.NetItemService;
 import com.tp32.ecommerceplatform.service.NetService;
-import com.tp32.ecommerceplatform.service.ProductService;
 
 @Controller
 public class NetController {
 
     private NetService netService;
-    private ProductService productService;
-    private UserRepository userRepository;
-    
-    public NetController(NetService netService, ProductService productService, UserRepository userRepository) {
+    private NetItemService netItemService;
+
+    public NetController(NetService netService, NetItemService netItemService) {
         this.netService = netService;
-        this.productService = productService;
-        this.userRepository = userRepository;
+        this.netItemService = netItemService;
     }
 
-    /*
-     * Simply displays the categories page to the user.
-     */
-    @PostMapping("/cart/add/{productId}")
-    @PreAuthorize("hasRole('USER')")
-    public ResponseEntity<Product> addToCart(@PathVariable("productId") Long productId, Model model, Authentication auth) throws Exception {
-        Product product = productService.getProduct(productId);
-        User user = userRepository.findByEmail(auth.getName()).get();
-        netService.addProduct(user, product);
-
-        return ResponseEntity.ok(product);
-        //return "redirect:/categories";
+    @GetMapping("/net")
+    public String getNet(Model model) {
+        User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        Net net = netService.findByUser(user);
+        if (net != null) 
+            model.addAttribute("netitems", net.getNetItems());
+        return "net.html";
     }
+    
+    @PostMapping("/net/add")
+    public ModelAndView createNetItem(@ModelAttribute NetDto netDto, @RequestParam(value = "productId", required = true) Long productId) {
+        User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        netItemService.create(user.getID(), productId, netDto.getQuantity());
+
+        ModelAndView model = new ModelAndView("redirect:/net");
+        return model;
+    }
+
+    @GetMapping("/net/delete")
+    public ModelAndView deleteNetItem(@RequestParam(value = "productId", required = true) Long productId) {
+        User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        netItemService.removeNetItem(user, productId);
+
+        ModelAndView model = new ModelAndView("redirect:/net");
+        return model;
+    }
+
+    @GetMapping("/net/submit")
+    public ModelAndView submitNet() {
+        User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+
+        Net net = netService.findByUser(user);
+
+        if (net == null) {
+            return new ModelAndView("redirect:/categories");
+        }
+        netService.close(net.getID()); 
+
+        ModelAndView model = new ModelAndView("redirect:/orders");
+        return model;
+    }
+
 }

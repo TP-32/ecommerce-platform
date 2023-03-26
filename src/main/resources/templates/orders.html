@@ -18,62 +18,95 @@
         </div>
     </header>
     <div class="detail">
-        <div class="recentOrders">
-            <div class="cardHeader">
-                <h2>Orders</h2>
-            </div>
+        <div th:if="${productview != 'true'}">
+            <div class="recentOrders">
+                <div class="cardHeader">
+                    <h2>Orders</h2>
+                </div>
 
-            <table>
                 <div th:if="${orders != null and !orders.isEmpty()}">
-                    <thead id="orderHeader">
-                        <tr>
-                            <td><a class="sort" th:href="@{'/orders/ID?sortDir=' + ${reverseSortDir}}">ID</a></td>
-                            <td><a class="sort" th:href="@{'/orders/name?sortDir=' + ${reverseSortDir}}">Name</a>
-                            </td>
-                            <td><a class="sort"
-                                    th:href="@{'/orders/price?sortDir=' + ${reverseSortDir}}">Price</a>
-                            </td>
-                            <td><a class="sort" th:href="@{'/orders/time?sortDir=' + ${reverseSortDir}}">Order
-                                    Time</a>
-                            </td>
-                            <td><a class="sort"
-                                    th:href="@{'/orders/status?sortDir=' + ${reverseSortDir}}">Status</a>
-                            </td>
-                        </tr>
-                    </thead>
-
-                    <tbody id="orders">
-                        <th:block th:each="order : ${orders}" id="orderList">
+                    <table>
+                        <thead id="orderHeader">
                             <tr>
-                                <td class="id" th:text="${order.ID}"></td>
-                                <td class="name" th:text="|${order.user.firstName} ${order.user.lastName}|"></td>
-                                <td th:text="|£${order.price}|"></td>
-                                <td th:text="${order.time}"></td>
-                                <td>
-                                    <span class="status pending" th:text="${order.status.name}"
-                                        th:if="${order.status.name} == 'Pending'"></span>
-                                    <span class="status processing" th:text="${order.status.name}"
-                                        th:if="${order.status.name} == 'Processing'"></span>
-                                    <span class="status shipping" th:text="${order.status.name}"
-                                        th:if="${order.status.name} == 'Shipping'"></span>
-                                    <span class="status completed" th:text="${order.status.name}"
-                                        th:if="${order.status.name} == 'Completed'"></span>
-                                    <span class="status declined" th:text="${order.status.name}"
-                                        th:if="${order.status.name} == 'Declined'"></span>
+                                <td><a class="sort" th:href="@{'/orders/ID?sortDir=' + ${reverseSortDir}}">ID</a></td>
+                                <td><a class="sort" th:href="@{'/orders/name?sortDir=' + ${reverseSortDir}}">Name</a>
+                                </td>
+                                <td><a class="sort" th:href="@{'/orders/price?sortDir=' + ${reverseSortDir}}">Price</a>
+                                </td>
+                                <td><a class="sort" th:href="@{'/orders/time?sortDir=' + ${reverseSortDir}}">Order
+                                        Time</a>
+                                </td>
+                                <td><a class="sort"
+                                        th:href="@{'/orders/status?sortDir=' + ${reverseSortDir}}">Status</a>
                                 </td>
                             </tr>
-                        </th:block>
-                    </tbody>
+                        </thead>
+                        <tbody id="orders">
+                            <th:block th:each="order : ${orders}" id="orderList">
+                                <tr th:onclick="'rowClicked(\'' + ${order.ID} + '\');'">
+                                    <td class="id" th:text="${order.ID}"></td>
+                                    <td class="name" th:text="|${order.user.firstName} ${order.user.lastName}|">
+                                    </td>
+                                    <td th:text="|£${order.price}|"></td>
+                                    <td th:text="${order.time}"></td>
+                                    <td>
+                                        <span class="status pending" th:text="${order.status.name}"
+                                            th:if="${order.status.name} == 'Pending'"></span>
+                                        <span class="status processing" th:text="${order.status.name}"
+                                            th:if="${order.status.name} == 'Processing'"></span>
+                                        <span class="status shipping" th:text="${order.status.name}"
+                                            th:if="${order.status.name} == 'Shipping'"></span>
+                                        <span class="status completed" th:text="${order.status.name}"
+                                            th:if="${order.status.name} == 'Completed'"></span>
+                                        <span class="status declined" th:text="${order.status.name}"
+                                            th:if="${order.status.name} == 'Declined'"></span>
+                                    </td>
+                                </tr>
+                            </th:block>
+                        </tbody>
+                    </table>
                 </div>
                 <div th:if="${orders.isEmpty()}">
                     <h2 style="text-align: center;">Oops, you do not have any orders yet.
                     </h2>
                     <h3 style="text-align: center;">Click <a th:href="@{/categories}"
-                        style="text-decoration: none; color: rgb(156, 1, 156)">here</a> to begin browsing!</h3>
+                            style="text-decoration: none; color: rgb(156, 1, 156)">here</a> to begin browsing!</h3>
                 </div>
-            </table>
+            </div>
+        </div>
+        <div th:unless="${productview != 'true'}"># <div class="recentOrders">
+                <div class="cardHeader">
+                    <h2>Order Items</h2>
+                </div>
+                <div class="cardHeader">
+                    <h2 style="color: white;">Order Items</h2>
+                </div>
+                <section class="content">
+                    <div class="productListing">
+                        <div class="card" th:each="orderItem : ${orderitems}">
+                            <div th:each="product : ${orderItem.product}">
+                                <div class="header">
+                                    <span id="parent" th:text="${product.name}"></span>
+                                </div>
+                                <img id="product-image" th:src="@{/{image}(image=${product.image})}" /><br>
+                                <span class="side">Price: <span class="child"
+                                        th:text="|£${product.price}|"></span></span>
+                            </div>
+                            <span class="side">Quantity: <span class="child"
+                                    th:text="${orderItem.quantity}"></span></span>
+                        </div>
+                    </div>
+                </section>
+            </div>
         </div>
     </div>
+    </div>
+
+    <script th:inline="javascript" type="text/javascript">
+        function rowClicked(value) {
+            location.href = "/orders?orderId=" + value;
+        }
+    </script>
 
     <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
     <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>

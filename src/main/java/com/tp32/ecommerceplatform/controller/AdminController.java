@@ -21,13 +21,16 @@ import com.tp32.ecommerceplatform.dto.ProductDto;
 import com.tp32.ecommerceplatform.dto.UpdateOrderDto;
 import com.tp32.ecommerceplatform.dto.UpdateUserDto;
 import com.tp32.ecommerceplatform.model.Order;
+import com.tp32.ecommerceplatform.model.OrderItem;
 import com.tp32.ecommerceplatform.model.Product;
 import com.tp32.ecommerceplatform.model.User;
 import com.tp32.ecommerceplatform.repository.CategoryRepository;
 import com.tp32.ecommerceplatform.service.AdminService;
+import com.tp32.ecommerceplatform.service.OrderItemsService;
 import com.tp32.ecommerceplatform.service.OrderService;
 import com.tp32.ecommerceplatform.service.ProductService;
 import com.tp32.ecommerceplatform.service.UserService;
+import com.tp32.ecommerceplatform.service.impl.OrderItemsServiceImpl.Popular;
 
 @Controller
 @RequestMapping("/admin")
@@ -37,14 +40,17 @@ public class AdminController {
     private ProductService productService;
     private CategoryRepository categoryRepository;
     private OrderService orderService;
+    private OrderItemsService orderItemsService;
     private UserService userService;
 
     public AdminController(AdminService adminService, ProductService productService,
-            CategoryRepository categoryRepository, OrderService orderService, UserService userService) {
+            CategoryRepository categoryRepository, OrderService orderService, OrderItemsService orderItemsService,
+            UserService userService) {
         this.adminService = adminService;
         this.productService = productService;
         this.categoryRepository = categoryRepository;
         this.orderService = orderService;
+        this.orderItemsService = orderItemsService;
         this.userService = userService;
     }
 
@@ -72,7 +78,7 @@ public class AdminController {
         Float price = orderService.sumPrice();
         if (price == null)
             price = 0F;
-        model.addAttribute("earning", String.format("£%.2f", price));
+        model.addAttribute("earning", String.format("£%,.2f", price));
         return "admin-dashboard.html";
     }
 
@@ -86,8 +92,10 @@ public class AdminController {
         Float price = orderService.sumPrice();
         if (price == null)
             price = 0F;
-        model.addAttribute("earning", String.format("£%.2f", price));
-        model.addAttribute("product", productService.getProduct(5L));
+        model.addAttribute("earning", String.format("£%,.2f", price));
+        Popular popular = orderItemsService.popularProduct();
+        model.addAttribute("product", popular.getProduct());
+        model.addAttribute("sale", popular.getCount());
         return "admin-analytics.html";
     }
 
@@ -214,16 +222,29 @@ public class AdminController {
     }
 
     @GetMapping("/orders")
-    public String orders(Model model, @RequestParam(value = "orderId", required = false) Long id) {
+    public String orders(Model model, @RequestParam(value = "orderId", required = false) Long id,
+            @RequestParam(value = "status", required = false) Long status) {
         if (id != null) {
             model.addAttribute("orderDto", new UpdateOrderDto());
             model.addAttribute("order", orderService.getOrder(id));
             model.addAttribute("status", orderService.getStatus());
+            if (orderService.getOrder(id) == null)
+                return "";
+
+            model.addAttribute("orderitems", orderService.getOrder(id).getOrderItems());
             return "admin-update-order.html";
         }
 
+        if (status != null) {
+            model.addAttribute("orders",
+                    orderService.getOrders().stream()
+                            .filter(o -> o.getStatus().getName().equals(orderService.getStatus(status).getName()))
+                            .collect(Collectors.toList()));
+        } else
+            model.addAttribute("orders", orderService.getOrders());
+
         model.addAttribute("status", orderService.getStatus());
-        model.addAttribute("orders", orderService.getOrders());
+
         model.addAttribute("reverseSortDir", "desc");
         return "admin-orders.html";
     }
@@ -244,6 +265,16 @@ public class AdminController {
         return model;
     }
 
+    @GetMapping("/orders/product/delete")
+    public ModelAndView deleteOrderItem(@RequestParam(value = "orderId", required = true) Long orderId,
+            @RequestParam(value = "productId", required = true) Long productId) {
+        List<OrderItem> orderItems = orderItemsService.removeOrderItem(orderId, productId);
+        if (orderItems.isEmpty())
+            return new ModelAndView("redirect:/admin/orders");
+
+        return new ModelAndView("redirect:/admin/orders?orderId=" + orderId);
+    }
+
     @GetMapping("/orders/{sort}")
     public String orders(Model model, @PathVariable("sort") String sort, @RequestParam("sortDir") String sortDir) {
         if (sort.equals("name"))
@@ -258,9 +289,10 @@ public class AdminController {
 
     @GetMapping("/orders/list")
     @ResponseBody
-    public List<Order> getOrders(@RequestParam(value = "status", required = false) Long status) {
+    public List<Order> getOrders(@RequestParam(value = "status", required = true) Long status) {
         if (status == 0)
             return orderService.getOrders();
+
         return orderService.getOrders().stream()
                 .filter(o -> o.getStatus().getName().equals(orderService.getStatus(status).getName()))
                 .collect(Collectors.toList());

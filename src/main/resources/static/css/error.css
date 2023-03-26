@@ -1,0 +1,49 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+header {
+    background: linear-gradient(rgba(0, 0, 0, 0), rgba(194, 7, 144, 0)), url('../images/Background2.jpg');
+    background-position: left;
+    background-repeat: no-repeat;
+    height: 100vh;
+    -webkit-background-size: cover;
+    background-size: cover;
+    background-position: center center;
+    position: relative;
+}
+
+.text {
+    position: absolute;
+    width: 620px;
+    height: 300px;
+    margin: auto;
+    text-align: center;
+    top: 30%;
+    left: 0;
+    right: 0;
+}
+
+.text h1 {
+    text-align: center;
+    color: aliceblue;
+    font-size: 50px;
+}
+
+.text a {
+    color: antiquewhite;
+    background: rgb(113, 3, 113);
+    font-weight: bold;
+    text-decoration: none;
+    padding: 15px 30px;
+    border-radius: 28px;
+    border: 2px solid transparent;
+    transition: .3s;
+}
+
+.text a:hover {
+    background: rgb(81, 2, 83);
+    cursor: pointer;
+    border: 3px solid rgb(113, 3, 113);
+}

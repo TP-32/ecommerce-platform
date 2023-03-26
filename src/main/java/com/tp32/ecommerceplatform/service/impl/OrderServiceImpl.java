@@ -1,13 +1,17 @@
 package com.tp32.ecommerceplatform.service.impl;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import com.tp32.ecommerceplatform.dto.UpdateOrderDto;
+import com.tp32.ecommerceplatform.model.Inventory;
 import com.tp32.ecommerceplatform.model.Order;
+import com.tp32.ecommerceplatform.model.OrderItem;
 import com.tp32.ecommerceplatform.model.Status;
 import com.tp32.ecommerceplatform.repository.OrderRepository;
 import com.tp32.ecommerceplatform.repository.StatusRepository;
@@ -29,11 +33,6 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public long count() {
-        return orderRepository.count();
-    }
-
-    @Override
     public long count(Status status) {
         return orderRepository.count(status);
     }
@@ -41,13 +40,6 @@ public class OrderServiceImpl implements OrderService {
     @Override
     public Float sumPrice() {
         return orderRepository.sumPrice();
-    }
-
-    @Override
-    public Order getOrder(Long id) {
-        if (orderRepository.existsById(id))
-            return orderRepository.findById(id).get();
-        return null;
     }
 
     @Override
@@ -71,18 +63,9 @@ public class OrderServiceImpl implements OrderService {
     @Override
     public Order updateOrder(Long id, UpdateOrderDto orderDto) {
         Order updateOrder = orderRepository.findById(id).get();
-        updateOrder.setPrice(orderDto.getPrice());
+        //updateOrder.setPrice(orderDto.getPrice());
 
         Status status = statusRepository.findByName(orderDto.getStatus()).get();
-        if (!updateOrder.getStatus().getName().equals("Completed") && status.getName().equals("Completed")) {
-            // TODO: Query the OrderItems, for each Product reduce the Stock by 1
-            System.out.println("Stock to be reduced.");
-        } else if (updateOrder.getStatus().getName().equals("Completed") && !status.getName().equals("Completed")) {
-            // TODO: Query the OrderItems, for each Product increase the Stock by 1
-            System.out.println("Stock to be increased, as this order is no longer valid.");
-        }
-
-        // TODO: Query the OrderItems, if any Product Stock = 0, then Status = Declined
 
         updateOrder.setStatus(status);
         // Date and User cannot be modified
@@ -94,6 +77,13 @@ public class OrderServiceImpl implements OrderService {
     @Override
     public Order deleteOrder(Long id) {
         Order order = orderRepository.findById(id).get();
+
+        for (OrderItem orderItem : order.getOrderItems()) {
+            Inventory inventory = orderItem.getProduct().getInventory();
+            inventory.setStock(inventory.getStock() + orderItem.getQuantity());
+            orderItem.getProduct().setInventory(inventory);
+        }
+
         orderRepository.deleteById(id);
         return order;
     }
@@ -120,6 +110,32 @@ public class OrderServiceImpl implements OrderService {
         if (statusRepository.existsById(id))
             return statusRepository.findById(id).get();
         return null;
+    }
+
+    // New changes
+
+    @Override
+    public Order create() {
+        Order order = new Order();
+        order.setOrderItems(new ArrayList<>());
+        order.setPrice(0F);
+        return save(order);
+    }
+
+    @Override
+    public Order save(Order order) {
+        return orderRepository.save(order);
+    }
+
+    @Override
+    public Order getOrder(Long id) {
+        Optional<Order> order = orderRepository.findById(id);
+        return order.isEmpty() ? null : order.get();
+    }
+
+    @Override
+    public List<Order> getAllOrders() {
+        return orderRepository.findAll();
     }
 
 }

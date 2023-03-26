@@ -25,7 +25,8 @@
                     <a th:href="@{/fish/details/{id}(id=${product.ID})}">[[${product.name}]] </a>
                 </div>
             </div>
-            <form th:action="@{/cart/add/{product}(product=${product.ID})}" method="POST">
+
+            <form th:action="@{'/net/add?productId=' + ${product.ID}}" th:object="${netDto}" method="POST">
                 <div class="row product-row">
                     <div class="col-5 col-md-12">
                         <div class="product-img" id="product-img">
@@ -56,13 +57,13 @@
                                     <i class='bx bx-minus'></i>
                                 </span>
                                 <span class="product-quantity">1</span>
+                                <input name="quantity" id="quantity" th:name="quantity" class="quantity" th:value="1" type="hidden"/>
                                 <span class="product-quantity-btn">
                                     <i class='bx bx-plus'></i>
                                 </span>
                             </div>
                             <div>
-                                <button class="btn-flat btn-hover">add to
-                                    cart</button>
+                                <button class="btn-flat btn-hover">Add To Cart</button>
                             </div>
                         </div>
                     </div>
@@ -83,11 +84,15 @@
         minusBtn.addEventListener('click', () => {
             if (quantity.innerText > 1) {
                 quantity.innerText = parseInt(quantity.innerText) - 1;
+
+                document.getElementById("quantity").value = quantity.innerText;
             }
         });
         plusBtn.addEventListener('click', () => {
             if (quantity.innerText < product.inventory.stock) {
                 quantity.innerText = parseInt(quantity.innerText) + 1;
+
+                document.getElementById("quantity").value = quantity.innerText;
             }
         });
     </script>

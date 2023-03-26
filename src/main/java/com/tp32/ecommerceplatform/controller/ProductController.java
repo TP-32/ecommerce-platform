@@ -8,6 +8,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
+import com.tp32.ecommerceplatform.dto.NetDto;
 import com.tp32.ecommerceplatform.model.Product;
 import com.tp32.ecommerceplatform.service.ProductService;
 
@@ -93,23 +94,10 @@ public class ProductController {
         return "basket.html";
     }
 
-    /*
-     * A parameter needs to be mapped here.
-     * With the 'Shop Now' button, once clicked, a request should be made to
-     * /fish/details with a parameter, this will likely be its ID
-     * Then the GetMapping method below will need to grab that id, find the product,
-     * and add it to the model as an attribute, before
-     * redirecting the user to the page, which should then have access to that
-     * model.
-     * GetMapping("/fish/details")
-     * public String getDetails(@RequestParam(required = true) String id) {
-     * return "ID: " + id;
-     * }
-     * This will then be mapped to /fish/details?id={id}
-     */
     @GetMapping("/fish/details/{productId}")
     public String getDetails(@PathVariable("productId") Long id, Model model) {
         model.addAttribute("product", productService.getProduct(id));
+        model.addAttribute("netDto", new NetDto());
         return "fishdetail.html";
     }
 
