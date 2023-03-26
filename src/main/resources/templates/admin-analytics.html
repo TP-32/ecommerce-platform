@@ -94,8 +94,7 @@
                                     <div class="imgBx"><img th:src="@{/{image}(image=${product.image})}" />
                                     </div>
                                     <span class="child" th:text="|£${product.price}|"></span>
-                                    <!-- TODO: Sales is determined by how many 'Completed' orders have this product -->
-                                    <span class="child" th:text="|${sale} Sales|"></span>
+                                    <span class="child" th:text="|${sale} Orders|"></span>
                                 </td>
                             </tr>
                         </th>

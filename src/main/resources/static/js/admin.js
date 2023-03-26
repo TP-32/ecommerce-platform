@@ -21,17 +21,18 @@ toggle.onclick = function () {
 // Dynamically updates the table based on the status dropdown
 $('#status').on('change', function () {
   $.ajax({
-    url: '/admin/orders/list?status=' + $("#status").val(),
+    url: '/admin/orders/list',
     type: 'GET',
     data: {
-      category: $(this).val(),
+      status: $(this).val(),
     },
 
-    success: function (category) {
+    success: function (status) {
       if ($("#status").val() == 0) {
         location.reload();
         return;
       }
+
       $('#orderHeader').empty();
       $('#orders').empty();
 
@@ -56,19 +57,24 @@ $('#status').on('change', function () {
         var formattedDate = year + "-" + month + "-" + day + " " + hour + ":" + minute + ":" + second + ":" + milli;
         return formattedDate;
       };
-      $(category).each(function () {
 
-        $('#orders').append('<tr onclick="rowClicked(\'' + this.id + '\');">' + 
+      $(status).each(function () {
+
+        $('#orders').append('<tr onclick="rowClicked(\'' + this.id + '\');">' +
           '<td class="id">' + this.id + '</td>' +
           '<td class="name">' + this.user.firstName + ' ' + this.user.lastName + '</td>' +
           '<td> £' + formatPrice(this.price) + '</td>' +
           '<td>' + $.formattedDate(this.time) + '</td></tr>');
       })
 
-      if (category.length == 0) {
+      if (status.length == 0) {
         $('#orderHeader').empty();
         $('#orders').append('<h2 style="text-align: center;">Oops, this filter has returned no valid records.</h2>');
       }
+    },
+    error: function (data, textStatus, errorThrown) {
+      console.log(textStatus, errorThrown);
+      console.log("Error", data.error)
     }
   })
 })

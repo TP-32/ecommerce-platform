@@ -38,47 +38,56 @@
                     </select>
                 </div>
 
-                <table>
-                    <thead id="orderHeader">
-                        <tr>
-                            <td><a class="sort" th:href="@{'/admin/orders/ID?sortDir=' + ${reverseSortDir}}">ID</a></td>
-                            <td><a class="sort" th:href="@{'/admin/orders/name?sortDir=' + ${reverseSortDir}}">Name</a>
-                            </td>
-                            <td><a class="sort"
-                                    th:href="@{'/admin/orders/price?sortDir=' + ${reverseSortDir}}">Price</a></td>
-                            <td><a class="sort" th:href="@{'/admin/orders/time?sortDir=' + ${reverseSortDir}}">Order
-                                    Time</a>
-                            </td>
-                            <td><a class="sort"
-                                    th:href="@{'/admin/orders/status?sortDir=' + ${reverseSortDir}}">Status</a></td>
-                        </tr>
-                    </thead>
-
-                    <tbody id="orders">
-                        <th:block th:each="order : ${orders}" id="orderList">
-                            <!-- Hides 'Completed' orders from Order List (unless specifically filtered) -->
-                            <tr th:onclick="'rowClicked(\'' + ${order.ID} + '\');'"
-                                th:if="${order.status.name} != 'Completed'">
-                                <td class="id" th:text="${order.ID}"></td>
-                                <td class="name" th:text="|${order.user.firstName} ${order.user.lastName}|"></td>
-                                <td th:text="|£${order.price}|"></td>
-                                <td th:text="${order.time}"></td>
-                                <td>
-                                    <span class="status pending" th:text="${order.status.name}"
-                                        th:if="${order.status.name} == 'Pending'"></span>
-                                    <span class="status processing" th:text="${order.status.name}"
-                                        th:if="${order.status.name} == 'Processing'"></span>
-                                    <span class="status shipping" th:text="${order.status.name}"
-                                        th:if="${order.status.name} == 'Shipping'"></span>
-                                    <span class="status completed" th:text="${order.status.name}"
-                                        th:if="${order.status.name} == 'Completed'"></span>
-                                    <span class="status declined" th:text="${order.status.name}"
-                                        th:if="${order.status.name} == 'Declined'"></span>
+                <div th:if="${orders.empty}">
+                    <h2 style="text-align: center;">Oops, there are no orders right now.
+                    </h2>
+                </div>
+                <div th:unless=${orders.empty}>
+                    <table>
+                        <thead id="orderHeader">
+                            <tr>
+                                <td><a class="sort" th:href="@{'/admin/orders/ID?sortDir=' + ${reverseSortDir}}">ID</a>
                                 </td>
+                                <td><a class="sort"
+                                        th:href="@{'/admin/orders/name?sortDir=' + ${reverseSortDir}}">Name</a>
+                                </td>
+                                <td><a class="sort"
+                                        th:href="@{'/admin/orders/price?sortDir=' + ${reverseSortDir}}">Price</a></td>
+                                <td><a class="sort" th:href="@{'/admin/orders/time?sortDir=' + ${reverseSortDir}}">Order
+                                        Time</a>
+                                </td>
+                                <td><a class="sort"
+                                        th:href="@{'/admin/orders/status?sortDir=' + ${reverseSortDir}}">Status</a></td>
                             </tr>
-                        </th:block>
-                    </tbody>
-                </table>
+                        </thead>
+
+                        <tbody id="orders">
+
+                            <th:block th:each="order : ${orders}" id="orderList">
+                                <!-- Hides 'Completed' orders from Order List (unless specifically filtered) -->
+                                <tr th:onclick="'rowClicked(\'' + ${order.ID} + '\');'"
+                                    th:if="${order.status.name} != 'Completed'">
+                                    <td class="id" th:text="${order.ID}"></td>
+                                    <td class="name" th:text="|${order.user.firstName} ${order.user.lastName}|"></td>
+                                    <td th:text="|£${order.price}|"></td>
+                                    <td th:text="${order.time}"></td>
+                                    <td>
+                                        <span class="status pending" th:text="${order.status.name}"
+                                            th:if="${order.status.name} == 'Pending'"></span>
+                                        <span class="status processing" th:text="${order.status.name}"
+                                            th:if="${order.status.name} == 'Processing'"></span>
+                                        <span class="status shipping" th:text="${order.status.name}"
+                                            th:if="${order.status.name} == 'Shipping'"></span>
+                                        <span class="status completed" th:text="${order.status.name}"
+                                            th:if="${order.status.name} == 'Completed'"></span>
+                                        <span class="status declined" th:text="${order.status.name}"
+                                            th:if="${order.status.name} == 'Declined'"></span>
+                                    </td>
+                                </tr>
+                            </th:block>
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
 

@@ -47,7 +47,7 @@
                             <div class="field">
                                 <td><label for="price">Price</label></td>
                                 <td><input type="number" min="0" step="0.01" name="price" id="price" required
-                                        th:name="price" th:value="${order.price}" /></td>
+                                        th:name="price" th:value="${order.price}" readonly /></td>
                             </div>
                         </tr>
                         <tr>
@@ -84,14 +84,16 @@
             <div class="productListing">
                 <div class="card" th:each="orderItem : ${orderitems}">
                     <!--<p th:text="|${orderItem.firstName} ${orderItem.user.lastName}|"></p>-->
-                    <div class="header">
-                        <span id="parent" th:text="${orderItem.name}"></span>
-                        <!-- TODO: Remove Product from OrderItems Listing -->
-                        <a href="#"><ion-icon style="font-size: 30px;" name="close-circle-outline"></ion-icon></a>
+                    <div th:each="product : ${orderItem.product}">
+                        <div class="header">
+                            <span id="parent" th:text="${product.name}"></span>
+                            <a th:href="@{'/admin/orders/product/delete?orderId=' + ${order.ID} + '&productId=' + ${product.ID}}"><ion-icon
+                                style="font-size: 30px;" name="close-circle-outline"></ion-icon></a>
+                        </div>
+                        <img id="product-image" th:src="@{/{image}(image=${product.image})}" /><br>
+                        <span class="side">Price: <span class="child" th:text="|£${product.price}|"></span></span>
                     </div>
-                    <img id="product-image" th:src="@{/{image}(image=${orderItem.image})}" /><br>
-                    <!--<span class="child" th:text="|${orderItem.quantity}|"></span>-->
-                    <span class="child" th:text="|£${orderItem.price}|"></span>
+                    <span class="side">Quantity: <span class="child" th:text="${orderItem.quantity}"></span></span>
                 </div>
             </div>
         </section>

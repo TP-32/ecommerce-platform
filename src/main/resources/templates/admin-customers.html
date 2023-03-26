@@ -45,24 +45,23 @@
                             </td>
                             <td><a class="sort"
                                     th:href="@{'/admin/customers/role?sortDir=' + ${reverseSortDir}}">Role</a></td>
-            </div>
-            </tr>
-            </thead>
+                        </tr>
+                    </thead>
 
-            <tbody>
-                <th:block th:each="customer : ${customers}" id="customerList">
-                    <tr th:onclick="'rowClicked(\'' + ${customer.ID} + '\');'">
-                        <td class="id" th:text=${customer.ID}></td>
-                        <td class="name" th:text="${customer.firstName}"></td>
-                        <td class="name" th:text="${customer.lastName}"></td>
-                        <td th:text="${customer.email}"></td>
-                        <td th:text="${customer.role.name}"></td>
-                    </tr>
-                </th:block>
-            </tbody>
-            </table>
+                    <tbody>
+                        <th:block th:each="customer : ${customers}" id="customerList">
+                            <tr th:onclick="'rowClicked(\'' + ${customer.ID} + '\');'">
+                                <td class="id" th:text=${customer.ID}></td>
+                                <td class="name" th:text="${customer.firstName}"></td>
+                                <td class="name" th:text="${customer.lastName}"></td>
+                                <td th:text="${customer.email}"></td>
+                                <td th:text="${customer.role.name}"></td>
+                            </tr>
+                        </th:block>
+                    </tbody>
+                </table>
+            </div>
         </div>
-        </table>
     </div>
 
     <script th:inline="javascript" type="text/javascript">
