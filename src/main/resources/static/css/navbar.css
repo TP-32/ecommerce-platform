@@ -11,7 +11,7 @@
 .nav li a {
     color: rgb(242, 239, 244);
     padding: 5px 20px;
-    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    font-family: "Ubuntu", sans-serif;
     font-size: 15px;
     text-decoration: none;
 }

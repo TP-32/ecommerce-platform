@@ -22,7 +22,7 @@
 }
 
 body {
-    font-family: "Poppins", sans-serif;
+    font-family: "Ubuntu", sans-serif;
     overflow-x: hidden;
     position: relative;
     background-color: black;
@@ -128,7 +128,7 @@ img {
     font-weight: 600;
     text-transform: capitalize;
     font-size: 25px;
-    font-family: "Poppins", sans-serif;
+    font-family: "Ubuntu", sans-serif;
 }
 
 .filter-list>li {
