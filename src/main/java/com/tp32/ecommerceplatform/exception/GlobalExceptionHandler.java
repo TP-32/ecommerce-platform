@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @ControllerAdvice
 public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
@@ -21,14 +22,9 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
      * Thrown if an invalid input is given, for example a duplicate email.
      */
     @ExceptionHandler(InputException.class)
-    public ResponseEntity<String> handleInputException(InputException exception) {
-        String response =
-                  "<header>"
-                + "<h1><span>An exception has occurred: "
-                + "</span></h1><h2 style='color:red;'>" + exception.getMessage() + "</h2>"
-                + "</header>";
-
-        return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
+    public String handleInputException(InputException exception, RedirectAttributes re) {
+        re.addFlashAttribute("status", 400);
+        return "redirect:error";
     }
 
     /*
