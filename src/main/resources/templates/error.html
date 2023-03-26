@@ -7,11 +7,19 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Error</title>
     <link rel="stylesheet" th:href="@{/css/error.css}" />
+    <link rel="stylesheet" th:href="@{/css/navbar.css}" />
 </head>
 
 <body>
     <header>
+        <div class="holder">
+            <div th:replace="~{fragments/navbar :: navbar}"></div>
+        </div>
         <div class="text" th:switch="${status}">
+            <div th:case="'400'">
+                <h1 style="font-size: 100px;">400</h1></br>
+                <h1>This email already exists!</h1>
+            </div>
             <div th:case="'403'">
                 <h1 style="font-size: 100px;">403</h1></br>
                 <h1>You do not have access to this page!</h1>
