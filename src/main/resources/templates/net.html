@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Orders</title>
+    <link rel="stylesheet" th:href="@{/css/net.css}" />
+    <link rel="stylesheet" th:href="@{/css/navbar.css}" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
+</head>
+
+<body>
+    <header>
+        <div class="holder">
+            <div th:replace="~{fragments/navbar :: navbar}"></div>
+        </div>
+    </header>
+    <div class="detail">
+        <div>
+            <div class="recentNet">
+                <div class="cardHeader">
+                    <h2>Net</h2>
+                </div>
+
+                <div th:if="${netitems != null and !netitems.empty}">
+                    <section class="content">
+                        <div class="productListing">
+                            <div class="card" th:each="netItem : ${netitems}">
+                                <div th:each="product : ${netItem.product}">
+                                    <div class="header">
+                                        <span id="parent" th:text="${product.name}"></span>
+                                        <a th:href="@{'/net/delete?productId=' + ${product.ID}}"><ion-icon
+                                                style="font-size: 30px;" name="close-circle-outline"></ion-icon></a>
+                                    </div>
+                                    <img id="product-image" th:src="@{/{image}(image=${product.image})}" /><br>
+                                    <span class="side">Price: <span class="child"
+                                            th:text="|£${product.price}|"></span></span>
+                                </div>
+                                <span class="side">Quantity: <span class="child"
+                                        th:text="${netItem.quantity}"></span></span>
+                            </div>
+                        </div>
+                    </section>
+                    <a th:href="@{/net/submit}" class="btn">Checkout</a>
+                </div>
+
+                <div th:unless="${netitems != null and !netitems.empty}">
+                    <h2 style="text-align: center;">Oops, your net is empty!</h2>
+                    <h3 style="text-align: center;">Click <a th:href="@{/categories}"
+                            style="text-decoration: none; color: rgb(156, 1, 156)">here</a> to begin browsing!</h3>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script th:inline="javascript" type="text/javascript">
+        function rowClicked(value) {
+            location.href = "/orders?orderId=" + value;
+        }
+    </script>
+
+    <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+</body>
