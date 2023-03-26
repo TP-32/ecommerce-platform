@@ -1,0 +1,109 @@
+body {
+    background-color: black;
+}
+
+* {
+    font-family: "Ubuntu", sans-serif;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.holder {
+    width: 1165px;
+    margin: auto;
+}
+
+.detail {
+    position: relative;
+    width: 100%;
+    padding: 50px;
+    display: grid;
+    grid-template-columns: 2fr fr;
+    grid-gap: 40px;
+}
+
+.detail .recentNet {
+    position: relative;
+    display: grid;
+    background: var(--white);
+    padding: 20px;
+    border-radius: 20px;
+    box-shadow: 0 7px 25px rgba(255, 255, 255, 0.686);
+    display: table;
+    table-layout: fixed;
+    width: 100%;
+    background-color: white;
+}
+
+.detail .cardHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+}
+
+.productListing {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    padding-bottom: 10px;
+    margin: 10px;
+    -webkit-overflow-scrolling: touch;
+    transform: rotateX(180deg);
+}
+
+.productListing .card {
+    text-align: center;
+    width: 300px;
+    margin: 10px 10px 5px;
+    height: 300px;
+    box-shadow: 0 1px 25px rgba(0, 0, 0, 0.686);
+    background-color: white;
+    border-radius: 20px;
+    transform: rotateX(-180deg);
+}
+
+.productListing .card .header {
+    display: block;
+    margin: 10px auto;
+}
+
+.productListing .card .child {
+    font-size: 14px;
+    color: rgb(153, 153, 153);
+}
+
+.productListing .card .side {
+    font-size: 14px;
+    color: rgb(34, 34, 34);
+}
+
+#product-image {
+    margin: auto;
+    height: 200px;
+    width: 200px;
+    box-sizing: border-box;
+    border-radius: 100px;
+    background-size: cover;
+}
+
+.btn {
+    background-color: rgb(171, 4, 171);
+    color: white;
+    padding: 12px;
+    margin: 10px 0;
+    border: none;
+    width: 100%;
+    border-radius: 3px;
+    cursor: pointer;
+    font-size: 17px;
+}
+
+.btn:hover {
+    background-color: rgb(113, 3, 113);
+}
+
+.card ion-icon {
+    color: red;
+    margin-left: 30%;
+  }
