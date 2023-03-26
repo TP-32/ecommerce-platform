@@ -34,7 +34,8 @@
                                         <a th:href="@{'/net/delete?productId=' + ${product.ID}}"><ion-icon
                                                 style="font-size: 30px;" name="close-circle-outline"></ion-icon></a>
                                     </div>
-                                    <img id="product-image" th:src="@{/{image}(image=${product.image})}" /><br>
+                                    <a th:href="@{/fish/details/{productId}(productId=${product.ID})}"><img
+                                            id="product-image" th:src="@{/{image}(image=${product.image})}" /></a><br>
                                     <span class="side">Price: <span class="child"
                                             th:text="|£${product.price}|"></span></span>
                                 </div>
