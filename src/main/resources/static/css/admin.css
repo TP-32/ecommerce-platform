@@ -771,6 +771,11 @@ table .description {
   color: var(--black2);
 }
 
+.productListing .card .side {
+  font-size: 14px;
+  color: var(--black1);
+}
+
 #product-image {
   margin: auto;
   height: 200px;

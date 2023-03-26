@@ -7,7 +7,10 @@ import com.tp32.ecommerceplatform.model.Order;
 import com.tp32.ecommerceplatform.model.Status;
 
 public interface OrderService {
+    Order create();
+    Order save(Order order);
     Order getOrder(Long id);
+    List<Order> getAllOrders();
     Order updateOrder(Long id, UpdateOrderDto orderDto);
     Order deleteOrder(Long id);
     List<Order> getOrders();
@@ -17,6 +20,5 @@ public interface OrderService {
     Status getStatus(Long id);
     List<Status> getStatus();
     Float sumPrice();
-    long count();
     long count(Status status);
 }

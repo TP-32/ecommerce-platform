@@ -1,9 +1,14 @@
 package com.tp32.ecommerceplatform.service;
 
-import com.tp32.ecommerceplatform.model.Order;
+import java.util.List;
+
 import com.tp32.ecommerceplatform.model.OrderItem;
-import com.tp32.ecommerceplatform.model.Product;
+import com.tp32.ecommerceplatform.service.impl.OrderItemsServiceImpl.Popular;
 
 public interface OrderItemsService {
-   OrderItem addOrderItem(Order order, Product product);
+   OrderItem save(OrderItem orderItem);
+   OrderItem getOrderItem(Long orderId, Long productId);
+   List<OrderItem> getAllOrderItems();
+   Popular popularProduct();
+   List<OrderItem> removeOrderItem(Long orderId, Long productId);
 }
