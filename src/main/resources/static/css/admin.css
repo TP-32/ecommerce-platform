@@ -667,6 +667,7 @@ select {
 
 input[type="submit"],
 input[type="reset"],
+input[name="reset"],
 #return {
   background: #eee;
   padding: 6px 12px;
@@ -734,6 +735,8 @@ table .description {
 }
 
 .productListing {
+  display: flex;
+  flex-direction: row;
   overflow-x: auto;
   overflow-y: hidden;
   white-space: nowrap;
@@ -745,11 +748,10 @@ table .description {
 }
 
 .productListing .card {
-  display: inline-block;
   text-align: center;
+  min-width: 300px;
   width: 300px;
   margin: 10px 10px 5px;
-  height: 300px;
   box-shadow: 0 1px 25px rgba(0, 0, 0, 0.686);
   background-color: white;
   border-radius: 20px;
@@ -757,8 +759,14 @@ table .description {
 }
 
 .productListing .card .header {
-  display: block;
+  display: flex;
   margin: 10px auto;
+  justify-content: center;
+  white-space: break-spaces;
+}
+
+.productListing .card a {
+  display: flex;
 }
 
 .productListing .card ion-icon {
@@ -783,4 +791,18 @@ table .description {
   box-sizing: border-box;
   border-radius: 100px;
   background-size: cover;
+}
+
+.alert {
+  padding: 0.75rem 1.25rem;
+  margin-bottom: 1rem;
+  border: 1px solid transparent;
+  border-radius: 0.25rem;
+  text-align: center;
+}
+
+.alert-danger {
+  color: #721c24;
+  background-color: #f8d7da;
+  border-color: #f5c6cb;
 }
