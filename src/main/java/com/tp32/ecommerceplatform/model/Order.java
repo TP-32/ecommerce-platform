@@ -5,6 +5,8 @@ import jakarta.persistence.*;
 import java.util.Date;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 /**
  * A model which holds the application data of a particular Order, used to be
  * displayed within a view.
@@ -17,23 +19,24 @@ public class Order {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    /* created_at TIMESTAMP to show what time the order was ordered at */
+    /* Created at Date to show what time the order was made at */
     @Column(name = "order_time")
     private Date time;
 
     @Column(name = "price", nullable = false)
     private Float price;
 
-    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    private List<OrderItem> orderItems;
-
     @ManyToOne
     @JoinColumn(name = "user_id", referencedColumnName = "id", nullable = false)
     private User user;
 
-    @OneToOne(fetch = FetchType.EAGER)
+    @ManyToOne
     @JoinColumn(name = "status_id", referencedColumnName = "id")
     private Status status;
+
+    @OneToMany(cascade = CascadeType.ALL)
+    @JsonIgnore
+    private List<OrderItem> orderItems;
 
     public Order() {}
 
@@ -82,5 +85,4 @@ public class Order {
     public void setOrderItems(List<OrderItem> orderItems) {
         this.orderItems = orderItems;
     }
-
 }

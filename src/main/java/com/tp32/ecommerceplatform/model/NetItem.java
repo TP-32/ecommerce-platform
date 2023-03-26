@@ -1,7 +1,5 @@
 package com.tp32.ecommerceplatform.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
 import jakarta.persistence.*;
 
 /**
@@ -9,8 +7,8 @@ import jakarta.persistence.*;
  * displayed within a view.
  */
 @Entity
-@Table(name="orderitem")
-public class OrderItem {
+@Table(name="netitem")
+public class NetItem {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -20,13 +18,12 @@ public class OrderItem {
     private Integer quantity;
 
     @ManyToOne
-    @JsonIgnore
-    private Order order;
+    private Net net;
 
     @ManyToOne
     private Product product;
 
-    public OrderItem() {}
+    public NetItem() {}
 
     // Getters
     public Long getID() {
@@ -37,8 +34,8 @@ public class OrderItem {
         return this.quantity;
     }
 
-    public Order getOrder() {
-        return this.order;
+    public Net getNet() {
+        return this.net;
     }
 
     public Product getProduct() {
@@ -50,8 +47,8 @@ public class OrderItem {
         this.quantity = quantity;
     }
 
-    public void setOrder(Order order) {
-        this.order = order;
+    public void setNet(Net net) {
+        this.net = net;
     }
 
     public void setProduct(Product product) {

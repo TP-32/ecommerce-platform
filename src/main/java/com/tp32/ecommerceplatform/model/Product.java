@@ -1,7 +1,5 @@
 package com.tp32.ecommerceplatform.model;
 
-import java.util.List;
-
 import jakarta.persistence.*;
 
 /**
@@ -35,9 +33,6 @@ public class Product {
     @OneToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "inventory_id", referencedColumnName = "id")
     private Inventory inventory;
-
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "product")
-    private List<Net> nets;
 
     public Product(String name, String image, String description, Float price) {
         this.name = name;
