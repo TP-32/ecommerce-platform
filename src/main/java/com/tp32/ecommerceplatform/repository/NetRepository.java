@@ -9,4 +9,5 @@ import com.tp32.ecommerceplatform.model.User;
 
 public interface NetRepository extends JpaRepository<Net, Long> {
     List<Net> findAllByUser(User user);
+    Net findByUser(User user);
 }
