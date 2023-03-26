@@ -82,3 +82,7 @@ $('#status').on('change', function () {
 function formatPrice(x) {
   return x.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",");
 }
+
+function customReset(x) {
+  location.href = x;
+}

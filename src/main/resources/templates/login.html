@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SignIn - IFM</title>
+    <title>Sign In</title>
     <style media="screen">
         body {
             background-color: black;
@@ -24,7 +24,7 @@
         .nav li a {
             color: rgb(242, 239, 244);
             padding: 5px 20px;
-            font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+            font-family: "Ubuntu", sans-serif;
             font-size: 15px;
             text-decoration: none;
         }
@@ -55,7 +55,7 @@
         }
 
         form * {
-            font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+            font-family: "Ubuntu", sans-serif;
             width: 450px;
             color: white;
             letter-spacing: 2px;
@@ -115,7 +115,7 @@
 <div class="holder">
     <div th:replace="~{fragments/navbar :: navbar}"></div>
 </div>
-<form th:action="@{/login}" th:object="${user}" method="POST">
+<form th:action="@{login}" th:object="${userDto}" method="POST">
     <h3>Login Here</h3>
 
     <label for="email">Email: </label>

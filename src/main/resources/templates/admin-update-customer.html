@@ -39,30 +39,46 @@
                         method="POST" autocomplete="off" class="create-form">
                         <tr>
                             <div class="field">
-                                <td><label for="firstName">First Name</label></td>
-                                <td><input type="text" name="firstName" id="firstName" required th:name="firstName"
-                                        th:value="${customer.firstName}" /></td>
+                                <td style="width: 20%;"><label for="firstName">First Name</label></td>
+                                <td style="width: 50%;"><input type="text" name="firstName" id="firstName" required
+                                        th:name="firstName" th:field="*{firstName}" /></td>
+                                <td style="width: 30%;">
+                                    <p class="alert alert-danger" th:if="${#fields.hasErrors('firstName')}"
+                                        th:errors="*{firstName}"></p>
+                                </td>
                             </div>
                         </tr>
                         <tr>
                             <div class="field">
                                 <td><label for="lastName">Last Name</label></td>
                                 <td><input type="text" name="lastName" id="lastName" th:name="lastName"
-                                        th:value="${customer.lastName}" /></td>
+                                        th:field="*{lastName}" /></td>
+                                <td style="width: 30%;">
+                                    <p class="alert alert-danger" th:if="${#fields.hasErrors('lastName')}"
+                                        th:errors="*{lastName}"></p>
+                                </td>
                             </div>
                         </tr>
                         <tr>
                             <div class="field">
-                                <td><label for="email">Email</label></td>
-                                <td><input type="text" name="email" id="email" required th:name="email"
-                                        th:value="${customer.email}" /></td>
+                                <td style="width: 20%;"><label for="email">Email</label></td>
+                                <td style="width: 50%;"><input type="text" name="email" id="email" required th:name="email"
+                                        th:field="*{email}" /></td>
+                                <td style="width: 30%;">
+                                    <p class="alert alert-danger" th:if="${#fields.hasErrors('email')}"
+                                        th:errors="*{email}"></p>
+                                </td>
                             </div>
                         </tr>
                         <tr>
                             <div class="field">
                                 <td><label for="password">Password</label></td>
-                                <td><input type="password" name="password" id="password" th:name="password" /><br>
+                                <td><input type="password" name="password" id="password" th:name="password" th:field="*{password}"/><br>
                                     <input type="checkbox" onclick="passwordView()"> Show Password
+                                </td>
+                                <td style="width: 30%;">
+                                    <p class="alert alert-danger" th:if="${#fields.hasErrors('password')}"
+                                        th:errors="*{password}"></p>
                                 </td>
 
                             </div>
@@ -78,12 +94,17 @@
                                             th:unless="${role.name == customer.role.name}">
                                         </option>
                                     </select></td>
+                                <td style="width: 30%;">
+                                    <p class="alert alert-danger" th:if="${#fields.hasErrors('role')}"
+                                        th:errors="*{role}"></p>
+                                </td>
                             </div>
                         </tr>
                 </table>
                 <div class="form_action--button">
                     <input type="submit" value="Submit">
-                    <input type="reset" value="Reset">
+                    <a th:href="@{/admin/customers?userId={id}(id=${customer.ID})}">
+                        <input type="button" name="reset" value="Reset"></a>
                 </div>
                 </form>
             </div>
