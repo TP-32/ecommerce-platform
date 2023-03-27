@@ -103,4 +103,9 @@ public class ProductServiceImpl implements ProductService {
 
         return products;
     }
+
+    @Override
+    public long count() {
+        return productRepository.count();
+    }
 }
