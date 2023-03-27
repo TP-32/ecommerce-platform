@@ -31,6 +31,7 @@
                             id="return">Delete</a>
                     </div>
                 </div>
+                <p class="alert alert-danger" th:if="${updateError != null}" th:text="${updateError}"></p>
                 <table class="product-table">
                     <form th:action="@{'/admin/customers/update?userId=' + ${customer.ID}}" th:object="${userDto}"
                         method="POST" autocomplete="off" class="create-form">
