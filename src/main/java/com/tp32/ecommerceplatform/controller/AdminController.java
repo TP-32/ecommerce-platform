@@ -117,7 +117,8 @@ public class AdminController {
     }
 
     @PostMapping("/customers/update")
-    public String updateCustomer(@Valid @ModelAttribute("userDto") UpdateUserDto userDto, BindingResult result, Model model,
+    public String updateCustomer(@Valid @ModelAttribute("userDto") UpdateUserDto userDto, BindingResult result,
+            Model model,
             @RequestParam(value = "userId") Long id) {
         if (!result.hasErrors()) {
             userService.updateUser(id, userDto);
@@ -321,6 +322,14 @@ public class AdminController {
         return orderService.getOrders().stream()
                 .filter(o -> o.getStatus().getName().equals(orderService.getStatus(status).getName()))
                 .collect(Collectors.toList());
+    }
+
+    @GetMapping("/notification")
+    public String notif(Model model) {
+        List<Product> products = productService.getProducts().stream().filter(p -> p.getInventory().getStock() <= 0)
+                .collect(Collectors.toList());
+        model.addAttribute("products", products);
+        return "admin-notification.html";
     }
 
     /*

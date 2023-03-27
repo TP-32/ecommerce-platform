@@ -197,25 +197,6 @@ body {
   font-size: 1.2rem;
 }
 
-.user {
-  position: relative;
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
-  overflow: hidden;
-  cursor: pointer;
-}
-
-.user img {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
-
-
 .cardBox {
   position: relative;
   width: 100%;
@@ -512,7 +493,8 @@ body {
 .listCustomers,
 .listProducts,
 .listOrders,
-.recentOrders {
+.recentOrders,
+.listNotifs {
   position: relative;
   display: grid;
   min-height: 500px;
@@ -805,4 +787,25 @@ table .description {
   color: #721c24;
   background-color: #f8d7da;
   border-color: #f5c6cb;
+}
+
+.detail .listNotifs table tr {
+  color: var(--black1);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.detail .listNotifs table tr:last-child {
+  border-bottom: none;
+}
+
+.detail .listNotifs table tbody tr:hover {
+  background-color: rgb(227, 227, 227);
+}
+
+.detail .listNotifs table tbody tr:hover .name {
+  text-decoration-line: underline;
+}
+
+.detail .listNotifs table tr td {
+  padding: 10px;
 }
