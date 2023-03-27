@@ -13,13 +13,9 @@
 
 <body>
     <header>
-        
+
     </header>
     <div class="text" th:switch="${status}">
-        <div th:case="'400'">
-            <h1 style="font-size: 100px;">400</h1></br>
-            <h1>This email already exists!</h1>
-        </div>
         <div th:case="'403'">
             <h1 style="font-size: 100px;">403</h1></br>
             <h1>You do not have access to this page!</h1>

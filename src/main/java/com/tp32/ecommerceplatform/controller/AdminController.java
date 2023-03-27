@@ -5,6 +5,7 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -60,6 +61,7 @@ public class AdminController {
         // Attributes used for statistics on the dashboard
         model.addAttribute("sales", orderService.count(orderService.getStatus(4L)));
         model.addAttribute("users", userService.count());
+        model.addAttribute("products", productService.count());
 
         List<User> customers = userService.getUsers();
         // Reverses the sort order to show most recent
@@ -79,7 +81,7 @@ public class AdminController {
         Float price = orderService.sumPrice();
         if (price == null)
             price = 0F;
-        model.addAttribute("earning", String.format("£%,.2f", price));
+        model.addAttribute("income", String.format("£%,.2f", price));
         return "admin-dashboard.html";
     }
 
@@ -88,12 +90,13 @@ public class AdminController {
         // Attributes used for statistics on the dashboard
         model.addAttribute("sales", orderService.count(orderService.getStatus(4L)));
         model.addAttribute("users", userService.count());
+        model.addAttribute("products", productService.count());
 
         // Formats the total price to 2 decimal places
         Float price = orderService.sumPrice();
         if (price == null)
             price = 0F;
-        model.addAttribute("earning", String.format("£%,.2f", price));
+        model.addAttribute("income", String.format("£%,.2f", price));
         Popular popular = orderItemsService.popularProduct();
         model.addAttribute("product", popular.getProduct());
         model.addAttribute("sale", popular.getCount());
@@ -120,12 +123,15 @@ public class AdminController {
     public String updateCustomer(@Valid @ModelAttribute("userDto") UpdateUserDto userDto, BindingResult result,
             Model model,
             @RequestParam(value = "userId") Long id) {
-        if (!result.hasErrors()) {
+        User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        boolean updateError = userDto.getEmail().equals(user.getEmail());
+        if (!result.hasErrors() && !updateError) {
             userService.updateUser(id, userDto);
             model.addAttribute("customers", userService.getUsers());
             model.addAttribute("reverseSortDir", "desc");
             return "admin-customers.html";
         }
+        model.addAttribute("updateError", "You cannot modify the account you are currently logged in as.");
         model.addAttribute("userDto", userDto);
         model.addAttribute("customer", userService.getUser(id));
         model.addAttribute("roles", userService.getRoles());
@@ -266,21 +272,53 @@ public class AdminController {
                     orderService.getOrders().stream()
                             .filter(o -> o.getStatus().getName().equals(orderService.getStatus(status).getName()))
                             .collect(Collectors.toList()));
-        } else
+        } else {
+            List<Order> orders = orderService.getOrders().stream().filter(o -> !o.getStatus().getName().equals("Completed")).collect(Collectors.toList());
+            if (orders.isEmpty()) model.addAttribute("message", "Filter by 'Completed' instead, maybe.");
+            
             model.addAttribute("orders", orderService.getOrders());
+        }
 
         model.addAttribute("status", orderService.getStatus());
-
         model.addAttribute("reverseSortDir", "desc");
         return "admin-orders.html";
     }
 
+    // @PostMapping("/orders/update")
+    // public ModelAndView updateOrder(@ModelAttribute UpdateOrderDto orderDto,
+    // @RequestParam(value = "orderId") Long id,
+    // RedirectAttributes redirect) {
+    // orderService.updateOrder(id, orderDto);
+    // ModelAndView model = new ModelAndView("redirect:/admin/orders");
+    // return model;
+    // }
+
     @PostMapping("/orders/update")
-    public ModelAndView updateOrder(@ModelAttribute UpdateOrderDto orderDto, @RequestParam(value = "orderId") Long id,
-            RedirectAttributes redirect) {
-        orderService.updateOrder(id, orderDto);
-        ModelAndView model = new ModelAndView("redirect:/admin/orders");
-        return model;
+    public String updateOrder(@Valid @ModelAttribute("orderDto") UpdateOrderDto orderDto, BindingResult result,
+            Model model, @RequestParam(value = "orderId") Long id) {
+        boolean stockError = false;
+        Order order = orderService.getOrder(id);
+        if (!order.getStatus().getName().equals("Completed") && orderDto.getStatus().equals("Completed")) {
+            for (OrderItem orderItem : order.getOrderItems()) {
+                if (orderItem.getQuantity() > orderItem.getProduct().getInventory().getStock()) {
+                    stockError = true;
+                }
+            }
+        }
+        if (!result.hasErrors() && !stockError) {
+            orderService.updateOrder(id, orderDto);
+            model.addAttribute("orders", orderService.getOrders());
+            model.addAttribute("status", orderService.getStatus());
+            model.addAttribute("reverseSortDir", "desc");
+            return "admin-orders.html";
+        }
+        model.addAttribute("orderitems", orderService.getOrder(id).getOrderItems());
+        model.addAttribute("stockError",
+                "Cannot be marked as Completed: Insufficient stock available for one or more products.");
+        model.addAttribute("orderDto", orderDto);
+        model.addAttribute("order", orderService.getOrder(id));
+        model.addAttribute("status", orderService.getStatus());
+        return "admin-update-order.html";
     }
 
     @GetMapping("/orders/delete")

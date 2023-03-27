@@ -6,7 +6,8 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Signup</title>
-    <link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Ubuntu:regular,bold&subset=Latin">
+    <link rel="stylesheet" type="text/css"
+        href="http://fonts.googleapis.com/css?family=Ubuntu:regular,bold&subset=Latin">
     <style media="screen">
         body {
             background-color: black;
@@ -143,6 +144,7 @@
     <label for="email">Email: </label>
     <input type="text" id="email" name="email" th:field="*{email}" required />
     <p class="alert alert-danger" th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></p>
+    <p class="alert alert-danger" th:if="${emailError != null}" th:text="${emailError}"></p>
 
     <label for="password">Password: </label>
     <input type="password" id="password" name="password" th:field="*{password}" required />
