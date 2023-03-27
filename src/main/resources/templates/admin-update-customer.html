@@ -28,7 +28,7 @@
                         <a th:href="@{/admin/customers}" class="btn" id="return">Return</a>
                         <a style="background-color: red;"
                             th:href="@{'/admin/customers/delete?userId=' + ${customer.ID}}" class="btn"
-                            id="return">Delete</a>
+                            id="delete">Delete</a>
                     </div>
                 </div>
                 <p class="alert alert-danger" th:if="${updateError != null}" th:text="${updateError}"></p>

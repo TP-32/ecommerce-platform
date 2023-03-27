@@ -650,7 +650,8 @@ select {
 input[type="submit"],
 input[type="reset"],
 input[name="reset"],
-#return {
+#return,
+#delete {
   background: #eee;
   padding: 6px 12px;
   margin: 15px 0 10px;
