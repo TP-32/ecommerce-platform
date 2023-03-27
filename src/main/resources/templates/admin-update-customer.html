@@ -6,7 +6,8 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin</title>
-    <link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Ubuntu:regular,bold&subset=Latin">
+    <link rel="stylesheet" type="text/css"
+        href="http://fonts.googleapis.com/css?family=Ubuntu:regular,bold&subset=Latin">
     <link rel="stylesheet" th:href="@{/css/admin.css}" />
     <link rel="stylesheet" th:href="@{/css/navbar.css}" />
 </head>
@@ -60,18 +61,21 @@
                         <tr>
                             <div class="field">
                                 <td style="width: 20%;"><label for="email">Email</label></td>
-                                <td style="width: 50%;"><input type="text" name="email" id="email" required th:name="email"
-                                        th:field="*{email}" /></td>
+                                <td style="width: 50%;"><input type="text" name="email" id="email" required
+                                        th:name="email" th:field="*{email}" /></td>
                                 <td style="width: 30%;">
                                     <p class="alert alert-danger" th:if="${#fields.hasErrors('email')}"
                                         th:errors="*{email}"></p>
+                                    <p class="alert alert-danger" th:if="${emailError != null}"
+                                        th:text="${emailError}"></p>
                                 </td>
                             </div>
                         </tr>
                         <tr>
                             <div class="field">
                                 <td><label for="password">Password</label></td>
-                                <td><input type="password" name="password" id="password" th:name="password" th:field="*{password}"/><br>
+                                <td><input type="password" name="password" id="password" th:name="password"
+                                        th:field="*{password}" /><br>
                                     <input type="checkbox" onclick="passwordView()"> Show Password
                                 </td>
                                 <td style="width: 30%;">

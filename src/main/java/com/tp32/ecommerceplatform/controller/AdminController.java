@@ -128,13 +128,19 @@ public class AdminController {
             @RequestParam(value = "userId") Long id) {
         User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         boolean updateError = userDto.getEmail().equals(user.getEmail());
-        if (!result.hasErrors() && !updateError) {
+        boolean emailError = userService.existsByEmail(userDto.getEmail());
+        if (!result.hasErrors() && !updateError && !emailError) {
             userService.updateUser(id, userDto);
             model.addAttribute("customers", userService.getUsers());
             model.addAttribute("reverseSortDir", "desc");
             return "admin-customers.html";
         }
-        model.addAttribute("updateError", "You cannot modify the account you are currently logged in as.");
+        if (updateError)
+            model.addAttribute("updateError", "You cannot modify the account you are currently logged in as.");
+
+        if (emailError)
+            model.addAttribute("emailError", "Email already exists.");
+            
         model.addAttribute("userDto", userDto);
         model.addAttribute("customer", userService.getUser(id));
         model.addAttribute("roles", userService.getRoles());
@@ -142,13 +148,15 @@ public class AdminController {
     }
 
     @GetMapping("/customers/delete")
-    public ModelAndView deleteCustomer(@RequestParam(value = "userId", required = true) Long id, HttpServletResponse response) throws IOException {
-        if (userService.getUser(id).getEmail().equals(((User) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getEmail())) {
+    public ModelAndView deleteCustomer(@RequestParam(value = "userId", required = true) Long id,
+            HttpServletResponse response) throws IOException {
+        if (userService.getUser(id).getEmail()
+                .equals(((User) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getEmail())) {
             Cookie cookie = new Cookie("Authorization", null);
             cookie.setHttpOnly(true);
             cookie.setPath("/");
             cookie.setMaxAge(0);
-    
+
             response.addCookie(cookie);
             response.sendRedirect("/");
         }
@@ -284,9 +292,11 @@ public class AdminController {
                             .filter(o -> o.getStatus().getName().equals(orderService.getStatus(status).getName()))
                             .collect(Collectors.toList()));
         } else {
-            List<Order> orders = orderService.getOrders().stream().filter(o -> !o.getStatus().getName().equals("Completed")).collect(Collectors.toList());
-            if (orders.isEmpty()) model.addAttribute("message", "Filter by 'Completed' instead, maybe.");
-            
+            List<Order> orders = orderService.getOrders().stream()
+                    .filter(o -> !o.getStatus().getName().equals("Completed")).collect(Collectors.toList());
+            if (orders.isEmpty())
+                model.addAttribute("message", "Filter by 'Completed' instead, maybe.");
+
             model.addAttribute("orders", orderService.getOrders());
         }
 
@@ -315,8 +325,9 @@ public class AdminController {
             return "admin-orders.html";
         }
         model.addAttribute("orderitems", orderService.getOrder(id).getOrderItems());
-        model.addAttribute("stockError",
-                "Cannot be marked as Completed: Insufficient stock available for one or more products.");
+        if (stockError)
+            model.addAttribute("stockError",
+                    "Cannot be marked as Completed: Insufficient stock available for one or more products.");
         model.addAttribute("orderDto", orderDto);
         model.addAttribute("order", orderService.getOrder(id));
         model.addAttribute("status", orderService.getStatus());
