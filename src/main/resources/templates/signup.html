@@ -127,36 +127,32 @@
     </style>
 </head>
 
-<div class="holder">
-    <div th:replace="~{fragments/navbar :: navbar}"></div>
-</div>
-<form th:action="@{/signup}" th:object="${userDto}" method="POST">
-    <h3>Sign-Up Here</h3>
+<body>
+    <div class="holder">
+        <div th:replace="~{fragments/navbar :: navbar}"></div>
+    </div>
+    <form th:action="@{/signup}" th:object="${userDto}" method="POST">
+        <h3>Sign-Up Here</h3>
 
-    <label for="firstname">First Name: </label>
-    <input type="text" id="firstname" name="firstname" th:field="*{firstName}" required />
-    <p class="alert alert-danger" th:if="${#fields.hasErrors('firstName')}" th:errors="*{firstName}"></p>
+        <label for="firstname">First Name: </label>
+        <input type="text" id="firstname" name="firstname" th:field="*{firstName}" required />
+        <p class="alert alert-danger" th:if="${#fields.hasErrors('firstName')}" th:errors="*{firstName}"></p>
 
-    <label for="lastname">Last Name: </label>
-    <input type="text" id="lastname" name="lastname" th:field="*{lastName}" required />
-    <p class="alert alert-danger" th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}"></p>
+        <label for="lastname">Last Name: </label>
+        <input type="text" id="lastname" name="lastname" th:field="*{lastName}" required />
+        <p class="alert alert-danger" th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}"></p>
 
-    <label for="email">Email: </label>
-    <input type="text" id="email" name="email" th:field="*{email}" required />
-    <p class="alert alert-danger" th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></p>
-    <p class="alert alert-danger" th:if="${emailError != null}" th:text="${emailError}"></p>
+        <label for="email">Email: </label>
+        <input type="text" id="email" name="email" th:field="*{email}" required />
+        <p class="alert alert-danger" th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></p>
+        <p class="alert alert-danger" th:if="${emailError != null}" th:text="${emailError}"></p>
 
-    <label for="password">Password: </label>
-    <input type="password" id="password" name="password" th:field="*{password}" required />
-    <p class="alert alert-danger" th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></p>
+        <label for="password">Password: </label>
+        <input type="password" id="password" name="password" th:field="*{password}" required />
+        <p class="alert alert-danger" th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></p>
 
-    <button>Sign Up</button>
-
-</form>
-</div>
-
-
-
+        <button>Sign Up</button>
+    </form>
 </body>
 
 </html>

@@ -19,6 +19,7 @@
             <li><a th:href="@{/contact}">Contact</a></li>
             <li><a th:href="@{/login}" sec:authorize="!isAuthenticated()">Login</a></li>
             <li><a th:href="@{/signup}" sec:authorize="!isAuthenticated()">Sign up</a></li>
+            <li><a th:href="@{/user/update}" sec:authorize="isAuthenticated()">Edit Account</a></li>
             <li><a th:href="@{/logout}" sec:authorize="isAuthenticated()">Sign Out</a>
             </li>
         </ul>

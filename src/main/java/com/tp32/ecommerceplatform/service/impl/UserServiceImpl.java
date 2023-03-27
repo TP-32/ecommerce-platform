@@ -148,14 +148,18 @@ public class UserServiceImpl implements UserService {
         User updateUser = userRepository.findById(id).get();
 
         updateUser.setFirstName(userDto.getFirstName());
+        System.out.println(updateUser.getFirstName());
         updateUser.setLastName(userDto.getLastName());
+        System.out.println(updateUser.getLastName());
         updateUser.setEmail(userDto.getEmail());
+        System.out.println(updateUser.getEmail());
 
         // Password remains the same if no password was received from the Dto
         if (!userDto.getPassword().isEmpty())
             updateUser.setPassword(passwordEncoder.encode(userDto.getPassword()));
 
-        updateUser.setRole(roleRepository.findByName(userDto.getRole()).get());
+        if (userDto.getRole() != null)
+            updateUser.setRole(roleRepository.findByName(userDto.getRole()).get());
 
         userRepository.save(updateUser);
         return updateUser;

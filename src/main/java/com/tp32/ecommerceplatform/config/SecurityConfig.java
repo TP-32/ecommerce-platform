@@ -42,6 +42,7 @@ public class SecurityConfig {
                 .requestMatchers("/admin/**").hasRole("ADMIN")
                 .requestMatchers("/orders").hasAnyRole("USER", "ADMIN")
                 .requestMatchers("/net/**").hasAnyRole("USER", "ADMIN")
+                .requestMatchers("/user/update").hasAnyRole("USER", "ADMIN")
                 .requestMatchers("/**").permitAll()
                 .anyRequest().authenticated()
                 .and()
