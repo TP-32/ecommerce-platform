@@ -1,5 +1,6 @@
 package com.tp32.ecommerceplatform.controller;
 
+import java.io.IOException;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
@@ -33,6 +34,8 @@ import com.tp32.ecommerceplatform.service.ProductService;
 import com.tp32.ecommerceplatform.service.UserService;
 import com.tp32.ecommerceplatform.service.impl.OrderItemsServiceImpl.Popular;
 
+import jakarta.servlet.http.Cookie;
+import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
 
 @Controller
@@ -139,8 +142,16 @@ public class AdminController {
     }
 
     @GetMapping("/customers/delete")
-    public ModelAndView deleteCustomer(@RequestParam(value = "userId", required = true) Long id,
-            RedirectAttributes redirect) {
+    public ModelAndView deleteCustomer(@RequestParam(value = "userId", required = true) Long id, HttpServletResponse response) throws IOException {
+        if (userService.getUser(id).getEmail().equals(((User) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getEmail())) {
+            Cookie cookie = new Cookie("Authorization", null);
+            cookie.setHttpOnly(true);
+            cookie.setPath("/");
+            cookie.setMaxAge(0);
+    
+            response.addCookie(cookie);
+            response.sendRedirect("/");
+        }
         userService.deleteUser(id);
         ModelAndView model = new ModelAndView("redirect:/admin/customers");
         return model;
@@ -283,15 +294,6 @@ public class AdminController {
         model.addAttribute("reverseSortDir", "desc");
         return "admin-orders.html";
     }
-
-    // @PostMapping("/orders/update")
-    // public ModelAndView updateOrder(@ModelAttribute UpdateOrderDto orderDto,
-    // @RequestParam(value = "orderId") Long id,
-    // RedirectAttributes redirect) {
-    // orderService.updateOrder(id, orderDto);
-    // ModelAndView model = new ModelAndView("redirect:/admin/orders");
-    // return model;
-    // }
 
     @PostMapping("/orders/update")
     public String updateOrder(@Valid @ModelAttribute("orderDto") UpdateOrderDto orderDto, BindingResult result,

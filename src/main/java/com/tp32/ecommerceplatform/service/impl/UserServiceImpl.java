@@ -166,7 +166,7 @@ public class UserServiceImpl implements UserService {
         User user = userRepository.findById(id).get();
 
         // Removes any tokens that were previously archived for this user.
-        for (Token token : tokenRepository.findAllValidTokenByUser(id)) {
+        for (Token token : tokenRepository.findAllTokensByUser(id)) {
             tokenRepository.delete(token);
         }
 
