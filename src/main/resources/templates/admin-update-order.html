@@ -87,10 +87,12 @@
                     <div th:each="product : ${orderItem.product}">
                         <div class="header">
                             <span id="parent" th:text="${product.name}"></span>
-                            <a th:href="@{'/admin/orders/product/delete?orderId=' + ${order.ID} + '&productId=' + ${product.ID}}"><ion-icon
-                                style="font-size: 30px;" name="close-circle-outline"></ion-icon></a>
+                            <a
+                                th:href="@{'/admin/orders/product/delete?orderId=' + ${order.ID} + '&productId=' + ${product.ID}}"><ion-icon
+                                    style="font-size: 30px;" name="close-circle-outline"></ion-icon></a>
                         </div>
-                        <img id="product-image" th:src="@{/{image}(image=${product.image})}" /><br>
+                        <a th:href="@{/admin/products?productId={productId}(productId=${product.ID})}"><img id="product-image"
+                                th:src="@{/{image}(image=${product.image})}" /></a><br>
                         <span class="side">Price: <span class="child" th:text="|£${product.price}|"></span></span>
                     </div>
                     <span class="side">Quantity: <span class="child" th:text="${orderItem.quantity}"></span></span>

@@ -4,7 +4,6 @@ import java.util.Comparator;
 import java.util.List;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
-
 import com.tp32.ecommerceplatform.dto.ProductDto;
 import com.tp32.ecommerceplatform.model.Inventory;
 import com.tp32.ecommerceplatform.model.Product;

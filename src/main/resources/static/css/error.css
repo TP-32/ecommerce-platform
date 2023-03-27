@@ -47,3 +47,8 @@ header {
     cursor: pointer;
     border: 3px solid rgb(113, 3, 113);
 }
+
+.holder {
+    width: 1165px;
+    margin: auto;
+  }

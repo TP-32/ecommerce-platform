@@ -2,14 +2,11 @@ package com.tp32.ecommerceplatform.service.impl;
 
 import java.util.HashMap;
 import java.util.List;
-
 import org.springframework.data.domain.Sort;
-import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-
 import com.tp32.ecommerceplatform.dto.JwtResponse;
 import com.tp32.ecommerceplatform.dto.LoginDto;
 import com.tp32.ecommerceplatform.dto.RegisterDto;
@@ -81,7 +78,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public JwtResponse register(RegisterDto registerDto) {
         if (userRepository.existsByEmail(registerDto.getEmail())) {
-            throw new InputException(HttpStatus.BAD_REQUEST, "This email is already being used.");
+            throw new InputException("Email already exists.");
         }
 
         User user = new User();

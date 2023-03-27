@@ -1,15 +1,34 @@
-package com.tp32.ecommerceplatform.dto;;
+package com.tp32.ecommerceplatform.dto;
+
+import com.tp32.ecommerceplatform.model.Product;
+
+import jakarta.validation.constraints.Size;
 
 public class ProductDto {
     
+    @Size(min = 5, message = "Name length must be greater than 5.")
+    @Size(max = 50, message = "Name length must be less than 50.")
     private String name;
+
+    @Size(min = 5, message = "Description length must be greater than 5.")
+    @Size(max = 50, message = "Description length must be less than 50.")
     private String description;
+
     private String image;
     private String category;
     private Float price;
     private Integer stock;
 
     public ProductDto() {}
+
+    public ProductDto(Product product) {
+        this.name = product.getName();
+        this.description = product.getDescription();
+        this.image = product.getImage();
+        this.category = product.getCategory().getName();
+        this.price = product.getPrice();
+        this.stock = product.getInventory().getStock();
+    }
 
     public String getName() {
         return this.name;

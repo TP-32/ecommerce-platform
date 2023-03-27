@@ -3,6 +3,7 @@ package com.tp32.ecommerceplatform.controller;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+
 import com.tp32.ecommerceplatform.dto.LoginDto;
 import com.tp32.ecommerceplatform.dto.RegisterDto;
 
@@ -27,7 +28,7 @@ public class IndexController {
      */
     @GetMapping("/login")
     public String login(Model model) {
-        model.addAttribute("user", new LoginDto());
+        model.addAttribute("userDto", new LoginDto());
         return "login.html";
     }
 
@@ -37,7 +38,7 @@ public class IndexController {
      */
     @GetMapping("/signup")
     public String register(Model model) {
-        model.addAttribute("user", new RegisterDto());
+        model.addAttribute("userDto", new RegisterDto());
         return "signup.html";
     }
 

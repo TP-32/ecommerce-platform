@@ -2,9 +2,11 @@ package com.tp32.ecommerceplatform.controller;
 
 import java.io.IOException;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RestController;
 
 import com.tp32.ecommerceplatform.dto.JwtResponse;
 import com.tp32.ecommerceplatform.dto.LoginDto;
@@ -13,11 +15,12 @@ import com.tp32.ecommerceplatform.service.UserService;
 
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.validation.Valid;
 
 /**
  * Handles the creation of RESTful web services, which maps requests to actions.
  */
-@RestController
+@Controller
 public class AuthController {
 
     private UserService userService;
@@ -34,10 +37,15 @@ public class AuthController {
      *                    from front-end to back-end
      * @throws IOException
      */
-    @PostMapping("/register")
-    public void register(@ModelAttribute RegisterDto registerDto, HttpServletResponse response) throws IOException {
-        JwtResponse res = userService.register(registerDto);
-        setCookie(res.getToken(), response);
+    @PostMapping("/signup")
+    public String register(@Valid @ModelAttribute("userDto") RegisterDto registerDto, BindingResult result, Model model, HttpServletResponse response) throws IOException {
+        if (!result.hasErrors()) {
+            JwtResponse res = userService.register(registerDto);
+            setCookie(res.getToken(), response);
+            return "index.html";
+        }
+        model.addAttribute("userDto", registerDto);
+        return "signup.html";
     }
 
     /**

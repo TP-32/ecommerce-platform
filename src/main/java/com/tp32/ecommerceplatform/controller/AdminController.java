@@ -7,6 +7,7 @@ import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -25,28 +26,28 @@ import com.tp32.ecommerceplatform.model.OrderItem;
 import com.tp32.ecommerceplatform.model.Product;
 import com.tp32.ecommerceplatform.model.User;
 import com.tp32.ecommerceplatform.repository.CategoryRepository;
-import com.tp32.ecommerceplatform.service.AdminService;
 import com.tp32.ecommerceplatform.service.OrderItemsService;
 import com.tp32.ecommerceplatform.service.OrderService;
 import com.tp32.ecommerceplatform.service.ProductService;
 import com.tp32.ecommerceplatform.service.UserService;
 import com.tp32.ecommerceplatform.service.impl.OrderItemsServiceImpl.Popular;
 
+import jakarta.validation.Valid;
+
 @Controller
 @RequestMapping("/admin")
 public class AdminController {
 
-    private AdminService adminService;
     private ProductService productService;
     private CategoryRepository categoryRepository;
     private OrderService orderService;
     private OrderItemsService orderItemsService;
     private UserService userService;
 
-    public AdminController(AdminService adminService, ProductService productService,
+    public AdminController(ProductService productService,
             CategoryRepository categoryRepository, OrderService orderService, OrderItemsService orderItemsService,
             UserService userService) {
-        this.adminService = adminService;
+
         this.productService = productService;
         this.categoryRepository = categoryRepository;
         this.orderService = orderService;
@@ -102,7 +103,9 @@ public class AdminController {
     @GetMapping("/customers")
     public String customers(Model model, @RequestParam(value = "userId", required = false) Long id) {
         if (id != null) {
-            model.addAttribute("userDto", new UpdateUserDto());
+            User user = userService.getUser(id);
+
+            model.addAttribute("userDto", new UpdateUserDto(user));
             model.addAttribute("customer", userService.getUser(id));
             model.addAttribute("roles", userService.getRoles());
             return "admin-update-customer.html";
@@ -114,11 +117,18 @@ public class AdminController {
     }
 
     @PostMapping("/customers/update")
-    public ModelAndView updateCustomer(@ModelAttribute UpdateUserDto userDto, @RequestParam(value = "userId") Long id,
-            RedirectAttributes redirect) {
-        userService.updateUser(id, userDto);
-        ModelAndView model = new ModelAndView("redirect:/admin/customers");
-        return model;
+    public String updateCustomer(@Valid @ModelAttribute("userDto") UpdateUserDto userDto, BindingResult result, Model model,
+            @RequestParam(value = "userId") Long id) {
+        if (!result.hasErrors()) {
+            userService.updateUser(id, userDto);
+            model.addAttribute("customers", userService.getUsers());
+            model.addAttribute("reverseSortDir", "desc");
+            return "admin-customers.html";
+        }
+        model.addAttribute("userDto", userDto);
+        model.addAttribute("customer", userService.getUser(id));
+        model.addAttribute("roles", userService.getRoles());
+        return "admin-update-customer.html";
     }
 
     @GetMapping("/customers/delete")
@@ -144,8 +154,10 @@ public class AdminController {
     public String products(Model model, @RequestParam(value = "productId", required = false) Long id,
             @RequestParam(value = "search", required = false) String search) {
         if (id != null) {
-            model.addAttribute("productDto", new ProductDto());
-            model.addAttribute("product", productService.getProduct(id));
+            Product product = productService.getProduct(id);
+
+            model.addAttribute("productDto", new ProductDto(product));
+            model.addAttribute("product", product);
             model.addAttribute("filter", "true");
             model.addAttribute("categories", categoryRepository.findAll());
             return "admin-update-product.html";
@@ -163,26 +175,39 @@ public class AdminController {
     }
 
     @GetMapping("/products/new")
-    public String createProduct(Model model) {
+    public String createProduct(Model model, @RequestParam(value = "error", required = false) String error,
+            RedirectAttributes redirect) {
         model.addAttribute("product", new ProductDto());
         model.addAttribute("categories", categoryRepository.findAll());
         return "admin-create-product.html";
     }
 
     @PostMapping("/products/save")
-    public ModelAndView saveProduct(@ModelAttribute ProductDto productDto, RedirectAttributes redirect) {
-        Product product = adminService.createProduct(productDto);
-        redirect.addFlashAttribute("preProduct", product);
-        ModelAndView model = new ModelAndView("redirect:/admin/products/new");
-        return model;
+    public String saveProduct(@Valid @ModelAttribute("product") ProductDto productDto, BindingResult result,
+            Model model) {
+        if (!result.hasErrors()) {
+            Product product = productService.createProduct(productDto);
+            model.addAttribute("preProduct", product);
+        }
+
+        model.addAttribute("categories", categoryRepository.findAll());
+        return "admin-create-product.html";
     }
 
     @PostMapping("/products/update")
-    public ModelAndView updateProduct(@ModelAttribute ProductDto productDto, @RequestParam(value = "productId") Long id,
-            RedirectAttributes redirect) {
-        productService.updateProduct(id, productDto);
-        ModelAndView model = new ModelAndView("redirect:/admin/products");
-        return model;
+    public String updateProduct(@Valid @ModelAttribute("productDto") ProductDto productDto, BindingResult result,
+            Model model, @RequestParam(value = "productId") Long id) {
+        if (!result.hasErrors()) {
+            productService.updateProduct(id, productDto);
+            model.addAttribute("products", productService.getProducts());
+            model.addAttribute("reverseSortDir", "desc");
+            return "admin-products.html";
+        }
+        model.addAttribute("productDto", productDto);
+        model.addAttribute("product", productService.getProduct(id));
+        model.addAttribute("filter", "true");
+        model.addAttribute("categories", categoryRepository.findAll());
+        return "admin-update-product.html";
     }
 
     @GetMapping("/products/delete")

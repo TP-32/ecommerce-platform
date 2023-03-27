@@ -88,7 +88,8 @@
                                 <div class="header">
                                     <span id="parent" th:text="${product.name}"></span>
                                 </div>
-                                <img id="product-image" th:src="@{/{image}(image=${product.image})}" /><br>
+                                <a th:href="@{/fish/details/{productId}(productId=${product.ID})}"><img
+                                        id="product-image" th:src="@{/{image}(image=${product.image})}" /></a><br>
                                 <span class="side">Price: <span class="child"
                                         th:text="|£${product.price}|"></span></span>
                             </div>
