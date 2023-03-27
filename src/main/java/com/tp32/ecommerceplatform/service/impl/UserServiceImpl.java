@@ -11,7 +11,6 @@ import com.tp32.ecommerceplatform.dto.JwtResponse;
 import com.tp32.ecommerceplatform.dto.LoginDto;
 import com.tp32.ecommerceplatform.dto.RegisterDto;
 import com.tp32.ecommerceplatform.dto.UpdateUserDto;
-import com.tp32.ecommerceplatform.exception.InputException;
 import com.tp32.ecommerceplatform.model.Order;
 import com.tp32.ecommerceplatform.model.Role;
 import com.tp32.ecommerceplatform.model.Token;
@@ -77,10 +76,6 @@ public class UserServiceImpl implements UserService {
      */
     @Override
     public JwtResponse register(RegisterDto registerDto) {
-        if (userRepository.existsByEmail(registerDto.getEmail())) {
-            throw new InputException("Email already exists.");
-        }
-
         User user = new User();
         user.setFirstName(registerDto.getFirstName());
         user.setLastName(registerDto.getLastName());
@@ -187,5 +182,10 @@ public class UserServiceImpl implements UserService {
         // Deletes the user's account
         userRepository.deleteById(id);
         return user;
+    }
+
+    @Override
+    public Boolean existsByEmail(String email) {
+        return userRepository.existsByEmail(email);
     }
 }

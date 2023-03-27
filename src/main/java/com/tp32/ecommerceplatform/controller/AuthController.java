@@ -38,12 +38,16 @@ public class AuthController {
      * @throws IOException
      */
     @PostMapping("/signup")
-    public String register(@Valid @ModelAttribute("userDto") RegisterDto registerDto, BindingResult result, Model model, HttpServletResponse response) throws IOException {
-        if (!result.hasErrors()) {
+    public String register(@Valid @ModelAttribute("userDto") RegisterDto registerDto, BindingResult result, Model model,
+            HttpServletResponse response) throws IOException {
+        boolean emailError = userService.existsByEmail(registerDto.getEmail());
+
+        if (!result.hasErrors() && !emailError) {
             JwtResponse res = userService.register(registerDto);
             setCookie(res.getToken(), response);
             return "index.html";
         }
+        model.addAttribute("emailError", "An account with this email already exists!");
         model.addAttribute("userDto", registerDto);
         return "signup.html";
     }
@@ -54,25 +58,26 @@ public class AuthController {
      * @throws IOException
      */
 
-     @PostMapping("login")
-     public void login(@ModelAttribute LoginDto loginDto, HttpServletResponse response) throws IOException {
+    @PostMapping("login")
+    public void login(@ModelAttribute LoginDto loginDto, HttpServletResponse response) throws IOException {
         JwtResponse res = userService.login(loginDto);
         setCookie(res.getToken(), response);
-     }
+    }
 
-     /**
-      * Helper Method to generate and set the cookie of a user
-      * @param token the generated token for this instance
-      * @param response provides HTTP functionality in sending a response
-      * @throws IOException
-      */
-     private void setCookie(String token, HttpServletResponse response) throws IOException {
+    /**
+     * Helper Method to generate and set the cookie of a user
+     * 
+     * @param token    the generated token for this instance
+     * @param response provides HTTP functionality in sending a response
+     * @throws IOException
+     */
+    private void setCookie(String token, HttpServletResponse response) throws IOException {
         Cookie cookie = new Cookie("Authorization", token);
         cookie.setHttpOnly(true);
         cookie.setPath("/");
-        cookie.setMaxAge((int) (jwtExpiration/1000));
-        
+        cookie.setMaxAge((int) (jwtExpiration / 1000));
+
         response.addCookie(cookie);
         response.sendRedirect("/");
-     }
+    }
 }

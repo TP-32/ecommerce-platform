@@ -22,13 +22,13 @@
         </div>
 
         <div class="detail">
-            <div th:if="${!products.empty}">
-                <div class="listNotifs">
-                    <div class="cardHeader">
-                        <h2>Notifications</h2>
-                    </div>
+            <div class="listNotifs">
+                <div class="cardHeader">
+                    <h2>Notifications</h2>
+                </div>
 
-                    <table>
+                <table>
+                    <div th:if="${!products.empty}">
                         <thead>
                             <tr>
                                 <td>Message</td>
@@ -48,21 +48,23 @@
                                 </tr>
                             </th:block>
                         </tbody>
-                    </table>
+                </table>
+                <div th:unless="${!products.empty}">
+                    <h2 style="text-align: center;">Oops, there are no notifications yet.</h2>
+                    <h3 style="text-align: center;">Notifications will appear when a product goes out of stock.</h3>
                 </div>
             </div>
-            <div th:if="${products.empty}">
-                <h2 style="text-align: center;">Oops, this filter has returned no valid records.</h2>
-            </div>
-
-            <script>
-                function rowClicked(value) {
-                    location.href = "/admin/products?productId=" + value;
-                }
-            </script>
         </div>
 
-        <script th:src="@{/js/admin.js}"></script>
-        <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
-        <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+
+        <script>
+            function rowClicked(value) {
+                location.href = "/admin/products?productId=" + value;
+            }
+        </script>
+    </div>
+
+    <script th:src="@{/js/admin.js}"></script>
+    <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
 </body>

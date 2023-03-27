@@ -69,7 +69,7 @@ $('#status').on('change', function () {
 
       if (status.length == 0) {
         $('#orderHeader').empty();
-        $('#orders').append('<h2 style="text-align: center;">Oops, this filter has returned no valid records.</h2>');
+        $('#orders').append('<td><h2 style="text-align: center;">Oops, this filter has returned no valid records.</h2><h3 style="text-align: center;">Try a different filter!</h3></td>');
       }
     },
     error: function (data, textStatus, errorThrown) {
