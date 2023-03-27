@@ -14,5 +14,7 @@ import com.tp32.ecommerceplatform.model.Token;
 public interface TokenRepository extends JpaRepository<Token, Long> {
     @Query("SELECT t FROM Token t INNER JOIN User u ON t.user.id = u.id WHERE u.id = :id AND (t.expired = false OR t.revoked = false)")
     List<Token> findAllValidTokenByUser(Long id);
+    @Query("SELECT t FROM Token t INNER JOIN User u ON t.user.id = u.id WHERE u.id = :id")
+    List<Token> findAllTokensByUser(Long id);
     Optional<Token> findByToken(String token);
 }

@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin</title>
+    <link rel="stylesheet" type="text/css"
+        href="http://fonts.googleapis.com/css?family=Ubuntu:regular,bold&subset=Latin">
+    <link rel="stylesheet" th:href="@{/css/admin.css}" />
+    <link rel="stylesheet" th:href="@{/css/navbar.css}" />
+</head>
+
+<body>
+    <div th:replace="~{fragments/sidebar :: sidebar}"></div>
+    <div class="first">
+        <div class="topbar">
+            <div class="toggle">
+                <ion-icon name="menu-outline"></ion-icon>
+            </div>
+        </div>
+
+        <div class="detail">
+            <div class="listNotifs">
+                <div class="cardHeader">
+                    <h2>Notifications</h2>
+                </div>
+
+                <table>
+                    <div th:if="${!products.empty}">
+                        <thead>
+                            <tr>
+                                <td>Message</td>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <th:block th:each="product : ${products}" id="productList">
+                                <tr th:onclick="'rowClicked(\'' + ${product.ID} + '\');'">
+                                    <td style="font-size: 20px;"><span>• We regret to inform you that product</span>
+                                        <span class="name" style="color: rgb(148, 148, 148);"
+                                            th:text="|${product.name}|"></span>
+                                        <span>has gone</span>
+                                        <span style="color: rgb(255, 81, 81); text-decoration-line: underline;">out of
+                                            stock!</span>
+                                        <span style="color: rgb(113, 3, 113);">Please take appropriate action.</span>
+                                    </td>
+                                </tr>
+                            </th:block>
+                        </tbody>
+                </table>
+                <div th:unless="${!products.empty}">
+                    <h2 style="text-align: center;">Oops, there are no notifications yet.</h2>
+                    <h3 style="text-align: center;">Notifications will appear when a product goes out of stock.</h3>
+                </div>
+            </div>
+        </div>
+
+
+        <script>
+            function rowClicked(value) {
+                location.href = "/admin/products?productId=" + value;
+            }
+        </script>
+    </div>
+
+    <script th:src="@{/js/admin.js}"></script>
+    <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+</body>

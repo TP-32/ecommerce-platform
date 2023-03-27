@@ -22,4 +22,5 @@ public interface UserService {
     List<User> getUsersWithSort(String field, String direction);
     List<Role> getRoles();
     long count();
+    Boolean existsByEmail(String email);
 }

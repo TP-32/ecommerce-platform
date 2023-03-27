@@ -23,8 +23,8 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
      */
     @ExceptionHandler(InputException.class)
     public String handleInputException(InputException exception, RedirectAttributes re) {
-        re.addFlashAttribute("status", 400);
-        return "redirect:error";
+        re.addFlashAttribute("status", exception.getStatus());
+        return "redirect:/error";
     }
 
     /*

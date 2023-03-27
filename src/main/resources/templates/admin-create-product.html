@@ -17,10 +17,6 @@
             <div class="toggle">
                 <ion-icon name="menu-outline"></ion-icon>
             </div>
-
-            <div class="user">
-                <img th:src="@{/images/user_icon.png}" alt="">
-            </div>
         </div>
 
         <div class="detail">
@@ -29,7 +25,6 @@
                     <h2>New Product</h2>
                     <a th:href="@{/admin/products}" class="btn" id="return">Return</a>
                 </div>
-                <div class="alert alert-danger" style="color: red;" th:text="${error}" th:if="${error}"></div>
                 <table class="product-table">
                     <form th:action="@{/admin/products/save}" th:object="${product}" method="POST" autocomplete="off"
                         class="create-form">

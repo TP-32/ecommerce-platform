@@ -11,7 +11,6 @@ import com.tp32.ecommerceplatform.dto.JwtResponse;
 import com.tp32.ecommerceplatform.dto.LoginDto;
 import com.tp32.ecommerceplatform.dto.RegisterDto;
 import com.tp32.ecommerceplatform.dto.UpdateUserDto;
-import com.tp32.ecommerceplatform.exception.InputException;
 import com.tp32.ecommerceplatform.model.Order;
 import com.tp32.ecommerceplatform.model.Role;
 import com.tp32.ecommerceplatform.model.Token;
@@ -77,10 +76,6 @@ public class UserServiceImpl implements UserService {
      */
     @Override
     public JwtResponse register(RegisterDto registerDto) {
-        if (userRepository.existsByEmail(registerDto.getEmail())) {
-            throw new InputException("Email already exists.");
-        }
-
         User user = new User();
         user.setFirstName(registerDto.getFirstName());
         user.setLastName(registerDto.getLastName());
@@ -153,14 +148,18 @@ public class UserServiceImpl implements UserService {
         User updateUser = userRepository.findById(id).get();
 
         updateUser.setFirstName(userDto.getFirstName());
+        System.out.println(updateUser.getFirstName());
         updateUser.setLastName(userDto.getLastName());
+        System.out.println(updateUser.getLastName());
         updateUser.setEmail(userDto.getEmail());
+        System.out.println(updateUser.getEmail());
 
         // Password remains the same if no password was received from the Dto
         if (!userDto.getPassword().isEmpty())
             updateUser.setPassword(passwordEncoder.encode(userDto.getPassword()));
 
-        updateUser.setRole(roleRepository.findByName(userDto.getRole()).get());
+        if (userDto.getRole() != null)
+            updateUser.setRole(roleRepository.findByName(userDto.getRole()).get());
 
         userRepository.save(updateUser);
         return updateUser;
@@ -171,7 +170,7 @@ public class UserServiceImpl implements UserService {
         User user = userRepository.findById(id).get();
 
         // Removes any tokens that were previously archived for this user.
-        for (Token token : tokenRepository.findAllValidTokenByUser(id)) {
+        for (Token token : tokenRepository.findAllTokensByUser(id)) {
             tokenRepository.delete(token);
         }
 
@@ -187,5 +186,10 @@ public class UserServiceImpl implements UserService {
         // Deletes the user's account
         userRepository.deleteById(id);
         return user;
+    }
+
+    @Override
+    public Boolean existsByEmail(String email) {
+        return userRepository.existsByEmail(email);
     }
 }

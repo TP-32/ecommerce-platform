@@ -4,7 +4,6 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
-import com.tp32.ecommerceplatform.model.Inventory;
 import com.tp32.ecommerceplatform.model.Net;
 import com.tp32.ecommerceplatform.model.NetItem;
 import com.tp32.ecommerceplatform.model.Product;
@@ -23,7 +22,8 @@ public class NetItemServiceImpl implements NetItemService {
     private ProductService productService;
     private UserService userService;
 
-    public NetItemServiceImpl(NetItemRepository netItemRepository, NetService netService, ProductService productService, UserService userService) {
+    public NetItemServiceImpl(NetItemRepository netItemRepository, NetService netService, ProductService productService,
+            UserService userService) {
         this.netItemRepository = netItemRepository;
         this.netService = netService;
         this.productService = productService;
@@ -33,23 +33,26 @@ public class NetItemServiceImpl implements NetItemService {
     @Override
     public NetItem create(Long userId, Long productId, int quantity) {
         Net net = netService.findByUser(userService.getUser(userId));
-        if (net == null) net = netService.create(userService.getUser(userId));
+        if (net == null)
+            net = netService.create(userService.getUser(userId));
 
         Product product = productService.getProduct(productId);
         List<NetItem> netItems = net.getNetItems();
-        // If this Net has a NetItem that has a Product that matches product, then increase quantity instead of creating a new NetItem
 
         NetItem item = containsProduct(product, netItems);
         if (item != null) {
-            item.setQuantity(item.getQuantity() + quantity);
-            save(item);
+            // Only update the quantity if there is enough stock left
+            if (item.getQuantity() + quantity <= product.getInventory().getStock()) {
+                item.setQuantity(item.getQuantity() + quantity);
+                save(item);
+            }
             return item;
         }
 
         NetItem netItem = new NetItem();
-        Inventory inventory = product.getInventory();
-        inventory.setStock(inventory.getStock() - quantity);
-        product.setInventory(product.getInventory());
+        // Inventory inventory = product.getInventory();
+        // inventory.setStock(inventory.getStock() - quantity);
+        // product.setInventory(product.getInventory());
 
         netItem.setNet(net);
         netItem.setProduct(product);
@@ -64,7 +67,8 @@ public class NetItemServiceImpl implements NetItemService {
 
     private NetItem containsProduct(Product product, List<NetItem> netItems) {
         for (NetItem netItem : netItems) {
-            if (netItem.getProduct().getID().equals(product.getID())) return netItem;
+            if (netItem.getProduct().getID().equals(product.getID()))
+                return netItem;
         }
         return null;
     }
@@ -86,10 +90,10 @@ public class NetItemServiceImpl implements NetItemService {
         NetItem netItem = netItemRepository.findByNetProduct(net, product);
         net.getNetItems().remove(netItem);
         net.setPrice(net.getPrice() - (netItem.getProduct().getPrice() * netItem.getQuantity()));
-        
-        Inventory inventory = netItem.getProduct().getInventory();
-        inventory.setStock(inventory.getStock() + netItem.getQuantity());
-        netItem.getProduct().setInventory(inventory);
-        netItemRepository.delete(netItem);    
+
+        // Inventory inventory = netItem.getProduct().getInventory();
+        // inventory.setStock(inventory.getStock() + netItem.getQuantity());
+        // netItem.getProduct().setInventory(inventory);
+        netItemRepository.delete(netItem);
     }
 }

@@ -13,4 +13,5 @@ public interface ProductService {
     List<Product> getProducts();
     List<Product> getProductsWithSort(String field, String direction);
     List<Product> getProductsWithSort(List<Product> products, String field, String direction);
+    long count();
 }

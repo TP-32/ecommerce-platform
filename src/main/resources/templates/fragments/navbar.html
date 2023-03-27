@@ -3,6 +3,7 @@
 
 <head>
     <meta charset="UTF-8">
+    <link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Ubuntu:regular,bold&subset=Latin">
     <link rel="stylesheet" th:href="@{/css/navbar.css}" />
 </head>
 
@@ -12,12 +13,13 @@
             <li><a th:href="@{/admin/dashboard}" sec:authorize="hasRole('ROLE_ADMIN')">Admin</a></li>
             <li><a th:href="@{/}">Home</a></li>
             <li><a th:href="@{/categories}">Categories</a></li>
-            <li><a th:href="@{/net}">Net</a></li>
+            <li><a th:href="@{/net}" sec:authorize="isAuthenticated()">Net</a></li>
             <li><a th:href="@{/orders}" sec:authorize="isAuthenticated()">Orders</a></li>
             <li><a th:href="@{/aboutus}">About</a></li>
             <li><a th:href="@{/contact}">Contact</a></li>
             <li><a th:href="@{/login}" sec:authorize="!isAuthenticated()">Login</a></li>
             <li><a th:href="@{/signup}" sec:authorize="!isAuthenticated()">Sign up</a></li>
+            <li><a th:href="@{/user/update}" sec:authorize="isAuthenticated()">Edit Account</a></li>
             <li><a th:href="@{/logout}" sec:authorize="isAuthenticated()">Sign Out</a>
             </li>
         </ul>
