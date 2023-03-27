@@ -6,7 +6,8 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin</title>
-    <link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Ubuntu:regular,bold&subset=Latin">
+    <link rel="stylesheet" type="text/css"
+        href="http://fonts.googleapis.com/css?family=Ubuntu:regular,bold&subset=Latin">
     <link rel="stylesheet" th:href="@{/css/admin.css}" />
     <link rel="stylesheet" th:href="@{/css/navbar.css}" />
 </head>
@@ -21,7 +22,7 @@
         </div>
 
         <div class="cardBox">
-            <a th:href="@{/admin/customers}" class="btn">
+            <a th:href="@{/admin/products}" class="btn">
                 <div class="card">
                     <div>
                         <div class="numbers" th:text="${products}"></div>
@@ -75,7 +76,6 @@
         </div>
 
         <div class="details">
-
             <div class="popularProduct">
                 <div class="cardHeader">
                     <h2 style="margin: 0 auto;">Popular Product</h2>
@@ -87,12 +87,17 @@
                         <th>
                             <tr>
                                 <td>
-                                    <span class="parent" th:text="${product.name}"></span><span class="child"
-                                        th:text="${product.description}"></span>
-                                    <div class="imgBx"><img th:src="@{/{image}(image=${product.image})}" />
+                                    <div th:if="${product != null}">
+                                        <span class="parent" th:text="${product.name}"></span><span class="child"
+                                            th:text="${product.description}"></span>
+                                        <div class="imgBx"><img th:src="@{/{image}(image=${product.image})}" />
+                                        </div>
+                                        <span class="child" th:text="|£${product.price}|"></span>
+                                        <span class="child" th:text="|${sale} Orders|"></span>
                                     </div>
-                                    <span class="child" th:text="|£${product.price}|"></span>
-                                    <span class="child" th:text="|${sale} Orders|"></span>
+                                    <div th:unless="${product != null}">
+                                        <h2 style="text-align: center;">There is no popular product yet!</h2>
+                                    </div>
                                 </td>
                             </tr>
                         </th>

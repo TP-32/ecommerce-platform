@@ -6,7 +6,8 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin</title>
-    <link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Ubuntu:regular,bold&subset=Latin">
+    <link rel="stylesheet" type="text/css"
+        href="http://fonts.googleapis.com/css?family=Ubuntu:regular,bold&subset=Latin">
     <link rel="stylesheet" th:href="@{/css/admin.css}" />
     <link rel="stylesheet" th:href="@{/css/navbar.css}" />
 </head>
@@ -40,7 +41,7 @@
                         <thead>
                             <tr>
                                 <!-- Allows columns to be sorted if a filter is not active. -->
-                                <div th:if="${filter} != 'true' and ${search} == null">
+                                <div th:if="${filter != 'true' and search == null}">
                                     <td><a class="sort"
                                             th:href="@{'/admin/products/ID?sortDir=' + ${reverseSortDir}}">ID</a></td>
                                     <td><a class="sort"
@@ -85,29 +86,8 @@
                                             th:href="@{'/admin/products/stock?sortDir=' + ${reverseSortDir} + '&search=' + ${search}}">Stock</a>
                                     </td>
                                 </div>
-                                <div th:if="${reverseSortDir} == null and ${search} != null">
-                                    <td><a class="sort" th:href="@{'/admin/products/ID?search=' + ${search}}">ID</a>
-                                    </td>
-                                    <td><a class="sort" th:href="@{'/admin/products/name?search=' + ${search}}">Name</a>
-                                    </td>
-                                    <td class="description"><a class="sort"
-                                            th:href="@{'/admin/products/description?search=' + ${search}}">Description</a>
-                                    </td>
-                                    <td><a class="sort"
-                                            th:href="@{'/admin/products/image?search=' + ${search}}">Image</a>
-                                    </td>
-                                    <td><a class="sort"
-                                            th:href="@{'/admin/products/price?search=' + ${search}'}">Price</a>
-                                    </td>
-                                    <td><a class="sort"
-                                            th:href="@{'/admin/products/category?search=' + ${search}'}">Category</a>
-                                    </td>
-                                    <td><a class="sort"
-                                            th:href="@{'/admin/products/stock?search=' + ${search}'}">Stock</a>
-                                    </td>
-                                </div>
                                 <!-- Does not allow columns to be sorted if a filter is active. -->
-                                <div th:if="${filter} == 'true'">
+                                <div th:if="${filter == 'true'}">
                                     <td>ID</td>
                                     <td>Name</td>
                                     <td>Description</td>

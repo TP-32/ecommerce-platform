@@ -127,7 +127,7 @@ public class AdminController {
             Model model,
             @RequestParam(value = "userId") Long id) {
         User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        boolean updateError = userDto.getEmail().equals(user.getEmail());
+        boolean updateError = userDto.getEmail().equals(user.getEmail()) && userService.getUser(id).getEmail().equals(user.getEmail());
         boolean emailError = userService.existsByEmail(userDto.getEmail()) && !userService.getUser(id).getEmail().equals(userDto.getEmail());
         if (!result.hasErrors() && !updateError && !emailError) {
             userService.updateUser(id, userDto);
@@ -214,6 +214,7 @@ public class AdminController {
         if (!result.hasErrors()) {
             Product product = productService.createProduct(productDto);
             model.addAttribute("preProduct", product);
+            model.addAttribute("product", new ProductDto());
         }
 
         model.addAttribute("categories", categoryRepository.findAll());

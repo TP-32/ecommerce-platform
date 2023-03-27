@@ -7,11 +7,11 @@ import jakarta.validation.constraints.Size;
 public class ProductDto {
     
     @Size(min = 5, message = "Name length must be greater than 5.")
-    @Size(max = 50, message = "Name length must be less than 50.")
+    @Size(max = 100, message = "Name length must be less than 100.")
     private String name;
 
     @Size(min = 5, message = "Description length must be greater than 5.")
-    @Size(max = 50, message = "Description length must be less than 50.")
+    @Size(max = 250, message = "Description length must be less than 250.")
     private String description;
 
     private String image;

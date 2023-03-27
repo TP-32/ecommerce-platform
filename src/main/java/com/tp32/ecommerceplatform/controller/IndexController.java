@@ -68,7 +68,8 @@ public class IndexController {
     @PostMapping("/user/update")
     public String update(@Valid @ModelAttribute("userDto") UpdateUserDto userDto, BindingResult result, Model model, HttpServletResponse response) throws IOException {
         User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        if (!result.hasErrors()) {
+        boolean emailError = userService.existsByEmail(userDto.getEmail()) && !user.getEmail().equals(userDto.getEmail());
+        if (!result.hasErrors() && !emailError) {
             Cookie cookie = new Cookie("Authorization", null);
             cookie.setHttpOnly(true);
             cookie.setPath("/");
@@ -79,6 +80,9 @@ public class IndexController {
             userService.updateUser(user.getID(), userDto);
             return "index.html";
         }
+        if (emailError)
+        model.addAttribute("emailError", "Email already exists.");
+
         model.addAttribute("userDto", userDto);
         return "update-user.html";
     }
