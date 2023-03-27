@@ -24,8 +24,8 @@
             <a th:href="@{/admin/customers}" class="btn">
                 <div class="card">
                     <div>
-                        <div class="numbers">35</div>
-                        <div class="cardName">Daily Views</div>
+                        <div class="numbers" th:text="${products}"></div>
+                        <div class="cardName">Products</div>
                     </div>
 
                     <div class="iconBx">
@@ -63,8 +63,8 @@
             <a th:href="@{/admin/orders}" class="btn">
                 <div class="card">
                     <div>
-                        <div class="numbers" th:text="${earning}"></div>
-                        <div class="cardName">Earning</div>
+                        <div class="numbers" th:text="${income}"></div>
+                        <div class="cardName">Income</div>
                     </div>
 
                     <div class="iconBx">
