@@ -56,8 +56,8 @@
                         </tr>
                         <tr>
                             <div class="field">
-                                <td><label for="status">Status</label></td>
-                                <td><select name="status" id="status" required th:field="*{status}">
+                                <td style="width: 20%;"><label for="status">Status</label></td>
+                                <td style="width: 50%;"><select name="status" id="status" required th:field="*{status}">
                                         <option th:each="status : ${status}" th:value="${status.name}"
                                             th:text="${status.name}" th:if="${status.name == order.status.name}"
                                             selected>
@@ -66,12 +66,15 @@
                                             th:text="${status.name}" th:unless="${status.name == order.status.name}">
                                         </option>
                                     </select></td>
+                                    <td style="width: 30%;"><p class="alert alert-danger" th:if="${stockError != null}"
+                                    th:text="${stockError}"></p></td>
                             </div>
                         </tr>
                 </table>
                 <div class="form_action--button">
                     <input type="submit" value="Submit">
-                    <input type="reset" value="Reset">
+                    <a th:href="@{/admin/orders?orderId={id}(id=${order.ID})}">
+                        <input type="button" name="reset" value="Reset"></a>
                 </div>
                 </form>
             </div>
