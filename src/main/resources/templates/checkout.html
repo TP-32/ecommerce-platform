@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Orders</title>
+	<link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Ubuntu:regular,bold&subset=Latin">
+	<link rel="stylesheet" th:href="@{/css/checkout.css}" />
+	<link rel="stylesheet" th:href="@{/css/navbar.css}" />
+</head>
+<style>
+	h5 {
+		color: white;
+	}
+</style>
+
+<body>
+	<header>
+		<div class="holder">
+			<div th:replace="~{fragments/navbar :: navbar}"></div>
+		</div>
+	</header>
+	<div class="checkout">
+		<div class="container">
+			<div class="left">
+				<h3>BILLING ADDRESS</h3>
+				<!-- Update to send to submit -->
+				<form th:action="@{'/net/submit'}" th:object="${addressDto}" method="POST" autocomplete="off"
+					class="create-form">
+
+					<h5>First Line Address</h5>
+					<input type="text" name="firstline" th:field="*{firstLine}" placeholder="First Line Address"
+						required />
+					<p class="alert alert-danger" th:if="${#fields.hasErrors('firstLine')}" th:errors="*{firstLine}">
+					</p>
+					<h5>Second Line Address</h5>
+					<input type="text" name="secondline" th:field="*{secondLine}" placeholder="Second Line Address" />
+					<p class="alert alert-danger" th:if="${#fields.hasErrors('secondLine')}" th:errors="*{secondLine}">
+					</p>
+
+					<h5>City</h5>
+					<input type="text" name="city" th:field="*{city}" placeholder="City" required />
+					<p class="alert alert-danger" th:if="${#fields.hasErrors('city')}" th:errors="*{city}"></p>
+					<div id="post">
+						<label>
+							<h5>Country</h5>
+							<select name="country" th:field="*{country}" required >
+								<option selected value="">Choose Country</option>
+								<option th:each="country : ${countries}" th:value="${country}" th:text="${country}"></option>
+							</select>
+						</label>
+						<label>
+							<h5>Post Code</h5>
+							<input type="text" name="postcode" th:field="*{postcode}" placeholder="Post Code" required/>
+							<p class="alert alert-danger" th:if="${#fields.hasErrors('postcode')}"
+								th:errors="*{postcode}"></p>
+						</label>
+					</div>
+					<div class="form_action--button">
+						<input type="submit" value="Submit">
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+</body>
+
+</html>
