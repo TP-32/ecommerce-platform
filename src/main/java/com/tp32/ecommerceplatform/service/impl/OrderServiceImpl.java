@@ -12,6 +12,7 @@ import com.tp32.ecommerceplatform.dto.UpdateOrderDto;
 import com.tp32.ecommerceplatform.model.Inventory;
 import com.tp32.ecommerceplatform.model.Order;
 import com.tp32.ecommerceplatform.model.OrderItem;
+import com.tp32.ecommerceplatform.model.Product;
 import com.tp32.ecommerceplatform.model.Status;
 import com.tp32.ecommerceplatform.repository.OrderRepository;
 import com.tp32.ecommerceplatform.repository.StatusRepository;
@@ -63,11 +64,27 @@ public class OrderServiceImpl implements OrderService {
     @Override
     public Order updateOrder(Long id, UpdateOrderDto orderDto) {
         Order updateOrder = orderRepository.findById(id).get();
-        //updateOrder.setPrice(orderDto.getPrice());
 
         Status status = statusRepository.findByName(orderDto.getStatus()).get();
 
+        if (updateOrder.getStatus().getName().equals("Completed") && !status.getName().equals("Completed")) {
+            for (OrderItem orderItem : updateOrder.getOrderItems()) {
+                Product product = orderItem.getProduct();
+                Inventory inventory = product.getInventory();
+                inventory.setStock(inventory.getStock() + orderItem.getQuantity());
+            }
+            // Increase Stock -> Went from Completed to Non-Completed
+        } else if (!updateOrder.getStatus().getName().equals("Completed") && status.getName().equals("Completed")) {
+            for (OrderItem orderItem : updateOrder.getOrderItems()) {
+                Product product = orderItem.getProduct();
+                Inventory inventory = product.getInventory();
+                inventory.setStock(inventory.getStock() - orderItem.getQuantity());
+            }
+            // Decrease Stock -> Went from Non-Completed to Completed
+        }
+
         updateOrder.setStatus(status);
+
         // Date and User cannot be modified
 
         orderRepository.save(updateOrder);
@@ -78,10 +95,12 @@ public class OrderServiceImpl implements OrderService {
     public Order deleteOrder(Long id) {
         Order order = orderRepository.findById(id).get();
 
-        for (OrderItem orderItem : order.getOrderItems()) {
-            Inventory inventory = orderItem.getProduct().getInventory();
-            inventory.setStock(inventory.getStock() + orderItem.getQuantity());
-            orderItem.getProduct().setInventory(inventory);
+        if (order.getStatus().getName().equals("Completed")) {
+            for (OrderItem orderItem : order.getOrderItems()) {
+                Inventory inventory = orderItem.getProduct().getInventory();
+                inventory.setStock(inventory.getStock() + orderItem.getQuantity());
+                orderItem.getProduct().setInventory(inventory);
+            }
         }
 
         orderRepository.deleteById(id);

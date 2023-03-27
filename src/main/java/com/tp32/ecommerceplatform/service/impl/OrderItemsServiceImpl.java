@@ -54,11 +54,13 @@ public class OrderItemsServiceImpl implements OrderItemsService {
         OrderItem orderItem = orderItemsRepository.findByOrderProduct(order, product);
         order.getOrderItems().remove(orderItem);
         order.setPrice(order.getPrice() - (orderItem.getProduct().getPrice() * orderItem.getQuantity()));
-        
-        Inventory inventory = orderItem.getProduct().getInventory();
-        inventory.setStock(inventory.getStock() + orderItem.getQuantity());
-        orderItem.getProduct().setInventory(inventory);
-        
+
+        if (order.getStatus().getName().equals("Completed")) {
+            Inventory inventory = orderItem.getProduct().getInventory();
+            inventory.setStock(inventory.getStock() + orderItem.getQuantity());
+            orderItem.getProduct().setInventory(inventory);
+        }
+
         orderItemsRepository.delete(orderItem);
 
         if (order.getOrderItems().isEmpty()) {
