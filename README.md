@@ -1,6 +1,25 @@
 # ecommerce-platform
 > Design and deploy an e-commerce platform to sell products of a business.
 
+# Login Details
+User Accounts
+  - Pablo Snow
+    - Email: `pablosnow4@gmail.com`
+    - Password: `PabloSnow4!`
+    - Role: `user`
+  - Ivy Moss
+    - Email: `ivymoss@gmail.com`
+    - Password: `IvyMoss21!`
+    - Role: `user`
+  - Admin
+    - Email: `admin@gmail.com`
+    - Password: `Admin16!`
+    - Role: `admin`
+  - Dante Fox
+    - Email: `dantefox@gmail.com`
+    - Password: `DanteFox1!`
+    - Role: `admin`
+    
 # Setup Local Server
 1. Clone project
     - HTTP: `git clone https://github.com/TP-32/ecommerce-platform.git`
