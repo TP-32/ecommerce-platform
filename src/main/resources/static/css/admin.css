@@ -20,8 +20,6 @@ body {
   background: #000000;
   background: -webkit-linear-gradient(to right, #2a2a2a, #000000);
   background: linear-gradient(to right, #171717, #000000);
-
-
 }
 
 .container1 {
@@ -809,4 +807,84 @@ table .description {
 
 .detail .listNotifs table tr td {
   padding: 10px;
+}
+
+@media (max-width: 600px) {
+  .navigation {
+    display: none;
+  }
+  
+  .toggle {
+    display: flex;
+  }
+}
+
+@media (max-width: 600px) {
+  .first {
+    width: 100%;
+    left: 0;
+  }
+}
+
+@media (min-width: 601px) {
+  .first.active {
+    width: calc(100% - 80px);
+    left: 80px;
+  }
+}
+
+@media (max-width: 600px) {
+  /* Font sizes */
+  body {
+    font-size: 16px;
+  }
+  
+  .navigation ul li a .icon {
+    min-width: 40px;
+    height: 40px;
+    line-height: 50px;
+  }
+  
+  .navigation ul li a .icon ion-icon {
+    font-size: 1.5rem;
+  }
+  
+  .navigation ul li a .title {
+    padding: 0 5px;
+    height: 40px;
+    line-height: 40px;
+  }
+  
+  .search label input {
+    height: 30px;
+    border-radius: 30px;
+    padding: 5px 15px;
+    padding-left: 30px;
+    font-size: 14px;
+  }
+  
+  .cardBox {
+    padding: 10px;
+    padding-top: 60px;
+    grid-template-columns: repeat(2, 1fr);
+    grid-gap: 20px;
+  }
+  
+  .cardBox .card {
+    padding: 20px;
+    border-radius: 10px;
+  }
+  
+  /* Margins and padding */
+  .toggle {
+    margin-left: 10px;
+  }
+  
+  .search {
+    margin: 0;
+  }
+  
+  .cardBox {
+    padding-top: 50px;
+  }
 }

@@ -103,3 +103,36 @@ input[type="submit"] {
 	background-color: #f8d7da;
 	border-color: #f5c6cb;
 }
+
+@media screen and (max-width: 768px) {
+	.container {
+		flex-direction: column;
+		max-width: 100%;
+		height: auto;
+		padding: 2rem;
+	}
+
+	.left {
+		width: 100%;
+		margin-bottom: 2rem;
+	}
+
+	form {
+		padding: 2rem;
+	}
+}
+
+@media screen and (max-width: 768px) {
+	#post {
+		flex-wrap: wrap;
+		justify-content: center;
+	}
+
+	#post select {
+		margin-bottom: 0.5rem;
+	}
+
+	#post input[name="postcode"] {
+		margin-left: 0;
+	}
+}

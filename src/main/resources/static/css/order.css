@@ -157,3 +157,26 @@ table td .sort {
     border-radius: 100px;
     background-size: cover;
 }
+
+@media only screen and (max-width: 768px) {
+    .detail {
+      grid-template-columns: 1fr;
+      padding: 20px;
+    }
+    
+    .detail .recentOrders {
+      margin-top: 20px;
+    }
+    
+    .productListing .card {
+      width: 100%;
+      margin: 10px 0 5px;
+    }
+    
+    #product-image {
+      height: 150px;
+      width: 150px;
+      border-radius: 75px;
+    }
+  }
+  

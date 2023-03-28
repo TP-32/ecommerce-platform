@@ -6,7 +6,8 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sign In</title>
-    <link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Ubuntu:regular,bold&subset=Latin">
+    <link rel="stylesheet" type="text/css"
+        href="http://fonts.googleapis.com/css?family=Ubuntu:regular,bold&subset=Latin">
     <style media="screen">
         body {
             background-color: black;
@@ -109,6 +110,37 @@
         .holder {
             width: 1165px;
             margin: auto;
+        }
+
+        @media (max-width: 767px) {
+            form {
+                width: 90%;
+                padding: 35px 20px;
+            }
+
+            form h3 {
+                font-size: 30px;
+            }
+
+            label {
+                font-size: 20px;
+            }
+
+            input {
+                font-size: 20px;
+            }
+
+            button {
+                font-size: 25px;
+                padding: 10px;
+            }
+        }
+
+        @media screen and (max-width: 600px) {
+            form * {
+                width: 100%;
+                font-size: 20px;
+            }
         }
     </style>
 </head>

@@ -104,3 +104,27 @@ input[type="submit"] {
 	background-color: #f8d7da;
 	border-color: #f5c6cb;
 }
+
+@media screen and (max-width: 767px) {
+	.container {
+		flex-direction: column;
+		max-width: 100%;
+	}
+
+	.left {
+		flex-basis: 100%;
+	}
+
+	form {
+		padding: 2rem;
+	}
+
+	input[type="submit"] {
+		margin-top: 1rem;
+	}
+
+	.holder {
+		width: 100%;
+		padding: 0 15px;
+	}
+}

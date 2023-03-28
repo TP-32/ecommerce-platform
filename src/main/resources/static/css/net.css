@@ -115,3 +115,28 @@ body {
     color: red;
     margin-left: 30%;
 }
+
+@media only screen and (max-width: 768px) {
+    .holder {
+        width: 100%;
+        padding: 0 15px;
+    }
+
+    .detail {
+        grid-template-columns: 1fr;
+        padding: 25px;
+    }
+
+    .productListing {
+        margin: 0;
+    }
+
+    .productListing .card {
+        width: 100%;
+    }
+
+    #product-image {
+        height: 150px;
+        width: 150px;
+    }
+}
