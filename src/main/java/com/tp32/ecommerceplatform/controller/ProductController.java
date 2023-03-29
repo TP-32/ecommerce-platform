@@ -1,5 +1,6 @@
 package com.tp32.ecommerceplatform.controller;
 
+import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -9,6 +10,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.tp32.ecommerceplatform.dto.NetDto;
 import com.tp32.ecommerceplatform.model.Product;
@@ -24,7 +26,8 @@ public class ProductController {
     }
 
     /*
-     * Simply displays the categories page to the user, showing all products at once.
+     * Simply displays the categories page to the user, showing all products at
+     * once.
      */
     @GetMapping("categories")
     public String categories(Model model, @RequestParam(value = "search", required = false) String search) {
@@ -32,7 +35,7 @@ public class ProductController {
         if (search != null && !search.isEmpty())
             products = this.filterBySearch(productService.getProducts(), search);
         else
-            products = productService.getProducts(); 
+            products = productService.getProducts();
         products.stream().filter(p -> p.getInventory().getStock() > 0).collect(Collectors.toList());
         model.addAttribute("products", products);
         return "categories.html";
@@ -94,9 +97,23 @@ public class ProductController {
     }
 
     @GetMapping("/products/list")
-    public String listProducts(Model model) {
-        model.addAttribute("products", productService.getProducts());
-        return "basket.html";
+    @ResponseBody
+    public List<Product> getProducts(@RequestParam(value = "filter", required = true) Long filter) {
+        List<Product> products = productService.getProducts();
+        if (filter == 0) // Sort by alphabetical order
+            Collections.sort(products, (p1, p2) -> p1.getName().compareToIgnoreCase(p2.getName()));
+        else if (filter == 1) // Sort by reverse alphabetical order
+            Collections.sort(products, (p1, p2) -> p2.getName().compareToIgnoreCase(p1.getName()));
+        else if (filter == 3) // Sort by price (lowest -> highest)
+            Collections.sort(products, Comparator.comparing(Product::getPrice));
+        else if (filter == 4) // Sort by price (highest -> lowest)
+            Collections.sort(products, Comparator.comparing(Product::getPrice).reversed());
+        else if (filter == 5) // Sort by newest
+            Collections.reverse(products);
+        else if (filter == 6) {// Sort by oldest
+        } // Do nothing
+
+        return products;
     }
 
     @GetMapping("/fish/details/{productId}")
