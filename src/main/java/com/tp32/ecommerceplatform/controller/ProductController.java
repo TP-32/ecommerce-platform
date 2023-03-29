@@ -98,19 +98,19 @@ public class ProductController {
 
     @GetMapping("/products/list")
     @ResponseBody
-    public List<Product> getProducts(@RequestParam(value = "filter", required = true) Long filter) {
+    public List<Product> getProducts(@RequestParam(value = "sort", required = true) Long sort) {
         List<Product> products = productService.getProducts();
-        if (filter == 0) // Sort by alphabetical order
+        if (sort == 1) // Sort by alphabetical order
             Collections.sort(products, (p1, p2) -> p1.getName().compareToIgnoreCase(p2.getName()));
-        else if (filter == 1) // Sort by reverse alphabetical order
+        else if (sort == 2) // Sort by reverse alphabetical order
             Collections.sort(products, (p1, p2) -> p2.getName().compareToIgnoreCase(p1.getName()));
-        else if (filter == 3) // Sort by price (lowest -> highest)
+        else if (sort == 3) // Sort by price (lowest -> highest)
             Collections.sort(products, Comparator.comparing(Product::getPrice));
-        else if (filter == 4) // Sort by price (highest -> lowest)
+        else if (sort == 4) // Sort by price (highest -> lowest)
             Collections.sort(products, Comparator.comparing(Product::getPrice).reversed());
-        else if (filter == 5) // Sort by newest
+        else if (sort == 5) // Sort by newest
             Collections.reverse(products);
-        else if (filter == 6) {// Sort by oldest
+        else if (sort == 6) {// Sort by oldest
         } // Do nothing
 
         return products;
