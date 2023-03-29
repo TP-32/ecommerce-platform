@@ -42,49 +42,46 @@
               </ul>
             </div>
           </div>
+
           <div class="col-9 col-md-12">
             <div class="box">
-              <div class="row" id="products"></div>
+
+              <form th:action="@{/categories}">
+                <input type="text" id="search" name="search" />
+                <div>
+                  <input type="submit" value="Search" />
+                  <a th:href="@{/categories}"><input type="button" value="Clear" /></a>
+                </div>
+
+              </form>
+
+              <div class="row" id="products">
+                <div class="col-4 col-md-6 col-sm-12" th:each="product : ${products}">
+                  <div class="product-card">
+                    <div class="product-card-img">
+                      <img th:src="${product.image}" alt="">
+                      <img th:src="${product.image}" alt="">
+                    </div>
+                    <div class="product-card-info">
+                      <div class="product-btn">
+                        <a th:href="@{/fish/details/{id}(id=${product.ID})}"
+                          class="btn btn-flat btn-hover btn-shop-now">Shop Now</a>
+                      </div>
+                      <div class="product-card-name" th:text="${product.name}">
+                      </div>
+                      <div class="product-card-price">
+                        <span class="curr-price" th:text="|£ ${product.price}|"></span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         </div>
       </div>
     </div>
   </div>
-  <script th:inline="javascript">
-    var products = /*[[${products}]]*/[];
-    function formatPrice(x) {
-      return x.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",");
-    }
-    let product_list = document.querySelector('#products')
-    renderProducts = (products) => {
-      products.forEach(e => {
-        let prod = `
-            <div class="col-4 col-md-6 col-sm-12">
-                <div class="product-card">
-                    <div class="product-card-img">
-                        <img src="${e.image}" alt="">
-                        <img src="${e.image}" alt="">
-                    </div>
-                    <div class="product-card-info">
-                        <div class="product-btn">
-                            <a href="/fish/details/${e.id}" class="btn btn-flat btn-hover btn-shop-now">shop now</a>
-                        </div>
-                        <div class="product-card-name">
-                            ${e.name}
-                        </div>
-                        <div class="product-card-price">
-                            <span class="curr-price">£ ` + formatPrice(`${e.price}`); `</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        `
-        product_list.insertAdjacentHTML("beforeend", prod)
-      })
-    }
-    renderProducts(products)
-  </script>
 </body>
 
 </html>

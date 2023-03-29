@@ -315,6 +315,71 @@ img {
     font-weight: normal;
 }
 
+.search {
+    position: relative;
+    width: 400px;
+    margin: 0 10px;
+}
+
+.search label {
+    position: relative;
+    width: 100%;
+}
+
+.search label input {
+    width: 100%;
+    height: 40px;
+    border-radius: 40px;
+    padding: 5px 20px;
+    padding-left: 35px;
+    font-size: 18px;
+    outline: none;
+    border: 1px solid var(--black2);
+}
+
+.search label ion-icon {
+    position: absolute;
+    top: 0;
+    left: 10px;
+    font-size: 1.2rem;
+}
+
+.search label input {
+    height: 30px;
+    border-radius: 30px;
+    padding: 5px 15px;
+    padding-left: 30px;
+    font-size: 14px;
+}
+
+input[type="submit"],
+input[type="button"] {
+  background: #eee;
+  padding: 6px 12px;
+  margin: 15px 0 10px;
+  display: inline-block;
+  border: none;
+  border-radius: 30px;
+  font-size: 1rem;
+  cursor: pointer;
+  outline: none;
+  color: black;
+}
+
+input[type="submit"]:hover,
+input[type="button"]:hover {
+    background: rgb(49, 49, 49);
+  }
+
+input[type="text"] {
+  width: 91%;
+  padding: 12px 20px;
+  margin: 8px 0;
+  border: 1px solid rgb(165, 161, 161);
+  border-radius: 4px;
+  background-color: black;
+}
+
 @media only screen and (max-width: 1280px) {
     .hero {
         height: calc(80vh - (var(--top-header-size) + var(--mid-header-size) + var(--bottom-header-size)));
@@ -398,7 +463,7 @@ img {
 
 @media only screen and (max-width: 600px) {
     li {
-      display: block;
-      width: 100%;
+        display: block;
+        width: 100%;
     }
-  }
+}
