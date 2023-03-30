@@ -1,150 +1,167 @@
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Marine Fish</title>
-  <link rel="preconnect" href="https://fonts.gstatic.com">
-  <link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Ubuntu:regular,bold&subset=Latin">
-  <link href='https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css' rel='stylesheet'>
-  <link rel="stylesheet" th:href="@{/css/categories.css}" />
-  <link rel="stylesheet" th:href="@{/css/navbar.css}" />
-</head>
-
-<body>
-  <div class="breadcumb-wrapper">
-    <h2 class="page-title">Categories</h2>
-  </div>
-  <div class="bg-main">
-    <div class="container">
-      <div th:replace="~{fragments/navbar :: navbar}"></div>
-      <div class="box">
-        <div class="breadcumb">
-          <a th:href="@{/}">Home</a>
-          <span><i class='bx bxs-chevrons-right'></i></span>
-          <a th:href="@{/categories}">Categories</a>
-        </div>
-      </div>
-      <div class="box">
-        <div class="row">
-          <div class="col-3 filter-col" id="filter-col">
-            <div class="box">
-              <span class="filter-header">Categories</span>
-              <ul class="filter-list">
-                <li><a th:href="@{/tropical}">Tropical Fish</a></li>
-                <li><a th:href="@{/brackish}">Brackish Fish</a></li>
-                <li><a th:href="@{/hybrid}">Hybrid Fish</a></li>
-                <li><a th:href="@{/predatory}">Predatory Fish</a></li>
-                <li><a th:href="@{/coldwater}">Coldwater Fish</a></li>
-                <li><a th:href="@{/marine}">Marine Fish</a></li>
-              </ul>
-            </div>
-          </div>
-          <div class="col-9 col-md-12">
-            <div class="box">
-              <h2 class="description">Marine fishes are the fishes that live in ocean water.
-                They are also called as saltwater fishes. Marine (saltwater fish) can swim and
-                live alone or in a large group called a school. These kinds of fishes are very
-                commonly kept in aquariums for entertainment. </h2>
-              <div class="row" id="products"></div>
-            </div>
-          </div>
-        </div>
-      </div>
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Marine Fish</title>
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,900&display=swap" rel="stylesheet">
+    <link href='https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css' rel='stylesheet'>
+    <link rel="stylesheet" href="categories.css">
+  </head>
+  <body>
+    <div class="breadcumb-wrapper">
+      <h2 class="page-title">Categories</h2>
     </div>
-  </div>
-  <script th:inline="javascript">
-    var products = /*[[${products}]]*/[];
-    /*     let products = [
-          {
-            name: 'MARINE CLOWN FISH       ',
-            image1: './images/m1.png',
-            image2: './images/m1.png',
-            curr_price: '£ 400.00'
-          },
-          {
-            name: 'MARINE ANGELFISH   ',
-            image1: './images/m2.png',
-            image2: './images/m2.png',
-            curr_price: '£ 400.00'
-          },
-          {
-            name: 'MARINE FROG FISH   ',
-            image1: './images/m3.png',
-            image2: './images/m3.png',
-            curr_price: '£ 350.00'
-          },
-          {
-            name: 'MARINE ANTHIAS   ',
-            image1: './images/m4.png',
-            image2: './images/m4.png',
-            curr_price: '£ 350.00'
-          },
-          {
-            name: 'MARINE BANNER FISH   ',
-            image1: './images/m5.png',
-            image2: './images/m5.png',
-            curr_price: '£ 350.00'  
-          },
-          {
-            name: 'MARINE BASSLET FISH     ',
-            image1: './images/m6.png',
-            image2: './images/m6.png',
-            curr_price: '£ 300.00'
-          },
-          {
-            name: 'MARINE BAT FISH   ',
-            image1: './images/m7.png',
-            image2: './images/m7.png',
-            curr_price: '£ 300.00'
-          },
-          {
-            name: 'MARINE BLENNYS   ',
-            image1: './images/m8.png',
-            image2: './images/m8.png',
-            curr_price: '£ 300.00'
-          },
-          {
-            name: 'MARINE CARDINAL FISH   ',
-            image1: './images/m9.png',
-            image2: './images/m9.png',
-            curr_price: '£ 250.00'
-          },
-        ] */
-    function formatPrice(x) {
-      return x.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",");
-    }
-    let product_list = document.querySelector('#products')
-    renderProducts = (products) => {
-      products.forEach(e => {
-        let prod = `
-            <div class="col-4 col-md-6 col-sm-12">
-                <div class="product-card">
-                    <div class="product-card-img">
-                        <img src="${e.image}" alt="">
-                        <img src="${e.image}" alt="">
-                    </div>
-                    <div class="product-card-info">
-                        <div class="product-btn">
-                          <a href="fish/details/${e.id}" class="btn-flat btn-hover btn-shop-now">shop now</a>
-                        </div>
-                        <div class="product-card-name">
-                            ${e.name}
-                        </div>
-                        <div class="product-card-price">
-                            <span class="curr-price">£ ` + formatPrice(`${e.price}`); `</span>
-                        </div>
-                    </div>
-                </div>
+    <div class="bg-main">
+        <div class="container">
+        <div class="box">
+          <div class="breadcumb">
+            <a href="#">Home</a>
+            <span><i class='bx bxs-chevrons-right'></i></span>
+            <a href="categories.html">Categories</a>
+          </div>
+          <ul class="pagination">
+            <select id="sort-selector">
+              <option value="popularity">Most Popular</option>
+              <option value="nameAsc">Name (A-Z)</option>
+              <option value="nameDesc">Name (Z-A)</option>
+              <option value="priceAsc">Price (low to high)</option>
+              <option value="priceDesc">Price (high to low)</option>
+            </select>
+          </ul>
+        </div>          
+        <div class="box">
+          <div class="row">
+            <div class="col-3 filter-col" id="filter-col">
+              <div class="box">
+                <span class="filter-header">Categories</span>
+                <ul class="filter-list">
+                  <li><a href="tropical.html">Tropical Fish</a></li>
+                  <li><a href="brackish.html">Brackish Fish</a></li>
+                  <li><a href="hybrid.html">Hybrid Fish</a></li>
+                  <li><a href="predatory.html">Predatory Fish</a></li>
+                  <li><a href="coldwater.html">Coldwater Fish</a></li>
+                  <li><a href="marine.html">Marine Fish</a></li>
+                </ul>
+              </div>
             </div>
-        `
-        product_list.insertAdjacentHTML("beforeend", prod)
-      })
-    }
-    renderProducts(products)
-  </script>
-</body>
-
+            <div class="col-9 col-md-12">
+              <div class="box">
+                <h2 class="description">Marine fishes are the fishes that live in ocean water.
+                   They are also called as saltwater fishes. Marine (saltwater fish) can swim and
+                    live alone or in a large group called a school. These kinds of fishes are very
+                     commonly kept in aquariums for entertainment.  </h2>
+                <div class="row" id="products"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>          
+    </div>
+    <script>
+      let products = [
+      {
+        name: 'MARINE CLOWN FISH       ',
+        image1: './images/m1.png',
+        image2: './images/m1.png',
+        curr_price: '£ 400.00'
+    },
+    {
+        name: 'MARINE ANGELFISH   ',
+        image1: './images/m2.png',
+        image2: './images/m2.png',
+        curr_price: '£ 400.00'
+    },
+    {
+        name: 'MARINE FROG FISH   ',
+        image1: './images/m3.png',
+        image2: './images/m3.png',
+        curr_price: '£ 350.00'
+    },
+    {
+        name: 'MARINE ANTHIAS   ',
+        image1: './images/m4.png',
+        image2: './images/m4.png',
+        curr_price: '£ 350.00'
+    },
+    {
+        name: 'MARINE BANNER FISH   ',
+        image1: './images/m5.png',
+        image2: './images/m5.png',
+        curr_price: '£ 350.00'
+    },
+    {
+        name: 'MARINE BASSLET FISH     ',
+        image1: './images/m6.png',
+        image2: './images/m6.png',
+        curr_price: '£ 300.00'
+    },
+    {
+        name: 'MARINE BAT FISH   ',
+        image1: './images/m7.png',
+        image2: './images/m7.png',
+        curr_price: '£ 300.00'
+    },
+    {
+        name: 'MARINE BLENNYS   ',
+        image1: './images/m8.png',
+        image2: './images/m8.png',
+        curr_price: '£ 300.00'
+    },
+    {
+        name: 'MARINE CARDINAL FISH   ',
+        image1: './images/m9.png',
+        image2: './images/m9.png',
+        curr_price: '£ 250.00'
+    },
+]
+let product_list = document.querySelector('#products')
+  renderProducts = (products) => {
+    product_list.innerHTML = "";
+    products.forEach(e => {
+      let prod = `
+        <div class="col-4 col-md-6 col-sm-12">
+          <div class="product-card">
+            <div class="product-card-img">
+              <img src="${e.image1}" alt="">
+              <img src="${e.image2}" alt="">
+            </div>
+            <div class="product-card-info">
+              <div class="product-btn">
+                <a href="fish-detail.html" class="btn-flat btn-hover btn-shop-now">shop now</a>
+              </div>
+              <div class="product-card-name">
+                ${e.name}
+              </div>
+              <div class="product-card-price">
+                <span class="curr-price">${e.curr_price}</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      `;
+      product_list.insertAdjacentHTML("beforeend", prod);
+    });
+  }
+  renderProducts(products)
+const sortSelector = document.getElementById('sort-selector')
+sortSelector.addEventListener('change', () => {
+const value = sortSelector.value
+if (value === 'popularity') {
+products.sort(() => Math.random() - 0.5);
+} else if (value === 'nameAsc') {
+products.sort((a, b) => a.name.localeCompare(b.name))
+} else if (value === 'nameDesc') {
+products.sort((a, b) => b.name.localeCompare(a.name))
+} else if (value === 'priceAsc') {
+products.sort((a, b) => parseFloat(a.curr_price.replace(/[^0-9.-]/g, '')) - parseFloat(b.curr_price.replace(/[^0-9.-]/g, '')))
+} else if (value === 'priceDesc') {
+products.sort((a, b) => parseFloat(b.curr_price.replace(/[^0-9.-]/g, '')) - parseFloat(a.curr_price.replace(/[^0-9.-]/g, '')))
+}
+renderProducts(products)
+})
+    </script>
+  </body>
 </html>
