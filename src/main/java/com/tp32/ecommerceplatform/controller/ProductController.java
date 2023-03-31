@@ -93,12 +93,6 @@ public class ProductController {
         return "predatory.html";
     }
 
-    @GetMapping("/products/list")
-    public String listProducts(Model model) {
-        model.addAttribute("products", productService.getProducts());
-        return "basket.html";
-    }
-
     @GetMapping("/fish/details/{productId}")
     public String getDetails(@PathVariable("productId") Long id, Model model) {
         model.addAttribute("product", productService.getProduct(id));
