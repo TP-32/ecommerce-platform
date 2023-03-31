@@ -1,168 +1,124 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Brackish Fish</title>
-    <link rel="preconnect" href="https://fonts.gstatic.com">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,900&display=swap" rel="stylesheet">
-    <link href='https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css' rel='stylesheet'>
-    <link rel="stylesheet" href="categories.css">
-  </head>
-  <body>
-    <div class="breadcumb-wrapper">
-      <h2 class="page-title">Categories</h2>
-    </div>
-    <div class="bg-main">
-        <div class="container">
-        <div class="box">
-          <div class="breadcumb">
-            <a href="#">Home</a>
-            <span><i class='bx bxs-chevrons-right'></i></span>
-            <a href="categories.html">Categories</a>
-          </div>
-          <ul class="pagination">
-            <select id="sort-selector">
-              <option value="popularity">Most Popular</option>
-              <option value="nameAsc">Name (A-Z)</option>
-              <option value="nameDesc">Name (Z-A)</option>
-              <option value="priceAsc">Price (low to high)</option>
-              <option value="priceDesc">Price (high to low)</option>
-            </select>
-          </ul>
-        </div>          
-        <div class="box">
-          <div class="row">
-            <div class="col-3 filter-col" id="filter-col">
-              <div class="box">
-                <span class="filter-header">Categories</span>
-                <ul class="filter-list">
-                  <li><a href="tropical.html">Tropical Fish</a></li>
-                  <li><a href="brackish.html">Brackish Fish</a></li>
-                  <li><a href="hybrid.html">Hybrid Fish</a></li>
-                  <li><a href="predatory.html">Predatory Fish</a></li>
-                  <li><a href="coldwater.html">Coldwater Fish</a></li>
-                  <li><a href="marine.html">Marine Fish</a></li>
-                </ul>
-              </div>
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Brackish Fish</title>
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Ubuntu:regular,bold&subset=Latin">
+  <link href='https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css' rel='stylesheet'>
+  <link rel="stylesheet" th:href="@{/css/categories.css}" />
+  <link rel="stylesheet" th:href="@{/css/navbar.css}" />
+</head>
+
+<body>
+  <div class="breadcumb-wrapper">
+    <h2 class="page-title">Categories</h2>
+  </div>
+  <div class="bg-main">
+    <div class="container">
+      <div th:replace="~{fragments/navbar :: navbar}"></div>
+      <div class="box">
+        <div class="breadcumb">
+          <a th:href="@{/}">Home</a>
+          <span><i class='bx bxs-chevrons-right'></i></span>
+          <a th:href="@{/categories}">Categories</a>
+        </div>
+        <ul class="pagination">
+          <select id="sort-selector">
+            <option value="popularity">Most Popular</option>
+            <option value="nameAsc">Name (A-Z)</option>
+            <option value="nameDesc">Name (Z-A)</option>
+            <option value="priceAsc">Price (low to high)</option>
+            <option value="priceDesc">Price (high to low)</option>
+          </select>
+        </ul>
+      </div>
+      <div class="box">
+        <div class="row">
+          <div class="col-3 filter-col" id="filter-col">
+            <div class="box">
+              <span class="filter-header">Categories</span>
+              <ul class="filter-list">
+                <li><a th:href="@{/tropical}">Tropical Fish</a></li>
+                <li><a th:href="@{/brackish}">Brackish Fish</a></li>
+                <li><a th:href="@{/hybrid}">Hybrid Fish</a></li>
+                <li><a th:href="@{/predatory}">Predatory Fish</a></li>
+                <li><a th:href="@{/coldwater}">Coldwater Fish</a></li>
+                <li><a th:href="@{/marine}">Marine Fish</a></li>
+              </ul>
             </div>
-            <div class="col-9 col-md-12">
-              <div class="box">
-                <h2 class="description">Brackish fish originate from areas in which 
-                  freshwater meets saltwater. Fish that live in these areas are able
-                   to tolerate a wide range of salinities. Brackish fish do best in 
-                   water with a salinity of 1.015, or 1/4 cup marine salt per gallon, 
-                   and a pH of 7.5 to 8.4. </h2>
-                <div class="row" id="products"></div>
-              </div>
+          </div>
+          <div class="col-9 col-md-12">
+            <div class="box">
+              <h2 class="description">Brackish fish originate from areas in which
+                freshwater meets saltwater. Fish that live in these areas are able
+                to tolerate a wide range of salinities. Brackish fish do best in
+                water with a salinity of 1.015, or 1/4 cup marine salt per gallon,
+                and a pH of 7.5 to 8.4. </h2>
+              <div class="row" id="products"></div>
             </div>
           </div>
         </div>
-      </div>          
+      </div>
     </div>
-    <script>
-      let products = [
-    {
-        name: 'TAENIANOTUS LEAF SCORPION FISH',
-        image1: './images/b1.png',
-        image2: './images/b1.png',
-        curr_price: '£ 550.00'
-    },
-    {
-        name: 'FROGFISH COLOUR ANTENNARIUS',
-        image1: './images/b2.png',
-        image2: './images/b2.png',
-        curr_price: '£ 500.00'
-    },
-    {
-        name: 'GIANT TREVALLY CARANAX IGNOBILIS',
-        image1: './images/b3.png',
-        image2: './images/b3.png',
-        curr_price: '£ 550.00'
-    },
-    {
-        name: 'OCELLATED PUFFERFISH TETRAODON',
-        image1: './images/b4.png',
-        image2: './images/b4.png',
-        curr_price: '£ 450.00'
-    },
-    {
-        name: 'SEBAE MONO ANGELFISH MONODACTYLUS',
-        image1: './images/b5.png',
-        image2: './images/b5.png',
-        curr_price: '£ 430.00'
-    },
-    {
-        name: 'ARCHER FISH TAXOTES JACULTRIX',
-        image1: './images/b6.png',
-        image2: './images/b6.png',
-        curr_price: '£ 400.00'
-    },
-    {
-        name: 'ASIAN PERCH DATNOID TIGER FISH',
-        image1: './images/b7.png',
-        image2: './images/b7.png',
-        curr_price: '£ 400.00'
-    },
-    {
-        name: 'FROGFISH ANTENNARIUS BIOCELLATUS',
-        image1: './images/b8.png',
-        image2: './images/b8.png',
-        curr_price: '£ 400.00'
-    },
-    {
-        name: 'STONEFISH BATRACHOMOEUS ',
-        image1: './images/b9.png',
-        image2: './images/b9.png',
-        curr_price: '£ 350.00'
-    },
-]
-let product_list = document.querySelector('#products')
-  renderProducts = (products) => {
-    product_list.innerHTML = "";
-    products.forEach(e => {
-      let prod = `
-        <div class="col-4 col-md-6 col-sm-12">
-          <div class="product-card">
-            <div class="product-card-img">
-              <img src="${e.image1}" alt="">
-              <img src="${e.image2}" alt="">
+  </div>
+  <script th:inline="javascript">
+    var products = /*[[${products}]]*/[];
+
+    function formatPrice(x) {
+      return x.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",");
+    }
+
+    let product_list = document.querySelector('#products')
+    renderProducts = (products) => {
+      products.forEach(e => {
+        let prod = `
+            <div class="col-4 col-md-6 col-sm-12">
+                <div class="product-card">
+                    <div class="product-card-img">
+                        <img src="${e.image}" alt="">
+                        <img src="${e.image}" alt="">
+                    </div>
+                    <div class="product-card-info">
+                        <div class="product-btn">
+                            <a href="fish/details/${e.id}" class="btn-flat btn-hover btn-shop-now">shop now</a>
+                        </div>
+                        <div class="product-card-name">
+                            ${e.name}
+                        </div>
+                        <div class="product-card-price">
+                            <span class="curr-price">£ ` + formatPrice(`${e.price}`); `</span>
+                        </div>
+                    </div>
+                </div>
             </div>
-            <div class="product-card-info">
-              <div class="product-btn">
-                <a href="fish-detail.html" class="btn-flat btn-hover btn-shop-now">shop now</a>
-              </div>
-              <div class="product-card-name">
-                ${e.name}
-              </div>
-              <div class="product-card-price">
-                <span class="curr-price">${e.curr_price}</span>
-              </div>
-            </div>
-          </div>
-        </div>
-      `;
-      product_list.insertAdjacentHTML("beforeend", prod);
-    });
-  }
-  renderProducts(products)
-const sortSelector = document.getElementById('sort-selector')
-sortSelector.addEventListener('change', () => {
-const value = sortSelector.value
-if (value === 'popularity') {
-products.sort(() => Math.random() - 0.5);
-} else if (value === 'nameAsc') {
-products.sort((a, b) => a.name.localeCompare(b.name))
-} else if (value === 'nameDesc') {
-products.sort((a, b) => b.name.localeCompare(a.name))
-} else if (value === 'priceAsc') {
-products.sort((a, b) => parseFloat(a.curr_price.replace(/[^0-9.-]/g, '')) - parseFloat(b.curr_price.replace(/[^0-9.-]/g, '')))
-} else if (value === 'priceDesc') {
-products.sort((a, b) => parseFloat(b.curr_price.replace(/[^0-9.-]/g, '')) - parseFloat(a.curr_price.replace(/[^0-9.-]/g, '')))
-}
-renderProducts(products)
-})
-    </script>
-  </body>
+        `
+        product_list.insertAdjacentHTML("beforeend", prod)
+      });
+    }
+    renderProducts(products)
+
+    const sortSelector = document.getElementById('sort-selector')
+    sortSelector.addEventListener('change', () => {
+      const value = sortSelector.value
+      if (value === 'popularity') {
+        products = products.sort(() => Math.random() - 0.5);
+      } else if (value === 'nameAsc') {
+        products = products.sort((a, b) => a.name.localeCompare(b.name))
+      } else if (value === 'nameDesc') {
+        products = products.sort((a, b) => b.name.localeCompare(a.name))
+      } else if (value === 'priceAsc') {
+        products = products.sort((a, b) => parseFloat(a.price) - parseFloat(b.price))
+      } else if (value === 'priceDesc') {
+        products = products.sort((a, b) => parseFloat(b.price) - parseFloat(a.price))
+      }
+      document.getElementById('products').innerHTML = '';
+      renderProducts(products)
+    })
+  </script>
+</body>
+
 </html>
