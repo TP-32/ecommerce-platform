@@ -14,18 +14,31 @@
 </head>
 
 <body>
+  <header>
+    <div class="holder">
+      <div th:replace="~{fragments/navbar :: navbar}"></div>
+    </div>
+  </header>
   <div class="breadcumb-wrapper">
     <h2 class="page-title">Categories</h2>
   </div>
   <div class="bg-main">
     <div class="container">
-      <div th:replace="~{fragments/navbar :: navbar}"></div>
       <div class="box">
         <div class="breadcumb">
           <a th:href="@{/}">Home</a>
           <span><i class='bx bxs-chevrons-right'></i></span>
           <a th:href="@{/categories}">Categories</a>
         </div>
+        <ul class="pagination">
+          <select id="sort-selector">
+            <option value="popularity">Most Popular</option>
+            <option value="nameAsc">Name (A-Z)</option>
+            <option value="nameDesc">Name (Z-A)</option>
+            <option value="priceAsc">Price (low to high)</option>
+            <option value="priceDesc">Price (high to low)</option>
+          </select>
+        </ul>
       </div>
       <div class="box">
         <div class="row">
@@ -33,18 +46,20 @@
             <div class="box">
               <span class="filter-header">Categories</span>
               <ul class="filter-list">
-                <li><a th:href="@{/tropical}">Tropical Fish</a></li>
-                <li><a th:href="@{/brackish}">Brackish Fish</a></li>
-                <li><a th:href="@{/hybrid}">Hybrid Fish</a></li>
-                <li><a th:href="@{/predatory}">Predatory Fish</a></li>
-                <li><a th:href="@{/coldwater}">Coldwater Fish</a></li>
-                <li><a th:href="@{/marine}">Marine Fish</a></li>
+                <li class="side"><a th:href="@{/tropical}">Tropical Fish</a></li>
+                <li class="side"><a th:href="@{/brackish}">Brackish Fish</a></li>
+                <li class="side"><a th:href="@{/hybrid}">Hybrid Fish</a></li>
+                <li class="side"><a th:href="@{/predatory}">Predatory Fish</a></li>
+                <li class="side"><a th:href="@{/coldwater}">Coldwater Fish</a></li>
+                <li class="side"><a th:href="@{/marine}">Marine Fish</a></li>
               </ul>
             </div>
           </div>
           <div class="col-9 col-md-12">
             <div class="box">
-              <div class="row" id="products"></div>
+              <div class="row" id="products">
+
+              </div>
             </div>
           </div>
         </div>
@@ -53,9 +68,11 @@
   </div>
   <script th:inline="javascript">
     var products = /*[[${products}]]*/[];
+
     function formatPrice(x) {
       return x.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",");
     }
+
     let product_list = document.querySelector('#products')
     renderProducts = (products) => {
       products.forEach(e => {
@@ -81,9 +98,26 @@
             </div>
         `
         product_list.insertAdjacentHTML("beforeend", prod)
-      })
+      });
     }
     renderProducts(products)
+    const sortSelector = document.getElementById('sort-selector')
+    sortSelector.addEventListener('change', () => {
+      const value = sortSelector.value
+      if (value === 'popularity') {
+        products.sort(() => Math.random() - 0.5);
+      } else if (value === 'nameAsc') {
+        products.sort((a, b) => a.name.localeCompare(b.name))
+      } else if (value === 'nameDesc') {
+        products.sort((a, b) => b.name.localeCompare(a.name))
+      } else if (value === 'priceAsc') {
+        products.sort((a, b) => parseFloat(a.price) - parseFloat(b.price))
+      } else if (value === 'priceDesc') {
+        products.sort((a, b) => parseFloat(b.price) - parseFloat(a.price))
+      }
+      document.getElementById('products').innerHTML = '';
+      renderProducts(products)
+    })
   </script>
 </body>
 

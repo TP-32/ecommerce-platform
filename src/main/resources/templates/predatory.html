@@ -26,6 +26,15 @@
           <span><i class='bx bxs-chevrons-right'></i></span>
           <a th:href="@{/categories}">Categories</a>
         </div>
+        <ul class="pagination">
+          <select id="sort-selector">
+            <option value="popularity">Most Popular</option>
+            <option value="nameAsc">Name (A-Z)</option>
+            <option value="nameDesc">Name (Z-A)</option>
+            <option value="priceAsc">Price (low to high)</option>
+            <option value="priceDesc">Price (high to low)</option>
+          </select>
+        </ul>
       </div>
       <div class="box">
         <div class="row">
@@ -60,65 +69,11 @@
   </div>
   <script th:inline="javascript">
     var products = /*[[${products}]]*/[];
-    /*     let products = [
-          {
-            name: 'PLATINUM BARRAMUNDI GROUPER LATES CALCIFER 30CM   ',
-            image1: './images/p1.png',
-            image2: './images/p1.png',
-            curr_price: '£ 3,000.00'
-          },
-          {
-            name: 'PLATINUM FLORIDA SPOTTED GAR LEPISOSTEUS 15CM   ',
-            image1: './images/p2.png',
-            image2: './images/p2.png',
-            curr_price: '£ 2,000.00'
-          },
-          {
-            name: 'PLATINUM BICHIR POLYPTERUS ENDLICHERI 15CM   ',
-            image1: './images/p3.png',
-            image2: './images/p3.png',
-            curr_price: '£ 2,000.00'
-          },
-          {
-            name: 'XANTHIC GOLDEN BARRAMUNDI GROUPER LATES CALCIFER ',
-            image1: './images/p4.png',
-            image2: './images/p4.png',
-            curr_price: '£ 2,000.00'
-          },
-          {
-            name: 'VIOLET LINE PIRANHA SERRASALMUS GERYI 12CM   ',
-            image1: './images/p5.png',
-            image2: './images/p5.png',
-            curr_price: '£ 1,500.00'
-          },
-          {
-            name: 'ARAPAIMA GIGAS OSTEOGLOSSIFORMES 90CM    ',
-            image1: './images/p6.png',
-            image2: './images/p6.png',
-            curr_price: '£ 1,000.00'
-          },
-          {
-            name: 'GIANT FRESHWATER PUFFER FISH TETRADON MBU 70CM   ',
-            image1: './images/p7.png',
-            image2: './images/p7.png',
-            curr_price: '£ 1,000.00'
-          },
-          {
-            name: 'TIGRINUS ZEBRA SHOVELNOSE CATFISH 15CM   ',
-            image1: './images/p8.png',
-            image2: './images/p8.png',
-            curr_price: '£ 1,000.00'
-          },
-          {
-            name: 'MEGHALAYA LEOPARD SNAKEHEAD CHANNA 20CM   ',
-            image1: './images/p9.png',
-            image2: './images/p9.png',
-            curr_price: '£ 500.00'
-          },
-        ] */
+
     function formatPrice(x) {
       return x.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",");
     }
+    
     let product_list = document.querySelector('#products')
     renderProducts = (products) => {
       products.forEach(e => {
@@ -144,9 +99,26 @@
             </div>
         `
         product_list.insertAdjacentHTML("beforeend", prod)
-      })
+      });
     }
     renderProducts(products)
+    const sortSelector = document.getElementById('sort-selector')
+    sortSelector.addEventListener('change', () => {
+      const value = sortSelector.value
+      if (value === 'popularity') {
+        products.sort(() => Math.random() - 0.5);
+      } else if (value === 'nameAsc') {
+        products.sort((a, b) => a.name.localeCompare(b.name))
+      } else if (value === 'nameDesc') {
+        products.sort((a, b) => b.name.localeCompare(a.name))
+      } else if (value === 'priceAsc') {
+        products.sort((a, b) => parseFloat(a.price) - parseFloat(b.price))
+      } else if (value === 'priceDesc') {
+        products.sort((a, b) => parseFloat(b.price) - parseFloat(a.price))
+      }
+      document.getElementById('products').innerHTML = '';
+      renderProducts(products)
+    })
   </script>
 </body>
 

@@ -26,6 +26,15 @@
           <span><i class='bx bxs-chevrons-right'></i></span>
           <a th:href="@{/categories}">Categories</a>
         </div>
+        <ul class="pagination">
+          <select id="sort-selector">
+            <option value="popularity">Most Popular</option>
+            <option value="nameAsc">Name (A-Z)</option>
+            <option value="nameDesc">Name (Z-A)</option>
+            <option value="priceAsc">Price (low to high)</option>
+            <option value="priceDesc">Price (high to low)</option>
+          </select>
+        </ul>
       </div>
       <div class="box">
         <div class="row">
@@ -57,65 +66,11 @@
   </div>
   <script th:inline="javascript">
     var products = /*[[${products}]]*/[];
-    /*     let products = [
-          {
-            name: '10 x ASSORTED PARROT FISH CICHALSOMA SP. HYBRID ',
-            image1: './images/h1.png',
-            image2: './images/h1.png',
-            curr_price: '£ 1,480.00'
-          },
-          {
-            name: '10 X ASSORTED FLOWERHORN CICHLID JUVENILE 5CM  ',
-            image1: './images/h2.png',
-            image2: './images/h2.png',
-            curr_price: '£ 1,000.00'
-          },
-          {
-            name: 'ESCONDIDO RED TEXAS CICHLID GRADE AA  7.5CM   ',
-            image1: './images/h3.png',
-            image2: './images/h3.png',
-            curr_price: '£ 500.00'
-          },
-          {
-            name: 'FLOWERHORN CHICHLID GRADE AA CICHLASOMA SP. HYBRID 20CM   ',
-            image1: './images/h4.png',
-            image2: './images/h4.png',
-            curr_price: '£ 500.00'
-          },
-          {
-            name: 'FLOWERHORN CHICHLID PLATINIUM GRADE AA 20CM ',
-            image1: './images/h5.png',
-            image2: './images/h5.png',
-            curr_price: '£ 500.00'
-          },
-          {
-            name: 'FLOWERHORN CHICLID SUPER MONKEY KAMFA GRADE AA 10CM ',
-            image1: './images/h6.png',
-            image2: './images/h6.png',
-            curr_price: '£ 500.00'
-          },
-          {
-            name: 'PEARL PLATINIUM GOLDEN BASE FLOWERHORN 12CM   ',
-            image1: './images/h7.png',
-            image2: './images/h7.png',
-            curr_price: '£ 450.00'
-          },
-          {
-            name: 'JAGUAR CATFISH HYBRID RED TAILED 10CM   ',
-            image1: './images/h8.png',
-            image2: './images/h8.png',
-            curr_price: '£ 400.00'
-          },
-          {
-            name: 'ESCONDIDO GREEN TEXAS CICHLID 10CM ',
-            image1: './images/h9.png',
-            image2: './images/h9.png',
-            curr_price: '£ 350.00'
-          },
-        ] */
+
     function formatPrice(x) {
       return x.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",");
     }
+    
     let product_list = document.querySelector('#products')
     renderProducts = (products) => {
       products.forEach(e => {
@@ -141,9 +96,26 @@
             </div>
         `
         product_list.insertAdjacentHTML("beforeend", prod)
-      })
+      });
     }
     renderProducts(products)
+    const sortSelector = document.getElementById('sort-selector')
+    sortSelector.addEventListener('change', () => {
+      const value = sortSelector.value
+      if (value === 'popularity') {
+        products.sort(() => Math.random() - 0.5);
+      } else if (value === 'nameAsc') {
+        products.sort((a, b) => a.name.localeCompare(b.name))
+      } else if (value === 'nameDesc') {
+        products.sort((a, b) => b.name.localeCompare(a.name))
+      } else if (value === 'priceAsc') {
+        products.sort((a, b) => parseFloat(a.price) - parseFloat(b.price))
+      } else if (value === 'priceDesc') {
+        products.sort((a, b) => parseFloat(b.price) - parseFloat(a.price))
+      }
+      document.getElementById('products').innerHTML = '';
+      renderProducts(products)
+    })
   </script>
 </body>
 

@@ -26,6 +26,15 @@
           <span><i class='bx bxs-chevrons-right'></i></span>
           <a th:href="@{/categories}">Categories</a>
         </div>
+        <ul class="pagination">
+          <select id="sort-selector">
+            <option value="popularity">Most Popular</option>
+            <option value="nameAsc">Name (A-Z)</option>
+            <option value="nameDesc">Name (Z-A)</option>
+            <option value="priceAsc">Price (low to high)</option>
+            <option value="priceDesc">Price (high to low)</option>
+          </select>
+        </ul>
       </div>
       <div class="box">
         <div class="row">
@@ -58,65 +67,11 @@
   </div>
   <script th:inline="javascript">
     var products = /*[[${products}]]*/[];
-    /*     let products = [
-          {
-            name: 'LEAF SCORPION FISH 8CM   ',
-            image1: './images/b1.png',
-            image2: './images/b1.png',
-            curr_price: '£ 550.00'
-          },
-          {
-            name: 'FROGFISH COLOUR ANTENNARIUS 10CM   ',
-            image1: './images/b2.png',
-            image2: './images/b2.png',
-            curr_price: '£ 500.00'
-          },
-          {
-            name: 'GIANT TREVALLY CARANAX IGNOBILIS 7CM   ',
-            image1: './images/b3.png',
-            image2: './images/b3.png',
-            curr_price: '£ 550.00'
-          },
-          {
-            name: 'OCELLATED PUFFERFISH TETRAODON 5CM      ',
-            image1: './images/b4.png',
-            image2: './images/b4.png',
-            curr_price: '£ 450.00'
-          },
-          {
-            name: 'SEBAE MONO ANGELFISH MONODACTYLUS 12CM      ',
-            image1: './images/b5.png',
-            image2: './images/b5.png',
-            curr_price: '£ 430.00'
-          },
-          {
-            name: 'ARCHER FISH TAXOTES JACULTRIX 5CM    ',
-            image1: './images/b6.png',
-            image2: './images/b6.png',
-            curr_price: '£ 400.00'
-          },
-          {
-            name: 'ASIAN PERCH DATNOID TIGER FISH 8CM     ',
-            image1: './images/b7.png',
-            image2: './images/b7.png',
-            curr_price: '£ 400.00'
-          },
-          {
-            name: 'FROGFISH ANTENNARIUS BIOCELLATUS     10CM    ',
-            image1: './images/b8.png',
-            image2: './images/b8.png',
-            curr_price: '£ 400.00'
-          },
-          {
-            name: 'FRESHWATER STONEFISH  5CM      ',
-            image1: './images/b9.png',
-            image2: './images/b9.png',
-            curr_price: '£ 350.00'
-          },
-        ] */
+
     function formatPrice(x) {
       return x.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",");
     }
+
     let product_list = document.querySelector('#products')
     renderProducts = (products) => {
       products.forEach(e => {
@@ -142,9 +97,27 @@
             </div>
         `
         product_list.insertAdjacentHTML("beforeend", prod)
-      })
+      });
     }
     renderProducts(products)
+
+    const sortSelector = document.getElementById('sort-selector')
+    sortSelector.addEventListener('change', () => {
+      const value = sortSelector.value
+      if (value === 'popularity') {
+        products = products.sort(() => Math.random() - 0.5);
+      } else if (value === 'nameAsc') {
+        products = products.sort((a, b) => a.name.localeCompare(b.name))
+      } else if (value === 'nameDesc') {
+        products = products.sort((a, b) => b.name.localeCompare(a.name))
+      } else if (value === 'priceAsc') {
+        products = products.sort((a, b) => parseFloat(a.price) - parseFloat(b.price))
+      } else if (value === 'priceDesc') {
+        products = products.sort((a, b) => parseFloat(b.price) - parseFloat(a.price))
+      }
+      document.getElementById('products').innerHTML = '';
+      renderProducts(products)
+    })
   </script>
 </body>
 

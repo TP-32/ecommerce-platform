@@ -26,6 +26,15 @@
           <span><i class='bx bxs-chevrons-right'></i></span>
           <a th:href="@{/categories}">Categories</a>
         </div>
+        <ul class="pagination">
+          <select id="sort-selector">
+            <option value="popularity">Most Popular</option>
+            <option value="nameAsc">Name (A-Z)</option>
+            <option value="nameDesc">Name (Z-A)</option>
+            <option value="priceAsc">Price (low to high)</option>
+            <option value="priceDesc">Price (high to low)</option>
+          </select>
+        </ul>
       </div>
       <div class="box">
         <div class="row">
@@ -61,65 +70,11 @@
   </div>
   <script th:inline="javascript">
     var products = /*[[${products}]]*/[];
-    /*     let products = [
-          {
-            name: 'PLATINUM ARAPAIMA GIGAS 12CM   ',
-            image1: './images/t1.png',
-            image2: './images/t1.png',
-            curr_price: '£ 50,000.00'
-          },
-          {
-            name: 'PLATINIUM DATNOID 40CM   ',
-            image1: './images/t2.png',
-            image2: './images/t2.png',
-            curr_price: '£ 50,000.00'
-          },
-          {
-            name: 'PLATINIUM DILVER AROWANA 40CM    ',
-            image1: './images/t3.png',
-            image2: './images/t3.png',
-            curr_price: '£ 50,000.00'
-          },
-          {
-            name: 'XANTHIC GOLDEN AROWANA 20CM   ',
-            image1: './images/t4.png',
-            image2: './images/t4.png',
-            curr_price: '£ 20,000.00'
-          },
-          {
-            name: 'KING CHILLI RED SHORT BODIED AROWANA 30CM ',
-            image1: './images/t5.png',
-            image2: './images/t5.png',
-            curr_price: '£ 10,000.00'
-          },
-          {
-            name: 'XANTHIC GOLDEN DATNOID 10CM     ',
-            image1: './images/t6.png',
-            image2: './images/t6.png',
-            curr_price: '£ 5,000.00'
-          },
-          {
-            name: 'PEACOCK SNAKEHEAD CHANNA BARCA 60CM    ',
-            image1: './images/t7.png',
-            image2: './images/t7.png',
-            curr_price: '£ 4,000.00'
-          },
-          {
-            name: 'ALBINO BLACK DIAMOND POLKA DOT STINGRAY ',
-            image1: './images/t8.png',
-            image2: './images/t8.png',
-            curr_price: '£ 3,500.00'
-          },
-          {
-            name: 'ZEBRA PLECO HYPANCISTRUS 4CM   ',
-            image1: './images/t9.png',
-            image2: './images/t9.png',
-            curr_price: '£ 3,000.00'
-          },
-        ] */
+
     function formatPrice(x) {
       return x.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",");
     }
+
     let product_list = document.querySelector('#products')
     renderProducts = (products) => {
       products.forEach(e => {
@@ -145,9 +100,26 @@
             </div>
         `
         product_list.insertAdjacentHTML("beforeend", prod)
-      })
+      });
     }
     renderProducts(products)
+    const sortSelector = document.getElementById('sort-selector')
+    sortSelector.addEventListener('change', () => {
+      const value = sortSelector.value
+      if (value === 'popularity') {
+        products.sort(() => Math.random() - 0.5);
+      } else if (value === 'nameAsc') {
+        products.sort((a, b) => a.name.localeCompare(b.name))
+      } else if (value === 'nameDesc') {
+        products.sort((a, b) => b.name.localeCompare(a.name))
+      } else if (value === 'priceAsc') {
+        products.sort((a, b) => parseFloat(a.price) - parseFloat(b.price))
+      } else if (value === 'priceDesc') {
+        products.sort((a, b) => parseFloat(b.price) - parseFloat(a.price))
+      }
+      document.getElementById('products').innerHTML = '';
+      renderProducts(products)
+    })
   </script>
 </body>
 

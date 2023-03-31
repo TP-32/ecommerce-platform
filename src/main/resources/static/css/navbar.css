@@ -1,43 +1,46 @@
 .nav {
-    float: right;
-    list-style: none;
-    margin-top: 30px;
+  float: right;
+  list-style: none;
+  margin-top: 30px;
 }
 
 .nav li {
-    display: inline-block;
+  display: inline-block;
 }
 
 .nav li a {
-    color: rgb(242, 239, 244);
-    padding: 5px 20px;
-    font-family: "Ubuntu", sans-serif;
-    font-size: 15px;
-    text-decoration: none;
+  all: revert;
+  color: rgb(242, 239, 244);
+  padding: 5px 20px;
+  font-family: "Ubuntu", sans-serif;
+  font-size: 15px;
+  text-decoration: none;
 }
 
 .nav li a:hover {
-    background: #780250;
-    color: aliceblue;
+  background: #780250;
+  color: aliceblue;
 }
 
 .nav ul li a {
-    color: aliceblue;
+  color: aliceblue;
 }
 
 @media screen and (max-width: 768px) {
-    .nav {
-      float: none;
-      text-align: center;
-      margin-top: 0;
-    }
-    .nav li {
-      display: block;
-      margin: 10px 0;
-    }
-    .nav li a {
-      display: inline-block;
-      padding: 10px;
-      border-radius: 5px;
-    }
+  .nav {
+    float: none;
+    text-align: center;
+    margin-top: 0;
   }
+
+  .nav li {
+    display: block;
+    margin: 10px 0;
+  }
+
+  .nav li a {
+    display: inline-block;
+    padding: 10px;
+    border-radius: 5px;
+  }
+}
