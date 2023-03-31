@@ -19,7 +19,8 @@ body {
 
 .container {
     width: 80%;
-    margin: 50px auto;
+    margin: auto;
+    padding: 30px;
 }
 
 .contact-box {

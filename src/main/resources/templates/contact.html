@@ -8,13 +8,16 @@
     <link rel="stylesheet" th:href="@{/css/navbar.css}" />
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Ubuntu:regular,bold&subset=Latin">
+    <link rel="stylesheet" type="text/css"
+        href="http://fonts.googleapis.com/css?family=Ubuntu:regular,bold&subset=Latin">
 </head>
 
 <body>
-    <div class="holder">
-        <div th:replace="~{fragments/navbar :: navbar}"></div>
-    </div>
+    <header>
+        <div class="holder">
+            <div th:replace="~{fragments/navbar :: navbar}"></div>
+        </div>
+    </header>
     <div class="container">
         <div class="top-container">
 
@@ -105,10 +108,9 @@
                         <br>
                         <img src="./images/map.png" width="400" height="200">
                         <pre>
-
-Aston Express Way 
-West Midlands, Birmigham  
-B4 7ET 
+                            Aston Express Way 
+                            West Midlands, Birmigham  
+                            B4 7ET 
                         </pre>
 
                     </tr>
