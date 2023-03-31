@@ -14,12 +14,16 @@
 </head>
 
 <body>
+  <header>
+    <div class="holder">
+      <div th:replace="~{fragments/navbar :: navbar}"></div>
+    </div>
+  </header>
   <div class="breadcumb-wrapper">
     <h2 class="page-title">Categories</h2>
   </div>
   <div class="bg-main">
     <div class="container">
-      <div th:replace="~{fragments/navbar :: navbar}"></div>
       <div class="box">
         <div class="breadcumb">
           <a th:href="@{/}">Home</a>
