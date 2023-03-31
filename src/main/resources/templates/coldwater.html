@@ -28,11 +28,11 @@
         </div>
         <ul class="pagination">
           <select id="sort-selector">
-            <option value="popularity">Most Popular</option>
+            <option value="default">Default</option>
             <option value="nameAsc">Name (A-Z)</option>
             <option value="nameDesc">Name (Z-A)</option>
-            <option value="priceAsc">Price (low to high)</option>
-            <option value="priceDesc">Price (high to low)</option>
+            <option value="priceAsc">Price (Low-High)</option>
+            <option value="priceDesc">Price (High-Low)</option>
           </select>
         </ul>
       </div>
@@ -107,8 +107,8 @@
     const sortSelector = document.getElementById('sort-selector')
     sortSelector.addEventListener('change', () => {
       const value = sortSelector.value
-      if (value === 'popularity') {
-        products.sort(() => Math.random() - 0.5);
+      if (value === 'default') {
+        products.sort((a, b) => (a.id > b.id) ? 1 :  -1);
       } else if (value === 'nameAsc') {
         products.sort((a, b) => a.name.localeCompare(b.name))
       } else if (value === 'nameDesc') {
