@@ -57,8 +57,14 @@
           </div>
           <div class="col-9 col-md-12">
             <div class="box">
+              <form th:action="@{/categories}">
+                <input type="text" id="search" name="search" />
+                <div>
+                  <input type="submit" value="Search" />
+                  <a th:href="@{/categories}"><input type="button" value="Clear" /></a>
+                </div>
+              </form>
               <div class="row" id="products">
-
               </div>
             </div>
           </div>
