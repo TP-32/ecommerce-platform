@@ -50,9 +50,6 @@ public class NetItemServiceImpl implements NetItemService {
         }
 
         NetItem netItem = new NetItem();
-        // Inventory inventory = product.getInventory();
-        // inventory.setStock(inventory.getStock() - quantity);
-        // product.setInventory(product.getInventory());
 
         netItem.setNet(net);
         netItem.setProduct(product);
@@ -91,9 +88,6 @@ public class NetItemServiceImpl implements NetItemService {
         net.getNetItems().remove(netItem);
         net.setPrice(net.getPrice() - (netItem.getProduct().getPrice() * netItem.getQuantity()));
 
-        // Inventory inventory = netItem.getProduct().getInventory();
-        // inventory.setStock(inventory.getStock() + netItem.getQuantity());
-        // netItem.getProduct().setInventory(inventory);
         netItemRepository.delete(netItem);
     }
 }

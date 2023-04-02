@@ -3,7 +3,7 @@ package com.tp32.ecommerceplatform.model;
 import jakarta.persistence.*;
 
 /**
- * A model which holds the application data of a particular Order Item, used to be
+ * A model which holds the application data of a particular Net Item, used to be
  * displayed within a view.
  */
 @Entity
