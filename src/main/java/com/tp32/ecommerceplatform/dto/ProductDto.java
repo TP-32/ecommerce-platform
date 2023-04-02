@@ -4,6 +4,10 @@ import com.tp32.ecommerceplatform.model.Product;
 
 import jakarta.validation.constraints.Size;
 
+/**
+ * Data Transfer Object which will send information from the front-end to the
+ * back-end.
+ */
 public class ProductDto {
     
     @Size(min = 5, message = "Name length must be greater than 5.")

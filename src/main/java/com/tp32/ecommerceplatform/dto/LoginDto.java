@@ -1,10 +1,11 @@
 package com.tp32.ecommerceplatform.dto;
 
 /**
- * Data Transfer Object which will send information from the front-end to the back-end.
+ * Data Transfer Object which will send information from the front-end to the
+ * back-end.
  */
 public class LoginDto {
-    
+
     private String email;
     private String password;
 
@@ -23,5 +24,5 @@ public class LoginDto {
     public void setPassword(String password) {
         this.password = password;
     }
-    
+
 }

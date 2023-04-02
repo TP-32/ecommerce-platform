@@ -1,10 +1,11 @@
 package com.tp32.ecommerceplatform.dto;
 
 /**
- * Data Transfer Object which will send information from the front-end to the back-end.
+ * Data Transfer Object which will send information from the front-end to the
+ * back-end.
  */
 public class UpdateOrderDto {
-    
+
     private Float price;
     private String status;
 
