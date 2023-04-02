@@ -122,13 +122,16 @@ public class AdminController {
         return "admin-customers.html";
     }
 
+    // @Valid ensures the form fields meet the minimum requirements to be stored
     @PostMapping("/customers/update")
     public String updateCustomer(@Valid @ModelAttribute("userDto") UpdateUserDto userDto, BindingResult result,
             Model model,
             @RequestParam(value = "userId") Long id) {
         User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        boolean updateError = userDto.getEmail().equals(user.getEmail()) && userService.getUser(id).getEmail().equals(user.getEmail());
-        boolean emailError = userService.existsByEmail(userDto.getEmail()) && !userService.getUser(id).getEmail().equals(userDto.getEmail());
+        boolean updateError = userDto.getEmail().equals(user.getEmail())
+                && userService.getUser(id).getEmail().equals(user.getEmail());
+        boolean emailError = userService.existsByEmail(userDto.getEmail())
+                && !userService.getUser(id).getEmail().equals(userDto.getEmail());
         if (!result.hasErrors() && !updateError && !emailError) {
             userService.updateUser(id, userDto);
             model.addAttribute("customers", userService.getUsers());
@@ -140,7 +143,7 @@ public class AdminController {
 
         if (emailError)
             model.addAttribute("emailError", "Email already exists.");
-            
+
         model.addAttribute("userDto", userDto);
         model.addAttribute("customer", userService.getUser(id));
         model.addAttribute("roles", userService.getRoles());
@@ -208,6 +211,7 @@ public class AdminController {
         return "admin-create-product.html";
     }
 
+    // @Valid ensures the form fields meet the minimum requirements to be stored
     @PostMapping("/products/save")
     public String saveProduct(@Valid @ModelAttribute("product") ProductDto productDto, BindingResult result,
             Model model) {
@@ -221,6 +225,7 @@ public class AdminController {
         return "admin-create-product.html";
     }
 
+    // @Valid ensures the form fields meet the minimum requirements to be stored
     @PostMapping("/products/update")
     public String updateProduct(@Valid @ModelAttribute("productDto") ProductDto productDto, BindingResult result,
             Model model, @RequestParam(value = "productId") Long id) {
@@ -306,6 +311,7 @@ public class AdminController {
         return "admin-orders.html";
     }
 
+    // @Valid ensures the form fields meet the minimum requirements to be stored
     @PostMapping("/orders/update")
     public String updateOrder(@Valid @ModelAttribute("orderDto") UpdateOrderDto orderDto, BindingResult result,
             Model model, @RequestParam(value = "orderId") Long id) {
